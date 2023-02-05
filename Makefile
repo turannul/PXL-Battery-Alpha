@@ -1,9 +1,9 @@
 export ARCHS = arm64 arm64e
 export TARGET = iphone:clang:14.8:13.0
-export SYSROOT = $(THEOS)/sdks/iPhoneOS14.4.sdk
+export SYSROOT = $(THEOS)/sdks/iPhoneOS14.1.sdk
 
-THEOS_DEVICE_IP= 127.0.0.1
-THEOS_DEVICE_PORT= 2222
+#THEOS_DEVICE_IP= 127.0.0.1
+#THEOS_DEVICE_PORT= 2222
 
 INSTALL_TARGET_PROCESSES = SpringBoard
 SUBPROJECTS += PXL/PXL_Battery           # Basic code works no bugs, more features coming. Completed:%50
