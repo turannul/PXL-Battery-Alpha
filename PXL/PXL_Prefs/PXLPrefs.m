@@ -72,17 +72,26 @@
 }
 
 // Buttons
--(void)Twitter
-{
-    [self link:@"https://twitter.com/ImNotTuran" name:@"Follow me on Twitter"];
-}
 -(void)SourceCode
 {
     [self link:@"https://github.com/turannul/PXL-Battery" name:@"Source Code"];
 }
 
+-(void)Twitter
+{
+    [self link:@"https://twitter.com/ImNotTuran" name:@"Follow me on Twitter"];
+}
 -(void)DonateMe
 {
     [self link:@"https://cash.app/$TuranUl" name:@"Donate"];
+}
+
+-(void)RandyTwitter
+{
+    [self link:@"https://twitter.com/rj_skins?s=21&t=YudSBh0iDY9C5zQIsJbXcA" name:@"Follow Randy on Twitter"];
+}
+-(void)DonatetoRandy420
+{
+    [self link:@"https://www.paypal.com/paypalme/4Randy420" name:@"Donate to Randy"];
 }
 @end
