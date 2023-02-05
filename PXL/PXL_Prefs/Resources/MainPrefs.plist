@@ -40,6 +40,29 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 		</dict>
+			<dict>
+			<key>PostNotification</key>
+		    <string>xyz.turannul.pxlbattery.settingschanged</string>
+		<key>cell</key>
+		<string>PSLinkCell</string>
+		<key>cellClass</key>
+		<string>SparkColourPickerCell</string>
+		<key>libsparkcolourpicker</key>
+		<dict>
+			<key>defaults</key>
+			<string>xyz.turannul.pxlbattery</string>
+			<key>fallback</key>
+			<string>#000000</string>
+			<key>alpha</key>
+			<true/>
+            <key>PreviewGradient</key>
+            <false/>
+		</dict>
+		<key>label</key>
+		<string>Battery Color</string>
+		<key>key</key>
+		<string>Battery_Color</string>
+	</dict>
 		<dict>
 			<key>PostNotification</key>
 		    <string>xyz.turannul.pxlbattery.settingschanged</string>
@@ -61,7 +84,7 @@
 		<key>label</key>
 		<string>Low Battery Color</string>
 		<key>key</key>
-		<string>LBC</string>
+		<string>LB_Color</string>
 	</dict>
 	<dict>
 		<key>PostNotification</key>
@@ -84,7 +107,7 @@
 		<key>label</key>
 		<string>Low Power Mode Color</string>
 		<key>key</key>
-		<string>LPMC</string>
+		<string>LPM_Color</string>
 	</dict>
 	<dict>
 		<key>PostNotification</key>
@@ -107,7 +130,7 @@
 		<key>label</key>
 		<string>Charging Color</string>
 		<key>key</key>
-		<string>CC</string>
+		<string>Charging_Color</string>
 	</dict>
 	<dict>
 			<key>cell</key>

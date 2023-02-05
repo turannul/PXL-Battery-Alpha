@@ -3,7 +3,13 @@
 
 static void loader() {
 	pxlSettings *_settings = [[pxlSettings alloc] init];
+	fill.backgroundColor = [UIColor colorWithHexString:[_settings LPM_Color]];
 	PXLEnabled = [_settings pxlEnabled];
+NSString *LPM_Color = [_settings LPM_Color];
+//NSString *Charging_Color = [_settings Charging_Color];
+//NSString *LB_Color = [_settings LB_Color];
+//NSString *Battery_Color = [_settings Battery_Color];
+
 	if (customViewApplied){
 		[[_UIBatteryView sharedInstance] cleanUpViews];
 		customViewApplied = NO;
@@ -25,6 +31,7 @@ static void loader() {
 }
 %end
 		/*
+		Research required here.
 		%hook ? // Lock Screen Charging view
 		 -(void)_updateFillLayer{ if (PXLEnabled){ [self refreshIcon]; }else{ %orig; }
 		 %end
@@ -137,7 +144,10 @@ static void loader() {
 //-----------------------------------------------
 //Colors
 				if ([self saverModeActive]){
-					fill.backgroundColor = YELLOW;
+					//fill.backgroundColor = YELLOW;
+					//fill.backgroundColor = LPM_Color;
+					fill.backgroundColor = [UIColor colorWithHexString:[_settings LPM_Color]]; //That's should return correctly formatted value.
+
 				}else{
 					if (isCharging){
 						fill.backgroundColor = GREEN;

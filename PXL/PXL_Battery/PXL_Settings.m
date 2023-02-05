@@ -46,6 +46,8 @@
  return _preferences;
 }
 
+-(NSString *)LPM_Color { return @"#FFCC02"; }
+
 -(BOOL)pxlEnabled
 {return (self.preferences[@"pxlEnabled"] ? [self.preferences[@"pxlEnabled"] boolValue] : YES);}
 @end
