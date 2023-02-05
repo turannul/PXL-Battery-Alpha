@@ -36,55 +36,84 @@
 			<key>label</key>
 			<string>Enabled</string>
 		</dict>
-		<dict>
-		    <key>PostNotification</key>
-		    <string>xyz.turannul.pxlbattery.settingschanged</string>
-		    <key>cell</key>
-		    <string>PSLinkCell</string>
-		    <key>cellClass</key>
-		    <string>HBColorPickerTableCell</string>
-		    <key>defaults</key>
-		    <string>xyz.turannul.pxlbattery</string>
-		    <key>default</key>
-		    <string>#EA3323</string>
-		    <key>label</key>
-		    <string>Low Battery</string>
-		    <key>showAlphaSlider</key>
-		    <true/>
-		</dict>	
-		<dict>
-		    <key>PostNotification</key>
-		    <string>xyz.turannul.pxlbattery.settingschanged</string>
-		    <key>cell</key>
-		    <string>PSLinkCell</string>
-		    <key>cellClass</key>
-		    <string>HBColorPickerTableCell</string>
-		    <key>defaults</key>
-		    <string>xyz.turannul.pxlbattery</string>
-		    <key>default</key>
-		    <string>#FFCC02</string>
-		    <key>label</key>
-		    <string>Low Power Mode</string>
-		    <key>showAlphaSlider</key>
-		    <true/>
+			<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
 		</dict>
 		<dict>
-		    <key>PostNotification</key>
+			<key>PostNotification</key>
 		    <string>xyz.turannul.pxlbattery.settingschanged</string>
-		    <key>cell</key>
-		    <string>PSLinkCell</string>
-		    <key>cellClass</key>
-		    <string>HBColorPickerTableCell</string>
-		    <key>defaults</key>
-		    <string>xyz.turannul.pxlbattery</string>
-		    <key>default</key>
-		    <string>#00FF0C</string>
-		    <key>label</key>
-		    <string>Charging</string>
-		    <key>showAlphaSlider</key>
-		    <true/>
-		</dict>
+		<key>cell</key>
+		<string>PSLinkCell</string>
+		<key>cellClass</key>
+		<string>SparkColourPickerCell</string>
+		<key>libsparkcolourpicker</key>
 		<dict>
+			<key>defaults</key>
+			<string>xyz.turannul.pxlbattery</string>
+			<key>fallback</key>
+			<string>#ea3323</string>
+			<key>alpha</key>
+			<true/>
+            <key>PreviewGradient</key>
+            <false/>
+		</dict>
+		<key>label</key>
+		<string>Low Battery Color</string>
+		<key>key</key>
+		<string>LBC</string>
+	</dict>
+	<dict>
+		<key>PostNotification</key>
+		    <string>xyz.turannul.pxlbattery.settingschanged</string>
+		<key>cell</key>
+		<string>PSLinkCell</string>
+		<key>cellClass</key>
+		<string>SparkColourPickerCell</string>
+		<key>libsparkcolourpicker</key>
+		<dict>
+			<key>defaults</key>
+			<string>xyz.turannul.pxlbattery</string>
+			<key>fallback</key>
+			<string>#ffcc02</string>
+			<key>alpha</key>
+			<true/>
+            <key>PreviewGradient</key>
+            <false/>
+		</dict>
+		<key>label</key>
+		<string>Low Power Mode Color</string>
+		<key>key</key>
+		<string>LPMC</string>
+	</dict>
+	<dict>
+		<key>PostNotification</key>
+		    <string>xyz.turannul.pxlbattery.settingschanged</string>
+		<key>cell</key>
+		<string>PSLinkCell</string>
+		<key>cellClass</key>
+		<string>SparkColourPickerCell</string>
+		<key>libsparkcolourpicker</key>
+		<dict>
+			<key>defaults</key>
+			<string>xyz.turannul.pxlbattery</string>
+			<key>fallback</key>
+			<string>#00ff0c</string>
+			<key>alpha</key>
+			<true/>
+            <key>PreviewGradient</key>
+            <false/>
+		</dict>
+		<key>label</key>
+		<string>Charging Color</string>
+		<key>key</key>
+		<string>CC</string>
+	</dict>
+	<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+		</dict>
+	<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
@@ -100,6 +129,10 @@
 			<key>label</key>
 			<string>Source Code</string>
 		</dict>
+			<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+		</dict>
 		<dict>
 			<key>action</key>
 			<string>Twitter</string>
@@ -111,6 +144,22 @@
 			<string>Buttom</string>
 			<key>label</key>
 			<string>Follow me on Twitter</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>DonateMe</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>icon</key>
+			<string>CashApp.png</string>
+			<key>id</key>
+			<string>Buttom</string>
+			<key>label</key>
+			<string>Buy me a coffee?</string>
+		</dict>
+			<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
 		</dict>
 		<dict>
 			<key>action</key>
@@ -126,23 +175,11 @@
 		</dict>
 		<dict>
 			<key>action</key>
-			<string>DonateMe</string>
-			<key>cell</key>
-			<string>PSButtonCell</string>
-			<key>icon</key>
-			<string>CashApp.png</string>
-			<key>id</key>
-			<string>Buttom</string>
-			<key>label</key>
-			<string>Buy me a coffee?</string>
-		</dict>
-		<dict>
-			<key>action</key>
 			<string>DonatetoRandy420</string>
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>icon</key>
-			<string>CashApp.png</string>
+			<string>PayPal.png</string>
 			<key>id</key>
 			<string>Buttom</string>
 			<key>label</key>
