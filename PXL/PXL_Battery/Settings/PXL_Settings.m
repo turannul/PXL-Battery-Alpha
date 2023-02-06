@@ -8,48 +8,50 @@
 @implementation pxlSettings
 @synthesize preferences = _preferences;
 
--(instancetype)init {
- if(self = [super init]) {
+-(instancetype)init{
+	if(self = [super init]){
+		[self registerDefaults];
 
-  [self registerDefaults];
-
-  int token = 0;
-  __block pxlSettings *blockSelf = self;
-  notify_register_dispatch(kPrefDomain, &token, dispatch_get_main_queue(), ^(int token) {
-   blockSelf->_preferences = nil;
-  });
-  _token = token;
- }
- return self;
+		int token = 0;
+		__block pxlSettings *blockSelf = self;
+		notify_register_dispatch(kPrefDomain, &token, dispatch_get_main_queue(), ^(int token){
+			blockSelf->_preferences = nil;
+		});
+		_token = token;
+	}
+	return self;
 }
 
--(void)dealloc {
+-(void)dealloc{
 	[super dealloc];
- notify_cancel(self.token);
+	notify_cancel(self.token);
 }
 
--(void)registerDefaults {
- if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("pxlEnabled"), CFSTR(kPrefDomain)))) 
+-(void)registerDefaults{
+	if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("pxlEnabled"), CFSTR(kPrefDomain)))) 
 		CFPreferencesSetAppValue((CFStringRef)@"pxlEnabled", (CFPropertyListRef)@1, CFSTR(kPrefDomain));
 
- if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("LPM_Color"), CFSTR(kPrefDomain)))) 
- CFPreferencesSetAppValue((CFStringRef)@"LPM_Color", (CFPropertyListRef)@"#FFCC02", CFSTR(kPrefDomain));
+	if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("LPM_Color"), CFSTR(kPrefDomain)))) 
+		CFPreferencesSetAppValue((CFStringRef)@"LPM_Color", (CFPropertyListRef)@"#FFCC02", CFSTR(kPrefDomain));
 }
 
--(NSMutableDictionary *)preferences {
- if (!_preferences) {
-  CFStringRef appID = CFSTR(kPrefDomain);
-  CFArrayRef keyList = CFPreferencesCopyKeyList(appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
-  if (!keyList) return nil;
-  _preferences = (NSMutableDictionary *)CFBridgingRelease(CFPreferencesCopyMultiple(keyList, appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost));
-  CFRelease(keyList);
- }
+-(NSMutableDictionary *)preferences{
+	if (!_preferences){
+		CFStringRef appID = CFSTR(kPrefDomain);
+		CFArrayRef keyList = CFPreferencesCopyKeyList(appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
+		if (!keyList) return nil;
+		_preferences = (NSMutableDictionary *)CFBridgingRelease(CFPreferencesCopyMultiple(keyList, appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost));
+		CFRelease(keyList);
+	}
 
- return _preferences;
+	return _preferences;
 }
 
--(NSString *)LPM_Color { return (self.preferences[@"LPM_Color"] ? self.preferences[@"LPM_Color"] : @"#FFCC02");}
+-(NSString *)LPM_Color{
+	return (self.preferences[@"LPM_Color"] ? self.preferences[@"LPM_Color"] : @"#FFCC02");
+}
 
--(BOOL)pxlEnabled
-{return (self.preferences[@"pxlEnabled"] ? [self.preferences[@"pxlEnabled"] boolValue] : YES);}
+-(BOOL)pxlEnabled{
+	return (self.preferences[@"pxlEnabled"] ? [self.preferences[@"pxlEnabled"] boolValue] : YES);
+}
 @end

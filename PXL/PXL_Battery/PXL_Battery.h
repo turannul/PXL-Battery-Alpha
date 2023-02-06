@@ -6,13 +6,19 @@ UIImageView* icon;
 UIImageView* fill;
 UIImageView* lockscreenBatteryIconView;
 UIImageView* lockscreenBatteryChargerView;
+
 UIColor *LPM_Color;
+UIColor *LPM_Charging_Color;
+UIColor *Charging_Color;
+UIColor *Normal_Color;
+
 BOOL isCharging = NO;
 BOOL customViewApplied = NO;
+BOOL PXLEnabled;
+
 double actualPercentage;
 static double percentX;
 static double percentY;
-
 
 @interface _UIBatteryView : UIView{
 }
@@ -22,7 +28,6 @@ static double percentY;
 @property (assign,nonatomic) BOOL saverModeActive;
 
 +(instancetype)sharedInstance;
-//+(UIColor *)colorFromHexString:(NSString *)hexString;
 -(CGFloat)chargePercent;
 -(long long)chargingState;
 -(BOOL)saverModeActive;

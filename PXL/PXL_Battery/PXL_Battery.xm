@@ -1,6 +1,6 @@
 #import "PXL_Battery.h"
 
-static void loader() {
+static void loader(){
 	pxlSettings *_settings = [[pxlSettings alloc] init];
 	PXLEnabled = [_settings pxlEnabled];
 	LPM_Color = [UIColor colorFromHexString:[_settings LPM_Color]];
@@ -15,13 +15,13 @@ static void loader() {
 }
 
 %group PXLBattery // Here go again
-%hook _UIStaticBatteryView  // Control Center Battery
--(bool) _showsInlineChargingIndicator{return PXLEnabled?NO:%orig;}     // Hide charging bolt
--(bool) _shouldShowBolt{return PXLEnabled?NO:%orig;}                   // Hide charging bolt x2
--(id) bodyColor{return PXLEnabled?[UIColor clearColor]:%orig;}         // Hide the body
--(CGFloat) bodyColorAlpha{return PXLEnabled?0.0:%orig;}                // Hide the body x2
--(id) pinColor{return PXLEnabled?[UIColor clearColor]:%orig;}          // Hide the pin
--(CGFloat) pinColorAlpha{return PXLEnabled?0.0:%orig;}                 // Hide battery pin x2
+%hook _UIStaticBatteryView// Control Center Battery
+-(bool) _showsInlineChargingIndicator{return PXLEnabled?NO:%orig;} // Hide charging bolt
+-(bool) _shouldShowBolt{return PXLEnabled?NO:%orig;} // Hide charging bolt x2
+-(id) bodyColor{return PXLEnabled?[UIColor clearColor]:%orig;} // Hide the body
+-(CGFloat) bodyColorAlpha{return PXLEnabled?0.0:%orig;}// Hide the body x2
+-(id) pinColor{return PXLEnabled?[UIColor clearColor]:%orig;}// Hide the pin
+-(CGFloat) pinColorAlpha{return PXLEnabled?0.0:%orig;} // Hide battery pin x2
 -(id) _batteryFillColor{return PXLEnabled?[UIColor clearColor]:%orig;} // Hide the fill
 
 -(void)_updateFillLayer{
@@ -48,12 +48,12 @@ static void loader() {
 	return sharedInstance;
 }
 
--(BOOL)_showsInlineChargingIndicator{return PXLEnabled?NO:%orig;}     // Hide charging bolt
--(BOOL)_shouldShowBolt{return PXLEnabled?NO:%orig;}                   // Hide charging bolt x2
--(id)bodyColor{return PXLEnabled?[UIColor clearColor]:%orig;}         // Hide the body
--(CGFloat)bodyColorAlpha{return PXLEnabled?0.0:%orig;}                // Hide the body x2
--(id)pinColor{return PXLEnabled?[UIColor clearColor]:%orig;}          // Hide the pin
--(CGFloat)pinColorAlpha{return PXLEnabled?0.0:%orig;}                 // Hide the pin x2
+-(BOOL)_showsInlineChargingIndicator{return PXLEnabled?NO:%orig;} // Hide charging bolt
+-(BOOL)_shouldShowBolt{return PXLEnabled?NO:%orig;} // Hide charging bolt x2
+-(id)bodyColor{return PXLEnabled?[UIColor clearColor]:%orig;} // Hide the body
+-(CGFloat)bodyColorAlpha{return PXLEnabled?0.0:%orig;}// Hide the body x2
+-(id)pinColor{return PXLEnabled?[UIColor clearColor]:%orig;}// Hide the pin
+-(CGFloat)pinColorAlpha{return PXLEnabled?0.0:%orig;} // Hide the pin x2
 -(id)_batteryFillColor{return PXLEnabled?[UIColor clearColor]:%orig;} // Hide the fill
 
 //-----------------------------------------------
@@ -142,8 +142,8 @@ static void loader() {
 //-----------------------------------------------
 //Colors
 				if ([self saverModeActive]){
-					//fill.backgroundColor = YELLOW;
-					//fill.backgroundColor = LPM_Color;
+//fill.backgroundColor = YELLOW;
+//fill.backgroundColor = LPM_Color;
 					fill.backgroundColor = LPM_Color; //That's should return correctly formatted value.
 
 				}else{
