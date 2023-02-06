@@ -1,6 +1,6 @@
 #import <QuartzCore/CoreAnimation.h>
 #import "BATTERY_IMAGE.h"
-#import "PXL_Settings.h"
+#import "includes.h"
 
 UIImageView* icon;
 UIImageView* fill;

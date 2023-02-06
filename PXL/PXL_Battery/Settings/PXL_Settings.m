@@ -1,4 +1,4 @@
-#import "PXL_Settings.h"
+#import "../includes.h"
 #import <notify.h>
 
 @interface pxlSettings ()
