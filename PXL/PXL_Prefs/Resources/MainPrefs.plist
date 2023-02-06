@@ -1,3 +1,4 @@
+@@ -1,214 +1,214 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -53,6 +54,7 @@
 			<string>xyz.turannul.pxlbattery</string>
 			<key>fallback</key>
 			<string>#000000</string>
+			<string>#FFFFFF</string>
 			<key>alpha</key>
 			<true/>
             <key>PreviewGradient</key>
@@ -76,6 +78,7 @@
 			<string>xyz.turannul.pxlbattery</string>
 			<key>fallback</key>
 			<string>#ea3323</string>
+			<string>#EA3323</string>
 			<key>alpha</key>
 			<true/>
             <key>PreviewGradient</key>
@@ -99,6 +102,7 @@
 			<string>xyz.turannul.pxlbattery</string>
 			<key>fallback</key>
 			<string>#ffcc02</string>
+			<string>#FFCC02</string>
 			<key>alpha</key>
 			<true/>
             <key>PreviewGradient</key>
@@ -122,6 +126,7 @@
 			<string>xyz.turannul.pxlbattery</string>
 			<key>fallback</key>
 			<string>#00ff0c</string>
+			<string>#00FF0C</string>
 			<key>alpha</key>
 			<true/>
             <key>PreviewGradient</key>
