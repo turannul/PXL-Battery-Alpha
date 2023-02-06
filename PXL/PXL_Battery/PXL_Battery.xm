@@ -185,8 +185,8 @@ static void loader(){
 		
 		if (![self saverModeActive]){
 			if (isCharging){
-				[icon setTintColor:GREEN];
-				[fill setTintColor:GREEN];
+				//[icon setTintColor:GREEN];
+				//[fill setTintColor:GREEN];
 			//	[icon setTintColor:GREEN];
 			//	[fill setTintColor:GREEN];
 			[icon setTintColor:Charging_Color];
@@ -198,19 +198,19 @@ static void loader(){
 					//[icon setTintColor:[UIColor labelColor]];
 					//[fill setTintColor:[UIColor labelColor]];
 					//[icon setTintColor:[UIColor Normal_Color]];
-					[icon setTintColor:Normal_Color];
+				//	[icon setTintColor:Normal_Color];
 					//[fill setTintColor:[UIColor Normal_Color]];
 				}else{
 					[icon setTintColor:[UIColor labelColor]];
-					[fill setTintColor:fill.backgroundColor = RED];
+					//[fill setTintColor:fill.backgroundColor = RED];
 					//[fill setTintColor:fill.backgroundColor = RED];
 					[fill.setTintColor:fill.backgroundColor = Low_Battery_Color];
 					if (actualPercentage >= 10){
 						[icon setTintColor:[UIColor labelColor]];
 						[fill setTintColor:[UIColor labelColor]];
 					}else{
-						[icon setTintColor:fill.backgroundColor = RED];
-						[fill setTintColor:fill.backgroundColor = RED];
+						//[icon setTintColor:fill.backgroundColor = RED];
+						//[fill setTintColor:fill.backgroundColor = RED];
 						//[icon setTintColor:fill.backgroundColor = RED];
 						//[fill setTintColor:fill.backgroundColor = RED];
 						[icon setTintColor:Low_Battery_Color];
@@ -221,15 +221,15 @@ static void loader(){
 			}
 		}else{
 			if (isCharging){
-				[icon setTintColor:GREEN];
-				[fill setTintColor:GREEN];
+				//[icon setTintColor:GREEN];
+				//[fill setTintColor:GREEN];
 			//	[icon setTintColor:GREEN];
 			//	[fill setTintColor:GREEN];
 			[icon setTintColor:Charging_Color];
 			[fill setTintColor:Charging_Color];
 			}else{
-				[icon setTintColor:YELLOW];
-				[fill setTintColor:YELLOW];
+				//[icon setTintColor:YELLOW];
+				//[fill setTintColor:YELLOW];
 			//[icon setTintColor:YELLOW];
 			//[fill setTintColor:YELLOW];
 			[icon setTintColor:LPM_Color];
