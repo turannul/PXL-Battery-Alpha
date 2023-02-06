@@ -8,4 +8,5 @@
 -(NSString *)LPM_Charging_Color;
 -(NSString *)Charging_Color;
 -(NSString *)Normal_Color;
+-(NSString *)Low_Battery_Color;
 @end

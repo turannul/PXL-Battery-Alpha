@@ -4,9 +4,6 @@ static void loader(){
 	pxlSettings *_settings = [[pxlSettings alloc] init];
 	PXLEnabled = [_settings pxlEnabled];
 	LPM_Color = [UIColor colorFromHexString:[_settings LPM_Color]];
-//NSString *Charging_Color = [_settings Charging_Color];
-//NSString *LB_Color = [_settings LB_Color];
-//NSString *Battery_Color = [_settings Battery_Color];
 
 	if (customViewApplied){
 		[[_UIBatteryView sharedInstance] cleanUpViews];
