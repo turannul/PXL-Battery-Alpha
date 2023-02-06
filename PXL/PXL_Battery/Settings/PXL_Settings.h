@@ -5,8 +5,10 @@
 
 -(BOOL)pxlEnabled;
 -(NSString *)LPM_Color;
--(NSString *)LPM_Charging_Color;
+/*-(NSString *)LPM_Charging_Color;
 -(NSString *)Charging_Color;
 -(NSString *)Normal_Color;
--(NSString *)Low_Battery_Color;
+-(NSString *)Low_Battery_Color;*/
 @end
+
+#define kPrefDomain "xyz.turannul.pxlbattery"
