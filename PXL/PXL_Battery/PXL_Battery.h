@@ -1,3 +1,6 @@
+//PXL_Battery.h
+//@@ -1,41 +1,41 @@ Saved from git stash
+
 #import <QuartzCore/CoreAnimation.h>
 #import "BATTERY_IMAGE.h"
 #import "includes.h"
@@ -8,10 +11,11 @@ UIImageView* lockscreenBatteryIconView;
 UIImageView* lockscreenBatteryChargerView;
 
 UIColor *LPM_Color;
-/*UIColor *LPM_Charging_Color;
+UIColor *LPM_Charging_Color;
+//UIColor *LPM_Charging_Color;
 UIColor *Charging_Color;
 UIColor *Normal_Color;
-UIColor *Low_Battery_Color;*/
+UIColor *Low_Battery_Color;
 
 BOOL isCharging = NO;
 BOOL customViewApplied = NO;

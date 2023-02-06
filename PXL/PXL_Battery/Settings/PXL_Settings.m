@@ -1,3 +1,5 @@
+//PXL_Settings.m
+//@@ -1,58 +1,68 @@ Saved from git stash
 #import "../includes.h"
 #import <notify.h>
 
@@ -47,9 +49,20 @@
 	return _preferences;
 }
 
+-(NSString *)Normal_Color{
+return (self.preferences[@"Normal_Color"] ? self.preferences[@"Normal_Color"] : @"#FFFFFF");
+}
+-(NSString *)Low_Battery_Color{
+	return (self.preferences[@"Low_Battery_Color"] ? self.preferences[@"Low_Battery_Color"] : @"#EA3323");
+}
 -(NSString *)LPM_Color{
 	return (self.preferences[@"LPM_Color"] ? self.preferences[@"LPM_Color"] : @"#FFCC02");
 }
+-(NSString *)Charging_Color{
+	return (self.preferences[@"Charging_Color"] ? self.preferences[@"Charging_Color"] : @"#00FF0C");
+}
+
+
 
 -(BOOL)pxlEnabled{
 	return (self.preferences[@"pxlEnabled"] ? [self.preferences[@"pxlEnabled"] boolValue] : YES);

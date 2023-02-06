@@ -1,3 +1,5 @@
+//PXL_Settings.h
+//@@ -1,13 +1,13 @@ Saved from git stash
 #include <Foundation/Foundation.h>
 
 @interface pxlSettings : NSObject{}
@@ -5,10 +7,9 @@
 
 -(BOOL)pxlEnabled;
 -(NSString *)LPM_Color;
-/*-(NSString *)LPM_Charging_Color;
+-(NSString *)LPM_Charging_Color;
+//-(NSString *)LPM_Charging_Color;
 -(NSString *)Charging_Color;
 -(NSString *)Normal_Color;
--(NSString *)Low_Battery_Color;*/
+-(NSString *)Low_Battery_Color;
 @end
-
-#define kPrefDomain "xyz.turannul.pxlbattery"
