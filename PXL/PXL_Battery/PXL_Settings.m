@@ -29,9 +29,11 @@
 }
 
 -(void)registerDefaults {
- if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("pxlEnabled"), CFSTR(kPrefDomain)))) {
-  CFPreferencesSetAppValue((CFStringRef)@"pxlEnabled", (CFPropertyListRef)@1, CFSTR(kPrefDomain));
- }
+ if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("pxlEnabled"), CFSTR(kPrefDomain)))) 
+		CFPreferencesSetAppValue((CFStringRef)@"pxlEnabled", (CFPropertyListRef)@1, CFSTR(kPrefDomain));
+
+ if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("LPM_Color"), CFSTR(kPrefDomain)))) 
+ CFPreferencesSetAppValue((CFStringRef)@"LPM_Color", (CFPropertyListRef)@"#FFCC02", CFSTR(kPrefDomain));
 }
 
 -(NSMutableDictionary *)preferences {
@@ -46,7 +48,7 @@
  return _preferences;
 }
 
--(NSString *)LPM_Color { return @"#FFCC02"; }
+-(NSString *)LPM_Color { return (self.preferences[@"LPM_Color"] ? self.preferences[@"LPM_Color"] : @"#FFCC02");}
 
 -(BOOL)pxlEnabled
 {return (self.preferences[@"pxlEnabled"] ? [self.preferences[@"pxlEnabled"] boolValue] : YES);}

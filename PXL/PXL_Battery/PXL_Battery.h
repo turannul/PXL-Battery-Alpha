@@ -1,11 +1,12 @@
-#import <UIKit/UIKit.h>
 #import <QuartzCore/CoreAnimation.h>
 #import "BATTERY_IMAGE.h"
+#import "PXL_Settings.h"
 
 UIImageView* icon;
 UIImageView* fill;
 UIImageView* lockscreenBatteryIconView;
 UIImageView* lockscreenBatteryChargerView;
+UIColor *LPM_Color;
 BOOL isCharging = NO;
 BOOL customViewApplied = NO;
 double actualPercentage;
@@ -13,13 +14,15 @@ static double percentX;
 static double percentY;
 
 
-@interface _UIBatteryView : UIView{}
+@interface _UIBatteryView : UIView{
+}
 @property (nonatomic, copy, readwrite) UIColor* fillColor;
 @property (nonatomic, copy, readwrite) UIColor* bodyColor;
 @property (nonatomic, copy, readwrite) UIColor* pinColor;
 @property (assign,nonatomic) BOOL saverModeActive;
 
 +(instancetype)sharedInstance;
++(UIColor *)colorFromHexString:(NSString *)hexString;
 -(CGFloat)chargePercent;
 -(long long)chargingState;
 -(BOOL)saverModeActive;

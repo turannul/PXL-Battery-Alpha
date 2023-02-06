@@ -1,5 +1,5 @@
 #include <Foundation/Foundation.h>
-#define kPrefDomain "xyz.turannul.pxlbattery"
+#include "includes.h"
 
 BOOL PXLEnabled;
 
@@ -7,4 +7,5 @@ BOOL PXLEnabled;
 @property (nonatomic, copy) NSMutableDictionary *preferences;
 
 -(BOOL)pxlEnabled;
+-(NSString *)LPM_Color;
 @end
