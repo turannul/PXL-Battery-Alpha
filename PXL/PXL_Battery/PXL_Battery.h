@@ -11,7 +11,6 @@ UIImageView* lockscreenBatteryIconView;
 UIImageView* lockscreenBatteryChargerView;
 
 UIColor *LPM_Color;
-UIColor *LPM_Charging_Color;
 //UIColor *LPM_Charging_Color;
 UIColor *Charging_Color;
 UIColor *Normal_Color;
