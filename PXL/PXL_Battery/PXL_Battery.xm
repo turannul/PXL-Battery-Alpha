@@ -3,7 +3,7 @@
 static void loader() {
 	pxlSettings *_settings = [[pxlSettings alloc] init];
 	PXLEnabled = [_settings pxlEnabled];
-	LPM_Color = [_UIBatteryView colorFromHexString:[_settings LPM_Color]];
+	LPM_Color = [UIColor colorFromHexString:[_settings LPM_Color]];
 //NSString *Charging_Color = [_settings Charging_Color];
 //NSString *LB_Color = [_settings LB_Color];
 //NSString *Battery_Color = [_settings Battery_Color];
@@ -48,14 +48,6 @@ static void loader() {
 	return sharedInstance;
 }
 
-%new
-+(UIColor *)colorFromHexString:(NSString *)hexString {
-	unsigned rgbValue = 0;
-	NSScanner *scanner = [NSScanner scannerWithString:hexString];
-	[scanner setScanLocation:1]; // bypass '#' character
-	[scanner scanHexInt:&rgbValue];
-	return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
-}
 -(BOOL)_showsInlineChargingIndicator{return PXLEnabled?NO:%orig;}     // Hide charging bolt
 -(BOOL)_shouldShowBolt{return PXLEnabled?NO:%orig;}                   // Hide charging bolt x2
 -(id)bodyColor{return PXLEnabled?[UIColor clearColor]:%orig;}         // Hide the body

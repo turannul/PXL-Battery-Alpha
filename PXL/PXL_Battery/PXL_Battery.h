@@ -22,7 +22,7 @@ static double percentY;
 @property (assign,nonatomic) BOOL saverModeActive;
 
 +(instancetype)sharedInstance;
-+(UIColor *)colorFromHexString:(NSString *)hexString;
+//+(UIColor *)colorFromHexString:(NSString *)hexString;
 -(CGFloat)chargePercent;
 -(long long)chargingState;
 -(BOOL)saverModeActive;
