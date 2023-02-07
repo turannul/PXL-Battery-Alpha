@@ -148,7 +148,7 @@ ChargingColor = [SparkColourPickerUtils colourWithString:[_settings ChargingColo
 //Colors
 			if ([self saverModeActive]){
 //fill.backgroundColor = YELLOW;
-fill.backgroundColor = LowPowerModeColor; //That's should return correctly formatted value.
+fill.backgroundColor = LowPowerModeColor; //This should return correctly formatted value.
 
 			}else{
 				if (isCharging){
@@ -183,7 +183,7 @@ fill.backgroundColor = LowBatteryColor;
 		return;
 
 icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
 	if (![self saverModeActive]){
 		if (isCharging){
@@ -226,7 +226,7 @@ fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTempla
 		}else{
 //			[icon setTintColor:YELLOW];
 //          [fill setTintColor:YELLOW];
-			[fill setTintColor:fill.backgroundColor = LowPowerModeColor];
+			[icon setTintColor:fill.backgroundColor = LowPowerModeColor];
 			[fill setTintColor:fill.backgroundColor = LowPowerModeColor];
 		}
 	}
