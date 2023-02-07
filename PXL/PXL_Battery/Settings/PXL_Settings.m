@@ -31,17 +31,17 @@
 	if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("pxlEnabled"), CFSTR(kPrefDomain)))) 
 		CFPreferencesSetAppValue((CFStringRef)@"pxlEnabled", (CFPropertyListRef)@1, CFSTR(kPrefDomain));
 
-	if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("LPM_Color"), CFSTR(kPrefDomain)))) 
-		CFPreferencesSetAppValue((CFStringRef)@"LPM_Color", (CFPropertyListRef)@"#FFCC02", CFSTR(kPrefDomain));
+	if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("LowPowerModeColor"), CFSTR(kPrefDomain)))) 
+		CFPreferencesSetAppValue((CFStringRef)@"LowPowerModeColor", (CFPropertyListRef)@"#FFCC02", CFSTR(kPrefDomain));
 
-		if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("B_Color"), CFSTR(kPrefDomain)))) 
-		CFPreferencesSetAppValue((CFStringRef)@"B_Color", (CFPropertyListRef)@"#FFFFFF", CFSTR(kPrefDomain));
+		if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("BatteryColor"), CFSTR(kPrefDomain)))) 
+		CFPreferencesSetAppValue((CFStringRef)@"BatteryColor", (CFPropertyListRef)@"#FFFFFF", CFSTR(kPrefDomain));
 
-		if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("LB_Color"), CFSTR(kPrefDomain)))) 
-		CFPreferencesSetAppValue((CFStringRef)@"LB_Color", (CFPropertyListRef)@"#EA3323", CFSTR(kPrefDomain));
+		if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("LowBatteryColor"), CFSTR(kPrefDomain)))) 
+		CFPreferencesSetAppValue((CFStringRef)@"LowBatteryColor", (CFPropertyListRef)@"#EA3323", CFSTR(kPrefDomain));
 
-		if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("C_Color"), CFSTR(kPrefDomain)))) 
-		CFPreferencesSetAppValue((CFStringRef)@"C_Color", (CFPropertyListRef)@"#00FF0C", CFSTR(kPrefDomain));
+		if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("ChargingColor"), CFSTR(kPrefDomain)))) 
+		CFPreferencesSetAppValue((CFStringRef)@"ChargingColor", (CFPropertyListRef)@"#00FF0C", CFSTR(kPrefDomain));
 }
 
 -(NSMutableDictionary *)preferences{
