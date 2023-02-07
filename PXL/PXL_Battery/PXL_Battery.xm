@@ -1,15 +1,14 @@
-//PXL_Battery.xm
-//@@ -1,214 +1,231 @@ Saved from git stash
 #import "PXL_Battery.h"
 
 static void loader(){
 	pxlSettings *_settings = [[pxlSettings alloc] init];
 	PXLEnabled = [_settings pxlEnabled];
-	LPM_Color = [UIColor colorFromHexString:[_settings LPM_Color]];
 
-	Charging_Color = [UIColor colorFromHexString:[_settings Charging_Color]];
-	Normal_Color = [UIColor colorFromHexString:[_settings Normal_Color]];
-	Low_Battery_Color = [UIColor colorFromHexString:[_settings Low_Battery_Color]];
+//LPM_Color = [SparkColourPickerUtils colourWithString:[_settings LPM_Color] withFallback:@"#FFCC02"];
+//B_Color = [SparkColourPickerUtils colourWithString:[_settings B_Color] withFallback:@"#FFFFFF"];
+//LB_Color = [SparkColourPickerUtils colourWithString:[_settings LB_Color] withFallback:@"#EA3323"];
+//C_Color = [SparkColourPickerUtils colourWithString:[_settings C_Color] withFallback:@"#00FF0C"];
+
 	if (customViewApplied){
 		[[_UIBatteryView sharedInstance] cleanUpViews];
 		customViewApplied = NO;
@@ -98,143 +97,137 @@ static void loader(){
 
 %new
 -(void)refreshIcon{
-	if (PXLEnabled){
-		[self chargePercent];
-		icon = nil;
-		fill = nil;
+	if (!PXLEnabled)
+		return;
+
+	[self chargePercent];
+	icon = nil;
+	fill = nil;
 
 // Frame as base64
-		[self cleanUpViews];
+	[self cleanUpViews];
 
-		NSData* batteryImage = BATTERY_IMAGE;
+	NSData* batteryImage = BATTERY_IMAGE;
 
-		if (!icon){
-			icon = [[UIImageView alloc] initWithFrame:[self bounds]];
-			[icon setContentMode:UIViewContentModeScaleAspectFill];
-			[icon setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-			if (![icon isDescendantOfView:self])[self addSubview:icon];
-		}
+	if (!icon){
+		icon = [[UIImageView alloc] initWithFrame:[self bounds]];
+		[icon setContentMode:UIViewContentModeScaleAspectFill];
+		[icon setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		if (![icon isDescendantOfView:self])
+			[self addSubview:icon];
+	}
 // Update tick count in battery %
-		if (!fill){
-			int tickCt = 0;
+	if (!fill){
+		int tickCt = 0;
 
-			if (actualPercentage >= 85)
-				tickCt = 5;
-			else if (actualPercentage >= 65)
-				tickCt = 4;
-			else if (actualPercentage >= 50)
-				tickCt = 3;
-			else if (actualPercentage >= 30)
-				tickCt = 2;
-			else if (actualPercentage >= 10)
-				tickCt = 1;
-			else
-				tickCt = 0; //You died, R.I.P.. 
+		if (actualPercentage >= 85)
+			tickCt = 5;
+		else if (actualPercentage >= 65)
+			tickCt = 4;
+		else if (actualPercentage >= 50)
+			tickCt = 3;
+		else if (actualPercentage >= 30)
+			tickCt = 2;
+		else if (actualPercentage >= 10)
+			tickCt = 1;
+		else
+			tickCt = 0; //You died, R.I.P.. 
 // Location of ticks
-			float iconLocationX = icon.frame.origin.x + 2;
-			float iconLocationY = icon.frame.origin.y + 2.75;
-			float barWidth = (icon.frame.size.width - 6) / 6;
-			float barHeight = icon.frame.size.height - 5;
+		float iconLocationX = icon.frame.origin.x + 2;
+		float iconLocationY = icon.frame.origin.y + 2.75;
+		float barWidth = (icon.frame.size.width - 6) / 6;
+		float barHeight = icon.frame.size.height - 5;
 
-			for (int i = 1; i <= tickCt; ++i){
-				UIView *fill = [[UIView alloc] initWithFrame:CGRectMake(iconLocationX + ((i-1) * (barWidth + 1)), iconLocationY, barWidth, barHeight)];
-				[fill setContentMode:UIViewContentModeScaleAspectFill];
-				[fill setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+		for (int i = 1; i <= tickCt; ++i){
+			UIView *fill = [[UIView alloc] initWithFrame:CGRectMake(iconLocationX + ((i-1) * (barWidth + 1)), iconLocationY, barWidth, barHeight)];
+			[fill setContentMode:UIViewContentModeScaleAspectFill];
+			[fill setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 
 //-----------------------------------------------
-//Colors
-				if ([self saverModeActive]){
-//fill.backgroundColor = YELLOW;
-//fill.backgroundColor = LPM_Color;
-					fill.backgroundColor = LPM_Color; //That's should return correctly formatted value.
 
+//Colors
+			if ([self saverModeActive]){
+//fill.backgroundColor = YELLOW;
+fill.backgroundColor = LPM_Color; //That's should return correctly formatted value.
+
+			}else{
+				if (isCharging){
+//fill.backgroundColor = GREEN;
+fill.backgroundColor = C_Color;
 				}else{
-					if (isCharging){
-						fill.backgroundColor = GREEN;
-						//fill.backgroundColor = LPM_Charging_Color;
-					}else{
-						if (actualPercentage >= 20)
-							fill.backgroundColor = [UIColor labelColor];
-							//fill.backgroundColor = [UIColor labelColor];
-							fill.backgroundColor = Normal_Color;
-						else
-							fill.backgroundColor = RED;
-							//fill.backgroundColor = RED;
-							fill.backgroundColor = Low_Battery_Color;
-					}
+					if (actualPercentage >= 20)
+//fill.backgroundColor = [UIColor labelColor];
+fill.backgroundColor = B_Color;
+					else
+//fill.backgroundColor = RED;
+fill.backgroundColor = LB_Color;
+
 				}
-				[self addSubview:fill];
 			}
+
+			[self addSubview:fill];
 		}
+	}
 
 //-----------------------------------------------
 //Loading Frame
-		[icon setImage:[UIImage imageWithData:batteryImage]];
-
-		[self updateIconColor];
-		customViewApplied=YES;
-	}
+	[icon setImage:[UIImage imageWithData:batteryImage]];
+	[self updateIconColor];
+	customViewApplied=YES;
 }
 //-----------------------------------------------
 %new
 // Load colors in conditions
 -(void)updateIconColor{
-	if (PXLEnabled){
-		icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-		fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-		
-		if (![self saverModeActive]){
-			if (isCharging){
-				//[icon setTintColor:GREEN];
-				//[fill setTintColor:GREEN];
-			//	[icon setTintColor:GREEN];
-			//	[fill setTintColor:GREEN];
-			[icon setTintColor:Charging_Color];
-			[fill setTintColor:Charging_Color];
-			}else{
-				if (actualPercentage >= 20){
-					[icon setTintColor:[UIColor labelColor]];
-					[fill setTintColor:[UIColor labelColor]];
-					//[icon setTintColor:[UIColor labelColor]];
-					//[fill setTintColor:[UIColor labelColor]];
-					//[icon setTintColor:[UIColor Normal_Color]];
-				//	[icon setTintColor:Normal_Color];
-					//[fill setTintColor:[UIColor Normal_Color]];
-				}else{
-					[icon setTintColor:[UIColor labelColor]];
-					//[fill setTintColor:fill.backgroundColor = RED];
-					//[fill setTintColor:fill.backgroundColor = RED];
-					[fill.setTintColor:fill.backgroundColor = Low_Battery_Color];
-					if (actualPercentage >= 10){
-						[icon setTintColor:[UIColor labelColor]];
-						[fill setTintColor:[UIColor labelColor]];
-					}else{
-						//[icon setTintColor:fill.backgroundColor = RED];
-						//[fill setTintColor:fill.backgroundColor = RED];
-						//[icon setTintColor:fill.backgroundColor = RED];
-						//[fill setTintColor:fill.backgroundColor = RED];
-						[icon setTintColor:Low_Battery_Color];
-			            [fill setTintColor:Low_Battery_Color];
+	if (!PXLEnabled)
+		return;
 
-					}
+icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+	if (![self saverModeActive]){
+		if (isCharging){
+//			[icon setTintColor:GREEN];
+//			[fill setTintColor:GREEN];
+			[icon setTintColor:C_Color];
+			[fill setTintColor:C_Color];
+		}else{
+			if (actualPercentage >= 20){
+//				[icon setTintColor:[UIColor labelColor]];
+//				[fill setTintColor:[UIColor labelColor]];
+				[icon setTintColor:B_Color];
+				[fill setTintColor:B_Color];
+			}else{
+//				[icon setTintColor:[UIColor labelColor]];
+//				[fill setTintColor:fill.backgroundColor = RED];
+            	[icon setTintColor:fill.backgroundColor = B_Color];
+                [fill setTintColor:fill.backgroundColor = LB_Color];
+				if (actualPercentage >= 10){
+//					[icon setTintColor:[UIColor labelColor]];
+//					[fill setTintColor:[UIColor labelColor]];
+                    [icon setTintColor:B_Color];
+                    [fill setTintColor:B_Color];
+				}else{
+//					[icon setTintColor:fill.backgroundColor = RED];
+//					[fill setTintColor:fill.backgroundColor = RED];
+					[icon setTintColor:fill.backgroundColor = LB_Color];
+					[fill setTintColor:fill.backgroundColor = LB_Color];
+
 				}
 			}
+		}
+	}else{
+		if (isCharging){
+//			[icon setTintColor:GREEN];
+//			[fill setTintColor:GREEN];
+			[icon setTintColor:fill.backgroundColor = C_Color];
+			[fill setTintColor:fill.backgroundColor = C_Color];
+
 		}else{
-			if (isCharging){
-				//[icon setTintColor:GREEN];
-				//[fill setTintColor:GREEN];
-			//	[icon setTintColor:GREEN];
-			//	[fill setTintColor:GREEN];
-			[icon setTintColor:Charging_Color];
-			[fill setTintColor:Charging_Color];
-			}else{
-				//[icon setTintColor:YELLOW];
-				//[fill setTintColor:YELLOW];
-			//[icon setTintColor:YELLOW];
-			//[fill setTintColor:YELLOW];
-			[icon setTintColor:LPM_Color];
-			[fill setTintColor:LPM_Color];
-			}
+//			[icon setTintColor:YELLOW];
+//          [fill setTintColor:YELLOW];
+			[fill setTintColor:fill.backgroundColor = LPM_Color];
+			[fill setTintColor:fill.backgroundColor = LPM_Color];
 		}
 	}
 }

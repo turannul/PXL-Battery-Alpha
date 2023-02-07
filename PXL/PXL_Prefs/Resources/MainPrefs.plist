@@ -36,6 +36,12 @@
 			<key>label</key>
 			<string>Enabled</string>
 		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Color options</string>
+		</dict>
 			<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -61,7 +67,7 @@
 		<key>label</key>
 		<string>Battery Color</string>
 		<key>key</key>
-		<string>Battery_Color</string>
+		<string>B_Color</string>
 	</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -130,7 +136,7 @@
 		<key>label</key>
 		<string>Charging Color</string>
 		<key>key</key>
-		<string>Charging_Color</string>
+		<string>C_Color</string>
 	</dict>
 	<dict>
 			<key>cell</key>

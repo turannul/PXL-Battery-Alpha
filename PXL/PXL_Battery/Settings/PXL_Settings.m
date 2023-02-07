@@ -1,5 +1,3 @@
-//PXL_Settings.m
-//@@ -1,58 +1,68 @@ Saved from git stash
 #import "../includes.h"
 #import <notify.h>
 
@@ -35,6 +33,15 @@
 
 	if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("LPM_Color"), CFSTR(kPrefDomain)))) 
 		CFPreferencesSetAppValue((CFStringRef)@"LPM_Color", (CFPropertyListRef)@"#FFCC02", CFSTR(kPrefDomain));
+
+		if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("B_Color"), CFSTR(kPrefDomain)))) 
+		CFPreferencesSetAppValue((CFStringRef)@"B_Color", (CFPropertyListRef)@"#FFFFFF", CFSTR(kPrefDomain));
+
+		if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("LB_Color"), CFSTR(kPrefDomain)))) 
+		CFPreferencesSetAppValue((CFStringRef)@"LB_Color", (CFPropertyListRef)@"#EA3323", CFSTR(kPrefDomain));
+
+		if(!CFBridgingRelease(CFPreferencesCopyAppValue(CFSTR("C_Color"), CFSTR(kPrefDomain)))) 
+		CFPreferencesSetAppValue((CFStringRef)@"C_Color", (CFPropertyListRef)@"#00FF0C", CFSTR(kPrefDomain));
 }
 
 -(NSMutableDictionary *)preferences{
@@ -49,17 +56,17 @@
 	return _preferences;
 }
 
--(NSString *)Normal_Color{
-return (self.preferences[@"Normal_Color"] ? self.preferences[@"Normal_Color"] : @"#FFFFFF");
-}
--(NSString *)Low_Battery_Color{
-	return (self.preferences[@"Low_Battery_Color"] ? self.preferences[@"Low_Battery_Color"] : @"#EA3323");
-}
 -(NSString *)LPM_Color{
 	return (self.preferences[@"LPM_Color"] ? self.preferences[@"LPM_Color"] : @"#FFCC02");
 }
--(NSString *)Charging_Color{
-	return (self.preferences[@"Charging_Color"] ? self.preferences[@"Charging_Color"] : @"#00FF0C");
+-(NSString *)B_Color{
+return (self.preferences[@"B_Color"] ? self.preferences[@"B_Color"] : @"#FFFFFF");
+}
+-(NSString *)LB_Color{
+	return (self.preferences[@"LB_Color"] ? self.preferences[@"LB_Color"] : @"#EA3323");
+}
+-(NSString *)C_Color{
+	return (self.preferences[@"C_Color"] ? self.preferences[@"C_Color"] : @"#00FF0C");
 }
 
 
