@@ -4,10 +4,10 @@ static void loader(){
 	pxlSettings *_settings = [[pxlSettings alloc] init];
 	PXLEnabled = [_settings pxlEnabled];
 
-//LPM_Color = [SparkColourPickerUtils colourWithString:[_settings LPM_Color] withFallback:@"#FFCC02"];
-//B_Color = [SparkColourPickerUtils colourWithString:[_settings B_Color] withFallback:@"#FFFFFF"];
-//LB_Color = [SparkColourPickerUtils colourWithString:[_settings LB_Color] withFallback:@"#EA3323"];
-//C_Color = [SparkColourPickerUtils colourWithString:[_settings C_Color] withFallback:@"#00FF0C"];
+LowPowerModeColor = [SparkColourPickerUtils colourWithString:[_settings LowPowerModeColor] withFallback:@"#FFCC02"];
+BatteryColor = [SparkColourPickerUtils colourWithString:[_settings BatteryColor] withFallback:@"#FFFFFF"];
+LowBatteryColor = [SparkColourPickerUtils colourWithString:[_settings LowBatteryColor] withFallback:@"#EA3323"];
+ChargingColor = [SparkColourPickerUtils colourWithString:[_settings ChargingColor] withFallback:@"#00FF0C"];
 
 	if (customViewApplied){
 		[[_UIBatteryView sharedInstance] cleanUpViews];
@@ -148,19 +148,19 @@ static void loader(){
 //Colors
 			if ([self saverModeActive]){
 //fill.backgroundColor = YELLOW;
-fill.backgroundColor = LPM_Color; //That's should return correctly formatted value.
+fill.backgroundColor = LowPowerModeColor; //That's should return correctly formatted value.
 
 			}else{
 				if (isCharging){
 //fill.backgroundColor = GREEN;
-fill.backgroundColor = C_Color;
+fill.backgroundColor = ChargingColor;
 				}else{
 					if (actualPercentage >= 20)
 //fill.backgroundColor = [UIColor labelColor];
-fill.backgroundColor = B_Color;
+fill.backgroundColor = BatteryColor;
 					else
 //fill.backgroundColor = RED;
-fill.backgroundColor = LB_Color;
+fill.backgroundColor = LowBatteryColor;
 
 				}
 			}
@@ -189,29 +189,29 @@ fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTempla
 		if (isCharging){
 //			[icon setTintColor:GREEN];
 //			[fill setTintColor:GREEN];
-			[icon setTintColor:C_Color];
-			[fill setTintColor:C_Color];
+			[icon setTintColor:ChargingColor];
+			[fill setTintColor:ChargingColor];
 		}else{
 			if (actualPercentage >= 20){
 //				[icon setTintColor:[UIColor labelColor]];
 //				[fill setTintColor:[UIColor labelColor]];
-				[icon setTintColor:B_Color];
-				[fill setTintColor:B_Color];
+				[icon setTintColor:BatteryColor];
+				[fill setTintColor:BatteryColor];
 			}else{
 //				[icon setTintColor:[UIColor labelColor]];
 //				[fill setTintColor:fill.backgroundColor = RED];
-            	[icon setTintColor:fill.backgroundColor = B_Color];
-                [fill setTintColor:fill.backgroundColor = LB_Color];
+            	[icon setTintColor:fill.backgroundColor = BatteryColor];
+                [fill setTintColor:fill.backgroundColor = LowBatteryColor];
 				if (actualPercentage >= 10){
 //					[icon setTintColor:[UIColor labelColor]];
 //					[fill setTintColor:[UIColor labelColor]];
-                    [icon setTintColor:B_Color];
-                    [fill setTintColor:B_Color];
+                    [icon setTintColor:BatteryColor];
+                    [fill setTintColor:BatteryColor];
 				}else{
 //					[icon setTintColor:fill.backgroundColor = RED];
 //					[fill setTintColor:fill.backgroundColor = RED];
-					[icon setTintColor:fill.backgroundColor = LB_Color];
-					[fill setTintColor:fill.backgroundColor = LB_Color];
+					[icon setTintColor:fill.backgroundColor = LowBatteryColor];
+					[fill setTintColor:fill.backgroundColor = LowBatteryColor];
 
 				}
 			}
@@ -220,17 +220,18 @@ fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTempla
 		if (isCharging){
 //			[icon setTintColor:GREEN];
 //			[fill setTintColor:GREEN];
-			[icon setTintColor:fill.backgroundColor = C_Color];
-			[fill setTintColor:fill.backgroundColor = C_Color];
+			[icon setTintColor:fill.backgroundColor = ChargingColor];
+			[fill setTintColor:fill.backgroundColor = ChargingColor];
 
 		}else{
 //			[icon setTintColor:YELLOW];
 //          [fill setTintColor:YELLOW];
-			[fill setTintColor:fill.backgroundColor = LPM_Color];
-			[fill setTintColor:fill.backgroundColor = LPM_Color];
+			[fill setTintColor:fill.backgroundColor = LowPowerModeColor];
+			[fill setTintColor:fill.backgroundColor = LowPowerModeColor];
 		}
 	}
 }
+/*This code sets the colors for the battery icon and fill. The colors are determined by whether the device is in low power mode, charging, or has a certain battery percentage. If the device is in low power mode, the colors will be set to LowPowerModeColor. If the device is charging, the colors will be set to ChargingColor. If the device has a battery percentage of 20% or greater, the colors will be set to BatteryColor. If the device has a battery percentage of less than 20%, the colors will be set to LowBatteryColor. The code sets both the tint color of the icon and fill using the appropriate color value.*/
 %end
 %end
 %ctor{

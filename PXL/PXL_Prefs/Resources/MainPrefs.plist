@@ -67,7 +67,7 @@
 		<key>label</key>
 		<string>Battery Color</string>
 		<key>key</key>
-		<string>B_Color</string>
+		<string>BatteryColor</string>
 	</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -90,7 +90,7 @@
 		<key>label</key>
 		<string>Low Battery Color</string>
 		<key>key</key>
-		<string>LB_Color</string>
+		<string>LowBatteryColor</string>
 	</dict>
 	<dict>
 		<key>PostNotification</key>
@@ -113,7 +113,7 @@
 		<key>label</key>
 		<string>Low Power Mode Color</string>
 		<key>key</key>
-		<string>LPM_Color</string>
+		<string>LowPowerModeColor</string>
 	</dict>
 	<dict>
 		<key>PostNotification</key>
@@ -136,7 +136,7 @@
 		<key>label</key>
 		<string>Charging Color</string>
 		<key>key</key>
-		<string>C_Color</string>
+		<string>ChargingColor</string>
 	</dict>
 	<dict>
 			<key>cell</key>

@@ -5,9 +5,9 @@
 @property (nonatomic, copy) NSMutableDictionary *preferences;
 
 -(BOOL)pxlEnabled;
--(NSString *)LPM_Color;
+-(NSString *)LowPowerModeColor;
 //-(NSString *)LPM_Charging_Color;
--(NSString *)C_Color;
--(NSString *)B_Color;
--(NSString *)LB_Color;
+-(NSString *)ChargingColor;
+-(NSString *)BatteryColor;
+-(NSString *)LowBatteryColor;
 @end

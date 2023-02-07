@@ -7,11 +7,11 @@ UIImageView* fill;
 UIImageView* lockscreenBatteryIconView;
 UIImageView* lockscreenBatteryChargerView;
 
-UIColor *LPM_Color;
+UIColor *LowPowerModeColor;
 //UIColor *LPM_Charging_Color;
-UIColor *C_Color;
-UIColor *B_Color;
-UIColor *LB_Color;
+UIColor *ChargingColor;
+UIColor *LowBatteryColor;
+UIColor *BatteryColor;
 
 BOOL isCharging = NO;
 BOOL customViewApplied = NO;

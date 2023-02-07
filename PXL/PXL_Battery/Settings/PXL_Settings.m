@@ -56,17 +56,17 @@
 	return _preferences;
 }
 
--(NSString *)LPM_Color{
-	return (self.preferences[@"LPM_Color"] ? self.preferences[@"LPM_Color"] : @"#FFCC02");
+-(NSString *)LowPowerModeColor{
+	return (self.preferences[@"LowPowerModeColor"] ? self.preferences[@"LowPowerModeColor"] : @"#FFCC02");
 }
--(NSString *)B_Color{
-return (self.preferences[@"B_Color"] ? self.preferences[@"B_Color"] : @"#FFFFFF");
+-(NSString *)BatteryColor{
+return (self.preferences[@"BatteryColor"] ? self.preferences[@"BatteryColor"] : @"#FFFFFF");
 }
--(NSString *)LB_Color{
-	return (self.preferences[@"LB_Color"] ? self.preferences[@"LB_Color"] : @"#EA3323");
+-(NSString *)LowBatteryColor{
+	return (self.preferences[@"LowBatteryColor"] ? self.preferences[@"LowBatteryColor"] : @"#EA3323");
 }
--(NSString *)C_Color{
-	return (self.preferences[@"C_Color"] ? self.preferences[@"C_Color"] : @"#00FF0C");
+-(NSString *)ChargingColor{
+	return (self.preferences[@"ChargingColor"] ? self.preferences[@"ChargingColor"] : @"#00FF0C");
 }
 
 
