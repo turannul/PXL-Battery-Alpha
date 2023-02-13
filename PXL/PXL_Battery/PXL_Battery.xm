@@ -1,18 +1,36 @@
 #import "PXL_Battery.h"
 
+static NSString *GetNSString(NSString *pkey, NSString *defaultValue){
+	NSDictionary *Dict = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", @kPrefDomain]];
+
+	return [Dict objectForKey:pkey] ? [Dict objectForKey:pkey] : defaultValue;
+}
+
+static BOOL GetBool(NSString *pkey, BOOL defaultValue){
+	NSDictionary *Dict = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", @kPrefDomain]];
+
+	return [Dict objectForKey:pkey] ? [[Dict objectForKey:pkey] boolValue] : defaultValue;
+}
+
 static void loader(){
-	pxlSettings *_settings = [[pxlSettings alloc] init];
-	PXLEnabled = [_settings pxlEnabled];
+	PXLEnabled = GetBool(@"pxlEnabled", YES);
 
-LowPowerModeColor = [SparkColourPickerUtils colourWithString:[_settings LowPowerModeColor] withFallback:@"#FFCC02"];
-BatteryColor = [SparkColourPickerUtils colourWithString:[_settings BatteryColor] withFallback:@"#FFFFFF"];
-LowBatteryColor = [SparkColourPickerUtils colourWithString:[_settings LowBatteryColor] withFallback:@"#EA3323"];
-ChargingColor = [SparkColourPickerUtils colourWithString:[_settings ChargingColor] withFallback:@"#00FF0C"];
+	NSString *Color = GetNSString(@"BatteryColor", @"#FFFFFF");
+	BatteryColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
 
-	if (customViewApplied){
-		[[_UIBatteryView sharedInstance] cleanUpViews];
+	Color = GetNSString(@"LowPowerModeColor", @"#FFCC02");
+	LowPowerModeColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFCC02"];
+
+	Color = GetNSString(@"LowBatteryColor", @"#EA3323");
+	LowBatteryColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#EA3323"];
+
+	Color = GetNSString(@"ChargingColor", @"#00FF0C");
+	ChargingColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#00FF0C"];
+
+/*	if (customViewApplied){
+		[[_UIBatteryView sharedInstance] cleanUpViews];*/
 		customViewApplied = NO;
-	}
+//	}
 }
 
 %group PXLBattery // Here go again
@@ -237,5 +255,5 @@ icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTempla
 %ctor{
 	loader();
 	%init(PXLBattery);
-	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)loader, CFSTR("xyz.turannul.pxlbattery.settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
+//	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)loader, CFSTR("xyz.turannul.pxlbattery.settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
 }
