@@ -1,5 +1,6 @@
 #import <QuartzCore/CoreAnimation.h>
 #import "BATTERY_IMAGE.h"
+#import "BATTERY_LOW_IMAGE.h"
 #import "includes.h"
 
 UIImageView* icon;
@@ -14,7 +15,6 @@ UIColor *LowBatteryColor;
 UIColor *BatteryColor;
 
 BOOL isCharging = NO;
-BOOL customViewApplied = NO;
 BOOL PXLEnabled;
 
 double actualPercentage;

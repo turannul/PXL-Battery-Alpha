@@ -26,11 +26,6 @@ static void loader(){
 
 	Color = GetNSString(@"ChargingColor", @"#00FF0C");
 	ChargingColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#00FF0C"];
-
-/*	if (customViewApplied){
-		[[_UIBatteryView sharedInstance] cleanUpViews];*/
-		customViewApplied = NO;
-//	}
 }
 
 %group PXLBattery // Here go again
@@ -125,7 +120,8 @@ static void loader(){
 // Frame as base64
 	[self cleanUpViews];
 
-	NSData* batteryImage = BATTERY_IMAGE;
+	NSData *batteryImage = BATTERY_IMAGE;
+	NSData *batteryLowImage = BATTERY_LOW_IMAGE;
 
 	if (!icon){
 		icon = [[UIImageView alloc] initWithFrame:[self bounds]];
@@ -135,29 +131,40 @@ static void loader(){
 			[self addSubview:icon];
 	}
 // Update tick count in battery %
+	float barPercent = 0.00f;
 	if (!fill){
 		int tickCt = 0;
 
-		if (actualPercentage >= 85)
+		if (actualPercentage >= 80){
 			tickCt = 5;
-		else if (actualPercentage >= 65)
+			barPercent = ((actualPercentage - 80) / 20.00f);
+		}else if (actualPercentage >= 60){
 			tickCt = 4;
-		else if (actualPercentage >= 50)
+			barPercent = ((actualPercentage - 60) / 20.00f);
+		}else if (actualPercentage >= 40){
 			tickCt = 3;
-		else if (actualPercentage >= 30)
+			barPercent = ((actualPercentage - 40) / 20.00f);
+		}else if (actualPercentage >= 20){
 			tickCt = 2;
-		else if (actualPercentage >= 10)
+			barPercent = ((actualPercentage - 20) / 20.00f);
+		}else if (actualPercentage >= 6){
 			tickCt = 1;
-		else
-			tickCt = 0; //You died, R.I.P.. 
-// Location of ticks
+			barPercent = ((actualPercentage - 6) / 14.00f);
+		}else{
+			tickCt = 0;
+		}
+
 		float iconLocationX = icon.frame.origin.x + 2;
 		float iconLocationY = icon.frame.origin.y + 2.75;
 		float barWidth = (icon.frame.size.width - 6) / 6;
 		float barHeight = icon.frame.size.height - 5;
 
 		for (int i = 1; i <= tickCt; ++i){
-			UIView *fill = [[UIView alloc] initWithFrame:CGRectMake(iconLocationX + ((i-1) * (barWidth + 1)), iconLocationY, barWidth, barHeight)];
+			UIView *fill;
+			if (i == tickCt)
+				fill = [[UIView alloc] initWithFrame: CGRectMake(iconLocationX + ((i-1)*(barWidth + 1)), iconLocationY, barWidth * barPercent, barHeight)];
+			else
+				fill = [[UIView alloc] initWithFrame: CGRectMake(iconLocationX + ((i-1)*(barWidth + 1)), iconLocationY, barWidth, barHeight)];
 			[fill setContentMode:UIViewContentModeScaleAspectFill];
 			[fill setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 
@@ -189,9 +196,14 @@ fill.backgroundColor = LowBatteryColor;
 
 //-----------------------------------------------
 //Loading Frame
-	[icon setImage:[UIImage imageWithData:batteryImage]];
+	UIImage *battery = nil;
+	if (actualPercentage >= 6)
+		battery = [UIImage imageWithData:batteryImage];
+	else
+		battery = [UIImage imageWithData:batteryLowImage];
+
+	[icon setImage:battery];
 	[self updateIconColor];
-	customViewApplied=YES;
 }
 //-----------------------------------------------
 %new
