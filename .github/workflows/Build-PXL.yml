@@ -34,22 +34,22 @@ jobs:
           submodules: recursive
 
       - name: Export Theos
-        run: echo "export THEOS=/Users/runner/work/WorkFlowTests/WorkFlowTests/theos" >> .env
+        run: echo "export THEOS=/Users/runner/work/pxl-development/pxl-development/theos" >> .env
 
       - name: Install iPhoneOS 14.1 SDK
         run: |
-          cd /Users/runner/work/WorkFlowTests/WorkFlowTests/theos/sdks 
+          cd /Users/runner/work/pxl-development/pxl-development/theos/sdks 
           wget -q --show-progress https://www.dropbox.com/s/jvonok3de24ibsz/14.1.zip 
           unzip 14.1.zip 
 
       - name: Download SparkColourPicker
         run: |
-          cd /Users/runner/work/WorkFlowTests/WorkFlowTests/theos/include
+          cd /Users/runner/work/pxl-development/pxl-development/theos/include
           wget -q --show-progress https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerView.h
           wget -q --show-progress https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerUtils.h
-          cd /Users/runner/work/WorkFlowTests/WorkFlowTests/theos/lib
+          cd /Users/runner/work/pxl-development/pxl-development/theos/lib
           wget -q --show-progress https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/lib/libsparkcolourpicker.dylib
-          sudo chmod 755 /Users/runner/work/WorkFlowTests/WorkFlowTests/theos/lib/libsparkcolourpicker.dylib
+          sudo chmod 755 /Users/runner/work/pxl-development/pxl-development/theos/lib/libsparkcolourpicker.dylib
 
       - name: Build Tweak
         run: |
