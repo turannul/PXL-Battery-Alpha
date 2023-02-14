@@ -1,0 +1,66 @@
+name: Build PXL - macOS
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install homebrew
+        run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+      - name: Install ldid
+        run: brew install ldid
+      
+      - name: Install make
+        run: brew install make
+
+      - name: Parallel Building #https://theos.dev/docs/parallel-building
+        run: echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env
+
+      - name: Install Theos
+        uses: actions/checkout@v3
+        with:
+          repository: theos/theos
+          path: theos
+          submodules: recursive
+
+      - name: Export Theos
+        run: echo "export THEOS=/Users/runner/work/WorkFlowTests/WorkFlowTests/theos" >> .env
+
+      - name: Install iPhoneOS 14.1 SDK
+        run: |
+          cd /Users/runner/work/WorkFlowTests/WorkFlowTests/theos/sdks 
+          wget -q --show-progress https://www.dropbox.com/s/jvonok3de24ibsz/14.1.zip 
+          unzip 14.1.zip 
+
+      - name: Download SparkColourPicker
+        run: |
+          cd /Users/runner/work/WorkFlowTests/WorkFlowTests/theos/include
+          wget -q --show-progress https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerView.h
+          wget -q --show-progress https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerUtils.h
+          cd /Users/runner/work/WorkFlowTests/WorkFlowTests/theos/lib
+          wget -q --show-progress https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/lib/libsparkcolourpicker.dylib
+          sudo chmod 755 /Users/runner/work/WorkFlowTests/WorkFlowTests/theos/lib/libsparkcolourpicker.dylib
+
+      - name: Build Tweak
+        run: |
+          pwd
+          source .env
+          make clean package
+          cp packages/*.deb $(pwd)
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: PXL.deb
+          path: |
+            packages/*.deb
