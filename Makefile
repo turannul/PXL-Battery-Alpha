@@ -2,6 +2,9 @@ export ARCHS = arm64 arm64e
 export TARGET = iphone:clang:latest:13.0
 export SYSROOT = $(THEOS)/sdks/iPhoneOS14.1.sdk
 
+FINALPACKAGE = 1
+DEBUG = 0
+
 # I need it for make install command its localhost you could use too
 THEOS_DEVICE_IP = 127.0.0.1
 THEOS_DEVICE_PORT = 2222
@@ -18,3 +21,6 @@ SUBPROJECTS += PXL/PXL_Prefs             # Basic switch works no bugs, more Feat
 
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/aggregate.mk
+c:
+	find . -name ".DS_Store" -delete
+#Clean up using 'make c'
