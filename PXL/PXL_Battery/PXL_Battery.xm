@@ -194,18 +194,37 @@ fill.backgroundColor = LowBatteryColor;
 		}
 	}
 
+	//UIImageView *percentageLabel = 
 //-----------------------------------------------
 //Loading Frame
-	UIImage *battery = nil;
 	if (actualPercentage >= 6)
-		battery = [UIImage imageWithData:batteryImage];
+		[icon setImage:[UIImage imageWithData:batteryImage]];
 	else
-		battery = [UIImage imageWithData:batteryLowImage];
+		[icon setImage:[UIImage imageWithData:batteryLowImage]];
 
-	[icon setImage:battery];
+	//[icon setImage:battImage];
 	[self updateIconColor];
 }
 //-----------------------------------------------
+/*%new
++(UIImage *)imageFromText:(NSString *)text{
+	UIFont *font = [UIFont systemFontOfSize:20.0];
+	CGSize size = [text sizeWithAttributes:@{NSFontAttributeName:
+		[UIFont systemFontOfSize:20.0f]}];
+	if (UIGraphicsBeginImageContextWithOptions != NULL)
+		UIGraphicsBeginImageContextWithOptions(size,NO,0.0);
+	else
+		UIGraphicsBeginImageContext(size);
+
+	[text drawAtPoint:CGPointMake(0.0, 0.0) withFont:font];
+//    [text drawAtPoint:CGPointMake(0.0, 0.0) forWidth:CGPointMake(0, 0) withFont:font fontSize:nil lineBreakMode:NSLineBreakByWordWrapping baselineAdjustment:NSTextAlignmentCenter];
+
+	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+
+	return image;
+}
+*/
 %new
 // Load colors in conditions
 -(void)updateIconColor{

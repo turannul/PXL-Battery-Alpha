@@ -17,21 +17,6 @@
 	return [super specifiers];
 }
 
--(void)setPreferenceValue:(id)value specifier:(PSSpecifier*)specifier{
-	[super setPreferenceValue:value specifier:specifier];
-}
-
--(void)reloadSpecifiers{[super reloadSpecifiers];}
-
--(void)putBool:(BOOL)putBool forKey:(NSString *)key{
-	NSMutableDictionary *preferences;
-	preferences = [[NSMutableDictionary alloc] init];
-
-	[preferences setObject:[NSNumber numberWithBool:putBool] forKey:key];
-	[preferences writeToFile:@"/var/mobile/Library/Preferences/xyz.turannul.pxlbattery.plist" atomically:YES];
-	[self reloadSpecifiers];
-}
-
 -(void)viewWillDisappear:(BOOL)animated{
 	[super viewWillDisappear:animated];
 	[UIView animateWithDuration:INFINITY animations:^{
@@ -74,24 +59,24 @@
 // Buttons
 -(void)SourceCode
 {
-    [self link:@"https://github.com/turannul/PXL-Battery" name:@"Source Code"];
+	[self link:@"https://github.com/turannul/PXL-Battery" name:@"Source Code"];
 }
 
 -(void)Twitter
 {
-    [self link:@"https://twitter.com/ImNotTuran" name:@"Follow me on Twitter"];
+	[self link:@"https://twitter.com/ImNotTuran" name:@"Follow me on Twitter"];
 }
 -(void)DonateMe
 {
-    [self link:@"https://cash.app/$TuranUl" name:@"Donate"];
+	[self link:@"https://cash.app/$TuranUl" name:@"Donate"];
 }
 
 -(void)RandyTwitter
 {
-    [self link:@"https://twitter.com/rj_skins?s=21&t=YudSBh0iDY9C5zQIsJbXcA" name:@"Follow Randy on Twitter"];
+	[self link:@"https://twitter.com/rj_skins?s=21&t=YudSBh0iDY9C5zQIsJbXcA" name:@"Follow Randy on Twitter"];
 }
 -(void)DonatetoRandy420
 {
-    [self link:@"https://www.paypal.com/paypalme/4Randy420" name:@"Donate to Randy"];
+	[self link:@"https://www.paypal.com/paypalme/4Randy420" name:@"Donate to Randy"];
 }
 @end

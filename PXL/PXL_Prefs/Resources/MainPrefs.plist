@@ -6,213 +6,219 @@
 	<array>
 		<dict>
 			<key>cell</key>
-			<string>PSGroupCell</string>
+				<string>PSGroupCell</string>
 			<key>condensed</key>
-			<true/>
+				<true/>
 			<key>headerCellClass</key>
-			<string>HBPackageNameHeaderCell</string>
+				<string>HBPackageNameHeaderCell</string>
 			<key>icon</key>
-			<string>icon.png</string>
+				<string>icon.png</string>
 			<key>packageIdentifier</key>
-			<string>xyz.turannul.pxlbattery</string>
+				<string>xyz.turannul.pxlbattery</string>
 			<key>packageNameOverride</key>
-			<string>PXL Battery</string>
+				<string>PXL Battery</string>
 		</dict>
 		<dict>
 			<key>cell</key>
-			<string>PSGroupCell</string>
+				<string>PSGroupCell</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
-			<string>xyz.turannul.pxlbattery.settingschanged</string>
+				<string>xyz.turannul.pxlbattery.settingschanged</string>
 			<key>cell</key>
-			<string>PSSwitchCell</string>
+				<string>PSSwitchCell</string>
 			<key>default</key>
-			<true/>
+				<true/>
 			<key>defaults</key>
-			<string>xyz.turannul.pxlbattery</string>
+				<string>xyz.turannul.pxlbattery</string>
 			<key>key</key>
-			<string>pxlEnabled</string>
+				<string>pxlEnabled</string>
 			<key>label</key>
-			<string>Enabled</string>
+				<string>Enabled</string>
 		</dict>
 		<dict>
 			<key>cell</key>
-			<string>PSGroupCell</string>
+				<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Color options</string>
+				<string>Color options</string>
 		</dict>
-			<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-		</dict>
-			<dict>
-			<key>PostNotification</key>
-		    <string>xyz.turannul.pxlbattery.settingschanged</string>
-		<key>cell</key>
-		<string>PSLinkCell</string>
-		<key>cellClass</key>
-		<string>SparkColourPickerCell</string>
-		<key>libsparkcolourpicker</key>
 		<dict>
-			<key>defaults</key>
-			<string>xyz.turannul.pxlbattery</string>
-			<key>fallback</key>
-			<string>#FFFFFF</string>
-			<key>alpha</key>
-			<true/>
-            <key>PreviewGradient</key>
-            <false/>
+			<key>cell</key>
+				<string>PSGroupCell</string>
 		</dict>
-		<key>label</key>
-		<string>Battery Color</string>
-		<key>key</key>
-		<string>BatteryColor</string>
-	</dict>
 		<dict>
 			<key>PostNotification</key>
-		    <string>xyz.turannul.pxlbattery.settingschanged</string>
-		<key>cell</key>
-		<string>PSLinkCell</string>
-		<key>cellClass</key>
-		<string>SparkColourPickerCell</string>
-		<key>libsparkcolourpicker</key>
-		<dict>
+				<string>xyz.turannul.pxlbattery.settingschanged</string>
 			<key>defaults</key>
-			<string>xyz.turannul.pxlbattery</string>
-			<key>fallback</key>
-			<string>#EA3323</string>
-			<key>alpha</key>
-			<true/>
-            <key>PreviewGradient</key>
-            <false/>
-		</dict>
-		<key>label</key>
-		<string>Low Battery Color</string>
-		<key>key</key>
-		<string>LowBatteryColor</string>
-	</dict>
-	<dict>
-		<key>PostNotification</key>
-		    <string>xyz.turannul.pxlbattery.settingschanged</string>
-		<key>cell</key>
-		<string>PSLinkCell</string>
-		<key>cellClass</key>
-		<string>SparkColourPickerCell</string>
-		<key>libsparkcolourpicker</key>
-		<dict>
-			<key>defaults</key>
-			<string>xyz.turannul.pxlbattery</string>
-			<key>fallback</key>
-			<string>#FFCC02</string>
-			<key>alpha</key>
-			<true/>
-            <key>PreviewGradient</key>
-            <false/>
-		</dict>
-		<key>label</key>
-		<string>Low Power Mode Color</string>
-		<key>key</key>
-		<string>LowPowerModeColor</string>
-	</dict>
-	<dict>
-		<key>PostNotification</key>
-		    <string>xyz.turannul.pxlbattery.settingschanged</string>
-		<key>cell</key>
-		<string>PSLinkCell</string>
-		<key>cellClass</key>
-		<string>SparkColourPickerCell</string>
-		<key>libsparkcolourpicker</key>
-		<dict>
-			<key>defaults</key>
-			<string>xyz.turannul.pxlbattery</string>
-			<key>fallback</key>
-			<string>#00FF0C</string>
-			<key>alpha</key>
-			<true/>
-            <key>PreviewGradient</key>
-            <false/>
-		</dict>
-		<key>label</key>
-		<string>Charging Color</string>
-		<key>key</key>
-		<string>ChargingColor</string>
-	</dict>
-	<dict>
+				<string>xyz.turannul.pxlbattery</string>
 			<key>cell</key>
-			<string>PSGroupCell</string>
+				<string>PSLinkCell</string>
+			<key>cellClass</key>
+				<string>SparkColourPickerCell</string>
+			<key>libsparkcolourpicker</key>
+				<dict>
+					<key>fallback</key>
+						<string>#FFFFFF</string>
+					<key>alpha</key>
+						<true/>
+					<key>PreviewGradient</key>
+						<false/>
+				</dict>
+			<key>label</key>
+				<string>Battery Color</string>
+			<key>key</key>
+				<string>BatteryColor</string>
 		</dict>
-	<dict>
+		<dict>
+			<key>PostNotification</key>
+				<string>xyz.turannul.pxlbattery.settingschanged</string>
+			<key>defaults</key>
+				<string>xyz.turannul.pxlbattery</string>
 			<key>cell</key>
-			<string>PSGroupCell</string>
+				<string>PSLinkCell</string>
+			<key>cellClass</key>
+				<string>SparkColourPickerCell</string>
+			<key>libsparkcolourpicker</key>
+				<dict>
+					<key>defaults</key>
+						<string>xyz.turannul.pxlbattery</string>
+					<key>fallback</key>
+						<string>#EA3323</string>
+					<key>alpha</key>
+						<true/>
+					<key>PreviewGradient</key>
+						<false/>
+				</dict>
+				<key>label</key>
+					<string>Low Battery Color</string>
+				<key>key</key>
+					<string>LowBatteryColor</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+				<string>xyz.turannul.pxlbattery.settingschanged</string>
+			<key>defaults</key>
+				<string>xyz.turannul.pxlbattery</string>
+			<key>cell</key>
+				<string>PSLinkCell</string>
+			<key>cellClass</key>
+				<string>SparkColourPickerCell</string>
+			<key>libsparkcolourpicker</key>
+				<dict>
+					<key>defaults</key>
+						<string>xyz.turannul.pxlbattery</string>
+					<key>fallback</key>
+						<string>#FFCC02</string>
+					<key>alpha</key>
+						<true/>
+					<key>PreviewGradient</key>
+						<false/>
+				</dict>
+			<key>label</key>
+				<string>Low Power Mode Color</string>
+			<key>key</key>
+				<string>LowPowerModeColor</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+				<string>xyz.turannul.pxlbattery.settingschanged</string>
+			<key>defaults</key>
+				<string>xyz.turannul.pxlbattery</string>
+			<key>cell</key>
+				<string>PSLinkCell</string>
+			<key>cellClass</key>
+				<string>SparkColourPickerCell</string>
+			<key>libsparkcolourpicker</key>
+				<dict>
+					<key>defaults</key>
+						<string>xyz.turannul.pxlbattery</string>
+					<key>fallback</key>
+						<string>#00FF0C</string>
+					<key>alpha</key>
+						<true/>
+					<key>PreviewGradient</key>
+						<false/>
+				</dict>
+			<key>label</key>
+				<string>Charging Color</string>
+			<key>key</key>
+				<string>ChargingColor</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+				<string>PSGroupCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+				<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Made with ❤️</string>
+				<string>Made with ❤️</string>
 		</dict>
 		<dict>
 			<key>action</key>
-			<string>SourceCode</string>
+				<string>SourceCode</string>
 			<key>cell</key>
-			<string>PSButtonCell</string>
+				<string>PSButtonCell</string>
 			<key>icon</key>
-			<string>Github.png</string>
+				<string>Github.png</string>
 			<key>label</key>
-			<string>Source Code</string>
+				<string>Source Code</string>
 		</dict>
-			<dict>
+		<dict>
 			<key>cell</key>
-			<string>PSGroupCell</string>
+				<string>PSGroupCell</string>
 		</dict>
 		<dict>
 			<key>action</key>
-			<string>Twitter</string>
+				<string>Twitter</string>
 			<key>cell</key>
-			<string>PSButtonCell</string>
+				<string>PSButtonCell</string>
 			<key>icon</key>
-			<string>Twitter.png</string>
+				<string>Twitter.png</string>
 			<key>id</key>
-			<string>Buttom</string>
+				<string>Buttom</string>
 			<key>label</key>
-			<string>Follow me on Twitter</string>
+				<string>Follow me on Twitter</string>
 		</dict>
 		<dict>
 			<key>action</key>
-			<string>DonateMe</string>
+				<string>DonateMe</string>
 			<key>cell</key>
-			<string>PSButtonCell</string>
+				<string>PSButtonCell</string>
 			<key>icon</key>
-			<string>CashApp.png</string>
+				<string>CashApp.png</string>
 			<key>id</key>
-			<string>Buttom</string>
+				<string>Buttom</string>
 			<key>label</key>
-			<string>Buy me a coffee?</string>
+				<string>Buy me a coffee?</string>
 		</dict>
-			<dict>
+		<dict>
 			<key>cell</key>
-			<string>PSGroupCell</string>
+				<string>PSGroupCell</string>
 		</dict>
 		<dict>
 			<key>action</key>
-			<string>RandyTwitter</string>
+				<string>RandyTwitter</string>
 			<key>cell</key>
-			<string>PSButtonCell</string>
+				<string>PSButtonCell</string>
 			<key>icon</key>
-			<string>Twitter.png</string>
+				<string>Twitter.png</string>
 			<key>id</key>
-			<string>Buttom</string>
+				<string>Buttom</string>
 			<key>label</key>
-			<string>Follow Randy on Twitter</string>
+				<string>Follow Randy on Twitter</string>
 		</dict>
 		<dict>
 			<key>action</key>
-			<string>DonatetoRandy420</string>
+				<string>DonatetoRandy420</string>
 			<key>cell</key>
-			<string>PSButtonCell</string>
+				<string>PSButtonCell</string>
 			<key>icon</key>
-			<string>PayPal.png</string>
+				<string>PayPal.png</string>
 			<key>id</key>
-			<string>Buttom</string>
+				<string>Buttom</string>
 			<key>label</key>
-			<string>Donate to Randy420?</string>
+				<string>Donate to Randy420?</string>
 		</dict>
 	</array>
 </dict>
