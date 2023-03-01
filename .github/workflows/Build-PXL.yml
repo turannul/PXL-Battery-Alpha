@@ -16,9 +16,9 @@ jobs:
 
       - name: Install homebrew & Install Requirements (ldid,make,xz) #Installing make because >> https://theos.dev/docs/parallel-building <<
         run: |
-          printf "\033[33m ==> \033[0m Downloading and installing Homebrew" && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > /dev/null 2>&1 && printf "\033[32m ==> \033[0m Homebrew successfully installed" || printf "\033[31m ==> \033[0m Oops! something goes wrong. (check logs for details)"
-          printf "\033[33m ==> \033[0m Downloading and installing ldid" && brew install ldid > /dev/null 2>&1 && printf "\033[32m ==> \033[0m ldid successfully installed" || printf "\033[31m ==> \033[0m Oops! something goes wrong. (check logs for details)"
-          printf "\033[33m ==> \033[0m Downloading and installing make" && brew install make > /dev/null 2>&1 &&  echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env && printf "\033[32m ==> \033[0m make successfully installed" || printf "\033[31m ==> \033[0m Oops! something goes wrong. (check logs for details)"
+            printf "\033[33m ==> \033[0m Downloading and installing Homebrew\n" && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > /dev/null 2>&1 && printf "\033[32m ==> \033[0m Homebrew successfully installed\n" || printf "\033[31m ==> \033[0m Oops! something goes wrong. (check logs for details)\n"
+            printf "\033[33m ==> \033[0m Downloading and installing ldid\n" && brew install ldid > /dev/null 2>&1 && printf "\033[32m ==> \033[0m ldid successfully installed\n" || printf "\033[31m ==> \033[0m Oops! something goes wrong. (check logs for details)\n"
+            printf "\033[33m ==> \033[0m Downloading and installing make\n" && brew install make > /dev/null 2>&1 &&  echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env && printf "\033[32m ==> \033[0m make successfully installed\n" || printf "\033[31m ==> \033[0m Oops! something goes wrong. (check logs for details)\n"
 
       - name: Install Theos
         uses: actions/checkout@v3
@@ -38,11 +38,12 @@ jobs:
           
       - name: Download SparkColourPicker
         run: |
-          cd ${{ github.workspace }}/theos/include
-          printf "\033[33m ==> \033[0m Downloading and installing Spark Colour Picker Header [1\2]" && wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerView.h > /dev/null 2>&1 && printf "\033[32m ==> \033[0m  Spark Colour Picker Header [1\2] successfully installed" || printf "\033[31m ==> \033[0m Oops! something goes wrong. (check logs for details)"
-          printf "\033[33m ==> \033[0m Downloading and installing Spark Colour Picker Header [2\2]" && wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerUtils.h > /dev/null 2>&1 && printf "\033[32m ==> \033[0m Spark Colour Picker Header [2\2] successfully installed" || printf "\033[31m ==> \033[0m Oops! something goes wrong. (check logs for details)"
-          cd ${{ github.workspace }}/theos/lib
-          printf "\033[33m ==> \033[0m Downloading and installing SparkColourPicker Library" && wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/lib/libsparkcolourpicker.dylib > /dev/null 2>&1 && sudo chmod 755 ${{ github.workspace }}/theos/lib/libsparkcolourpicker.dylib && printf "\033[32m ==> \033[0m   Spark Colour Picker Library successfully installed" || printf "\033[31m ==> \033[0m Oops! something goes wrong. (check logs for details)"
+          - name: Download SparkColourPicker
+        run: |
+          printf "\033[33m ==> \033[0m Downloading and installing Spark Colour Picker Header [1\2]" && wget https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerView.h -O ${{ github.workspace }}/theos/include/SparkColourPickerView.h > /dev/null 2>&1 && printf "\n\033[32m ==> \033[0m Spark Colour Picker Header [1\2] successfully installed" || printf "\n\033[31m ==> \033[0m Oops! something goes wrong. (check logs for details)"
+          printf "\033[33m ==> \033[0m Downloading and installing Spark Colour Picker Header [2\2]" && wget https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerUtils.h -O ${{ github.workspace }}/theos/include/SparkColourPickerUtils.h > /dev/null 2>&1 && printf "\n\033[32m ==> \033[0m Spark Colour Picker Header [2\2] successfully installed" || printf "\n\033[31m ==> \033[0m Oops! something goes wrong. (check logs for details)"
+          printf "\033[33m ==> \033[0m Downloading and installing SparkColourPicker Library" && wget https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/lib/libsparkcolourpicker.dylib -O ${{ github.workspace }}/theos/lib/libsparkcolourpicker.dylib > /dev/null 2>&1 && sudo chmod 755 ${{ github.workspace }}/theos/lib/libsparkcolourpicker.dylib && printf "\n\033[32m ==> \033[0m Spark Colour Picker Library successfully installed" || printf "\n\033[31m ==> \033[0m Oops! something goes wrong. (check logs for details)"
+
 
       - name: Build Tweak
         run: |
