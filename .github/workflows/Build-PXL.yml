@@ -14,18 +14,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-    #  - name: Install homebrew & Install Requirements (ldid,make,xz) #https://theos.dev/docs/parallel-building
-     #   run: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          brew install ldid make xz
-          echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env
+      #- name: Install homebrew & Install Requirements (ldid,make,xz) #https://theos.dev/docs/parallel-building
+        #run: |
+          #/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          #brew install ldid make xz
+          #echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env
 
-   #   - name: Install Theos
-    #    uses: actions/checkout@v3
-     #   with:
-      #    repository: theos/theos
-       #   path: theos
-        #  submodules: recursive
+      #- name: Install Theos
+        #uses: actions/checkout@v3
+        #with:
+          #repository: theos/theos
+          #path: theos
+          #submodules: recursive
 
       - name: Export Theos Imstall
         #run: echo "export THEOS=/Users/runner/work/pxl-development/pxl-development/theos" >> .env
@@ -43,7 +43,7 @@ jobs:
         run: |
           cd $(pwd)/theos/sdks
           wget -q --show-progress https://www.dropbox.com/s/jvonok3de24ibsz/14.1.zip 
-          unzip 14.1.zip -p
+          #unzip 14.1.zip -p
 
       - name: Download SparkColourPicker
         run: |
