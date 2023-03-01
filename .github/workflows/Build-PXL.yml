@@ -14,11 +14,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      #- name: Install homebrew & Install Requirements (ldid,make,xz) #https://theos.dev/docs/parallel-building
-        #run: |
-          #/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          #brew install ldid make xz
-          #echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env
+      - name: Install homebrew & Install Requirements (ldid,make,xz) #Installing make because >> https://theos.dev/docs/parallel-building <<
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          brew install ldid make xz
+          echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env
 
       - name: Install Theos
         uses: actions/checkout@v3
@@ -27,31 +27,27 @@ jobs:
           path: theos
           submodules: recursive
 
-      - name: Export Theos Install
-        #run: echo "export THEOS=/Users/runner/work/pxl-development/pxl-development/theos" >> .env
+      - name: Export Theos Install # Do not remove this step its critical.
         run: |
          echo "export THEOS=$(pwd)/theos" >> .env
-         echo "User/theos"
-         ls $(pwd)/theos
 
-      - name: Install iPhoneOS 14.1 SDK
+      - name: Download iPhoneOS 14.1 SDK # Download SDKs
         run: |
           cd $(pwd)/theos/sdks
-          wget -q --show-progress https://www.dropbox.com/s/jvonok3de24ibsz/14.1.zip 
-          unzip 14.1.zip -p
+          wget -q https://www.dropbox.com/s/jvonok3de24ibsz/14.1.zip > /dev/null 2>&1
+          unzip 14.1.zip > /dev/null 2>&1
 
       - name: Download SparkColourPicker
         run: |
           cd $(pwd)/theos/include
-          wget -q --show-progress https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerView.h
-          wget -q --show-progress https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerUtils.h
+          wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerView.h > /dev/null 2>&1
+          wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerUtils.h > /dev/null 2>&1
           cd $(pwd)/theos/lib
-          wget -q --show-progress https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/lib/libsparkcolourpicker.dylib
+          wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/lib/libsparkcolourpicker.dylib > /dev/null 2>&1
           sudo chmod 755 $(pwd)/theos/lib/libsparkcolourpicker.dylib
 
       - name: Build Tweak
         run: |
-          pwd
           source .env
           make clean package
           cp packages/*.deb $(pwd)
