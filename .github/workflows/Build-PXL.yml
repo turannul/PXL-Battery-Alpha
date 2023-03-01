@@ -14,11 +14,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install homebrew 
-        run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-      - name: Install Requirements (ldid,dpkg,make) #https://theos.dev/docs/parallel-building
-        run:  brew install ldid make dpkg && echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env
+      - name: Install homebrew & Install Requirements (ldid,make,xz) #https://theos.dev/docs/parallel-building
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          brew install ldid make xz
+          echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env
 
       - name: Install Theos
         uses: actions/checkout@v3
@@ -27,8 +27,8 @@ jobs:
           path: theos
           submodules: recursive
 
-      - name: Export Theos
-        run: echo "export THEOS=/Users/runner/work/pxl-development/pxl-development/theos" >> .env
+      #- name: Export Theos Imstall script seems does this
+       # run: echo "export THEOS=/Users/runner/work/pxl-development/pxl-development/theos" >> .env
 
       - name: Install iPhoneOS 14.1 SDK
         run: |
