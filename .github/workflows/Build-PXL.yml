@@ -20,39 +20,34 @@ jobs:
           #brew install ldid make xz
           #echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env
 
-      #- name: Install Theos
-        #uses: actions/checkout@v3
-        #with:
-          #repository: theos/theos
-          #path: theos
-          #submodules: recursive
+      - name: Install Theos
+        uses: actions/checkout@v3
+        with:
+          repository: theos/theos
+          path: theos
+          submodules: recursive
 
-      - name: Export Theos Imstall
+      - name: Export Theos Install
         #run: echo "export THEOS=/Users/runner/work/pxl-development/pxl-development/theos" >> .env
         run: |
          echo "export THEOS=$(pwd)/theos" >> .env
-         echo "default"
-         ls 
-         echo "User folder?"
-         ls $(pwd)
          echo "User/theos"
          ls $(pwd)/theos
-         exit 6
 
       - name: Install iPhoneOS 14.1 SDK
         run: |
           cd $(pwd)/theos/sdks
           wget -q --show-progress https://www.dropbox.com/s/jvonok3de24ibsz/14.1.zip 
-          #unzip 14.1.zip -p
+          unzip 14.1.zip -p
 
       - name: Download SparkColourPicker
         run: |
-          cd /Users/runner/work/pxl-development/pxl-development/theos/include
+          cd $(pwd)/theos/include
           wget -q --show-progress https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerView.h
           wget -q --show-progress https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerUtils.h
-          cd /Users/runner/work/pxl-development/pxl-development/theos/lib
+          cd $(pwd)/theos/lib
           wget -q --show-progress https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/lib/libsparkcolourpicker.dylib
-          sudo chmod 755 /Users/runner/work/pxl-development/pxl-development/theos/lib/libsparkcolourpicker.dylib
+          sudo chmod 755 $(pwd)/theos/lib/libsparkcolourpicker.dylib
 
       - name: Build Tweak
         run: |
@@ -64,6 +59,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: PXL.deb
+          name: PXL.deb # Name of .deb file shown on first page
           path: |
             packages/*.deb
