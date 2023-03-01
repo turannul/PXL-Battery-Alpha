@@ -166,27 +166,24 @@ static void loader(){
 			else
 				fill = [[UIView alloc] initWithFrame: CGRectMake(iconLocationX + ((i-1)*(barWidth + 1)), iconLocationY, barWidth, barHeight)];
 			[fill setContentMode:UIViewContentModeScaleAspectFill];
-			[fill setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-
+			[fill setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];	
 //-----------------------------------------------
 
 //Colors
 			if ([self saverModeActive]){
-//fill.backgroundColor = YELLOW;
 fill.backgroundColor = LowPowerModeColor; //This should return correctly formatted value.
 
 			}else{
 				if (isCharging){
-//fill.backgroundColor = GREEN;
 fill.backgroundColor = ChargingColor;
 				}else{
 					if (actualPercentage >= 20)
-//fill.backgroundColor = [UIColor labelColor];
-fill.backgroundColor = BatteryColor;
+						fill.backgroundColor = BatteryColor;
+						// BatteryColor = No Black/White, Custom 
+						// LabelColor = Black/White, no custom?
+						// How to merge 2 to create dynamic color Research required...
 					else
-//fill.backgroundColor = RED;
 fill.backgroundColor = LowBatteryColor;
-
 				}
 			}
 
@@ -202,7 +199,6 @@ fill.backgroundColor = LowBatteryColor;
 	else
 		[icon setImage:[UIImage imageWithData:batteryLowImage]];
 
-	//[icon setImage:battImage];
 	[self updateIconColor];
 }
 //-----------------------------------------------
@@ -231,34 +227,24 @@ fill.backgroundColor = LowBatteryColor;
 	if (!PXLEnabled)
 		return;
 
-icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-//fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]; // What this does actually?
+fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
 	if (![self saverModeActive]){
 		if (isCharging){
-//			[icon setTintColor:GREEN];
-//			[fill setTintColor:GREEN];
 			[icon setTintColor:ChargingColor];
 			[fill setTintColor:ChargingColor];
 		}else{
 			if (actualPercentage >= 20){
-//				[icon setTintColor:[UIColor labelColor]];
-//				[fill setTintColor:[UIColor labelColor]];
 				[icon setTintColor:BatteryColor];
 				[fill setTintColor:BatteryColor];
 			}else{
-//				[icon setTintColor:[UIColor labelColor]];
-//				[fill setTintColor:fill.backgroundColor = RED];
             	[icon setTintColor:fill.backgroundColor = BatteryColor];
                 [fill setTintColor:fill.backgroundColor = LowBatteryColor];
 				if (actualPercentage >= 10){
-//					[icon setTintColor:[UIColor labelColor]];
-//					[fill setTintColor:[UIColor labelColor]];
                     [icon setTintColor:BatteryColor];
                     [fill setTintColor:BatteryColor];
 				}else{
-//					[icon setTintColor:fill.backgroundColor = RED];
-//					[fill setTintColor:fill.backgroundColor = RED];
 					[icon setTintColor:fill.backgroundColor = LowBatteryColor];
 					[fill setTintColor:fill.backgroundColor = LowBatteryColor];
 
@@ -267,24 +253,27 @@ icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTempla
 		}
 	}else{
 		if (isCharging){
-//			[icon setTintColor:GREEN];
-//			[fill setTintColor:GREEN];
 			[icon setTintColor:fill.backgroundColor = ChargingColor];
 			[fill setTintColor:fill.backgroundColor = ChargingColor];
 
 		}else{
-//			[icon setTintColor:YELLOW];
-//          [fill setTintColor:YELLOW];
 			[icon setTintColor:fill.backgroundColor = LowPowerModeColor];
 			[fill setTintColor:fill.backgroundColor = LowPowerModeColor];
 		}
 	}
 }
-/*This code sets the colors for the battery icon and fill. The colors are determined by whether the device is in low power mode, charging, or has a certain battery percentage. If the device is in low power mode, the colors will be set to LowPowerModeColor. If the device is charging, the colors will be set to ChargingColor. If the device has a battery percentage of 20% or greater, the colors will be set to BatteryColor. If the device has a battery percentage of less than 20%, the colors will be set to LowBatteryColor. The code sets both the tint color of the icon and fill using the appropriate color value.*/
+/*
+This code sets colors for battery icon & fill. 
+Colors are determined by whether device is in low power mode, charging, or has a certain battery percentage. 
+If device is in low power mode, colors will be set to LowPowerModeColor. 
+If charging = 1, colors will be set to ChargingColor. 
+If device has a battery percentage of 20% or greater, colors will be set to BatteryColor. 
+If device has a battery percentage of less than 20%, colors will be set to LowBatteryColor. 
+Code sets both tint color of icon and fill using appropriate color value.
+*/
 %end
 %end
 %ctor{
 	loader();
 	%init(PXLBattery);
-//	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)loader, CFSTR("xyz.turannul.pxlbattery.settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
 }

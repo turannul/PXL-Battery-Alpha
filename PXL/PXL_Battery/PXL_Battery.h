@@ -1,7 +1,7 @@
+#define kPrefDomain "xyz.turannul.pxlbattery"
+#include "SparkColourPickerUtils.h"
 #import <QuartzCore/CoreAnimation.h>
-#import "BATTERY_IMAGE.h"
-#import "BATTERY_LOW_IMAGE.h"
-#import "includes.h"
+#import "Battery_Images.h"
 
 UIImageView* icon;
 UIImageView* fill;
@@ -9,7 +9,6 @@ UIImageView* lockscreenBatteryIconView;
 UIImageView* lockscreenBatteryChargerView;
 
 UIColor *LowPowerModeColor;
-//UIColor *LPM_Charging_Color;
 UIColor *ChargingColor;
 UIColor *LowBatteryColor;
 UIColor *BatteryColor;
