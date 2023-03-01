@@ -42,7 +42,6 @@ jobs:
           printf "\033[33m ==> \033[0m Downloading and installing Spark Colour Picker Header [2\2]" && wget https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerUtils.h -O ${{ github.workspace }}/theos/include/SparkColourPickerUtils.h > /dev/null 2>&1 && printf "\n\033[32m ==> \033[0m Spark Colour Picker Header [2\2] successfully installed" || printf "\n\033[31m ==> \033[0m Oops! something goes wrong. (check logs for details)"
           printf "\033[33m ==> \033[0m Downloading and installing SparkColourPicker Library" && wget https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/lib/libsparkcolourpicker.dylib -O ${{ github.workspace }}/theos/lib/libsparkcolourpicker.dylib > /dev/null 2>&1 && sudo chmod 755 ${{ github.workspace }}/theos/lib/libsparkcolourpicker.dylib && printf "\n\033[32m ==> \033[0m Spark Colour Picker Library successfully installed" || printf "\n\033[31m ==> \033[0m Oops! something goes wrong. (check logs for details)"
 
-
       - name: Build Tweak
         run: |
           source .env
