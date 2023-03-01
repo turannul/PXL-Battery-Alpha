@@ -33,8 +33,6 @@ jobs:
          echo "export THEOS=$(pwd)/theos" >> .env
          echo "default"
          ls 
-         echo "/theos"
-         ls /theos
          echo "User folder?"
          ls $(pwd)
          echo "User/theos"
