@@ -17,11 +17,8 @@ jobs:
       - name: Install homebrew 
         run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-      - name: Install Requirements (ldid,dpkg,make)
-        run:  brew install ldid make dpkg
-
-      - name: Parallel Building #https://theos.dev/docs/parallel-building
-        run: echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env
+      - name: Install Requirements (ldid,dpkg,make) #https://theos.dev/docs/parallel-building
+        run:  brew install ldid make dpkg && echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env
 
       - name: Install Theos
         uses: actions/checkout@v3
