@@ -29,32 +29,28 @@ jobs:
 
       - name: Export Theos Install # Do not remove this step its critical.
         run: |
-         echo "export THEOS=$(pwd)/theos" >> .env
-         echo "home" 
-         ls $HOME
-         echo current path
-         ls $pwd
-         echo $pwd
+         echo "export THEOS=${{ github.workspace }}/theos" >> .env
+
       - name: Download iPhoneOS 14.1 SDK # Download SDKs
         run: |
-          cd $HOME/theos/sdks
+          cd ${{ github.workspace }}/theos/sdks
           wget -q https://www.dropbox.com/s/jvonok3de24ibsz/14.1.zip > /dev/null 2>&1
           unzip 14.1.zip > /dev/null 2>&1
 
       - name: Download SparkColourPicker
         run: |
-          cd $HOME/theos/include
+          cd ${{ github.workspace }}/theos/include
           wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerView.h > /dev/null 2>&1
           wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerUtils.h > /dev/null 2>&1
-          cd $HOME/theos/lib
+          cd ${{ github.workspace }}/theos/lib
           wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/lib/libsparkcolourpicker.dylib > /dev/null 2>&1
-          sudo chmod 755 $(pwd)/theos/lib/libsparkcolourpicker.dylib
+          sudo chmod 755 ${{ github.workspace }})/theos/lib/libsparkcolourpicker.dylib
 
       - name: Build Tweak
         run: |
           source .env
           make clean package
-          cp packages/*.deb $(pwd)
+          cp packages/*.deb ${{ github.workspace }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
