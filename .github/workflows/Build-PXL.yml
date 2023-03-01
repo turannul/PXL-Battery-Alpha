@@ -27,14 +27,25 @@ jobs:
           path: theos
           submodules: recursive
 
-      #- name: Export Theos Imstall script seems does this
-       # run: echo "export THEOS=/Users/runner/work/pxl-development/pxl-development/theos" >> .env
+      - name: Export Theos Imstall
+        #run: echo "export THEOS=/Users/runner/work/pxl-development/pxl-development/theos" >> .env
+        run: |
+         echo "export THEOS=$(pwd)/theos" >> .env
+         echo "default"
+         ls 
+         echo "/theos"
+         ls /theos
+         echo "User folder?"
+         ls $(pwd)
+         echo "User/theos"
+         ls $(pwd)/theos
+         exit 6
 
       - name: Install iPhoneOS 14.1 SDK
         run: |
-          cd /Users/runner/work/pxl-development/pxl-development/theos/sdks 
+          cd $(pwd)/theos/sdks
           wget -q --show-progress https://www.dropbox.com/s/jvonok3de24ibsz/14.1.zip 
-          unzip 14.1.zip 
+          unzip 14.1.zip -p
 
       - name: Download SparkColourPicker
         run: |
