@@ -16,6 +16,8 @@ jobs:
 
       - name: Install homebrew & Install Requirements (ldid,make,xz) #Installing make because >> https://theos.dev/docs/parallel-building <<
         run: |
+          ls $HOME
+          echo "Test" $HOME
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
           brew install ldid make xz
           echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env
