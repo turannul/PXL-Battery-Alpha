@@ -1,4 +1,4 @@
-name: Build PXL - macOS
+name: Build
 
 on:
   push:
