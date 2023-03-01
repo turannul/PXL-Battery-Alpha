@@ -16,9 +16,9 @@ jobs:
 
       - name: Install homebrew & Install Requirements (ldid,make,xz) #Installing make because >> https://theos.dev/docs/parallel-building <<
         run: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          brew install ldid make xz
-          echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env
+          echo -e "\e[1;33m ==> \e[0m Downloading and installing Homebrew" && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > /dev/null && echo -e "\e[1;32m ==> \e[0m Homebrew successfully installed" || echo -e "\e[1;31m ==> \e[0m Oops! something goes wrong. (check logs for details)"
+          echo -e "\e[1;33m ==> \e[0m Downloading and installing ldid" && brew install ldid > /dev/null && echo -e "\e[1;32m ==> \e[0m ldid successfully installed" || echo -e "\e[1;31m ==> \e[0m Oops! something goes wrong. (check logs for details)"
+          echo -e "\e[1;33m ==> \e[0m Downloading and installing make" && brew install make > /dev/null &&  echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env && echo -e "\e[1;32m ==> \e[0m make successfully installed" || echo -e "\e[1;31m ==> \e[0m Oops! something goes wrong. (check logs for details)"
 
       - name: Install Theos
         uses: actions/checkout@v3
@@ -29,22 +29,20 @@ jobs:
 
       - name: Export Theos Install # Do not remove this step its critical.
         run: |
-         echo "export THEOS=${{ github.workspace }}/theos" >> .env
+          echo "export THEOS=${{ github.workspace }}/theos" >> .env
 
       - name: Download iPhoneOS 14.1 SDK # Download SDKs
         run: |
           cd ${{ github.workspace }}/theos/sdks
-          wget -q https://www.dropbox.com/s/jvonok3de24ibsz/14.1.zip > /dev/null 2>&1
-          unzip 14.1.zip > /dev/null 2>&1
-
+          echo -e "\e[1;33m ==> \e[0m Downloading and installing SDK" && wget -q https://www.dropbox.com/s/jvonok3de24ibsz/14.1.zip > /dev/null && unzip 14.1.zip > /dev/null && echo -e "\e[1;32m ==> \e[0m SDK successfully installed" || echo -e "\e[1;31m ==> \e[0m Oops! something goes wrong. (check logs for details)"
+          
       - name: Download SparkColourPicker
         run: |
           cd ${{ github.workspace }}/theos/include
-          wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerView.h > /dev/null 2>&1
-          wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerUtils.h > /dev/null 2>&1
+          echo -e "\e[1;33m ==> \e[0m Downloading and installing Spark Colour Picker Header [1\2]" && wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerView.h > /dev/null && echo -e "\e[1;32m ==> \e[0m  Spark Colour Picker Header [1\2] successfully installed" || echo -e "\e[1;31m ==> \e[0m Oops! something goes wrong. (check logs for details)"
+          echo -e "\e[1;33m ==> \e[0m Downloading and installing Spark Colour Picker Header [2\2]" && wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerUtils.h > /dev/null && echo -e "\e[1;32m ==> \e[0m Spark Colour Picker Header [2\2] successfully installed" || echo -e "\e[1;31m ==> \e[0m Oops! something goes wrong. (check logs for details)"
           cd ${{ github.workspace }}/theos/lib
-          wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/lib/libsparkcolourpicker.dylib > /dev/null 2>&1
-          sudo chmod 755 ${{ github.workspace }})/theos/lib/libsparkcolourpicker.dylib
+          echo -e "\e[1;33m ==> \e[0m Downloading and installing SparkColourPicker Library" && wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/lib/libsparkcolourpicker.dylib > /dev/null && sudo chmod 755 ${{ github.workspace }}/theos/lib/libsparkcolourpicker.dylib && echo -e "\e[1;32m ==> \e[0m   Spark Colour Picker Library successfully installed" || echo -e "\e[1;31m ==> \e[0m Oops! something goes wrong. (check logs for details)"
 
       - name: Build Tweak
         run: |
