@@ -34,18 +34,19 @@ jobs:
          ls $HOME
          echo current path
          ls $pwd
+         echo $pwd
       - name: Download iPhoneOS 14.1 SDK # Download SDKs
         run: |
-          cd $(HOME)/theos/sdks
+          cd $HOME/theos/sdks
           wget -q https://www.dropbox.com/s/jvonok3de24ibsz/14.1.zip > /dev/null 2>&1
           unzip 14.1.zip > /dev/null 2>&1
 
       - name: Download SparkColourPicker
         run: |
-          cd $(HOME)/theos/include
+          cd $HOME/theos/include
           wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerView.h > /dev/null 2>&1
           wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerUtils.h > /dev/null 2>&1
-          cd $(HOME)/theos/lib
+          cd $HOME/theos/lib
           wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/lib/libsparkcolourpicker.dylib > /dev/null 2>&1
           sudo chmod 755 $(pwd)/theos/lib/libsparkcolourpicker.dylib
 
