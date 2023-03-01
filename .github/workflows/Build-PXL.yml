@@ -16,8 +16,6 @@ jobs:
 
       - name: Install homebrew & Install Requirements (ldid,make,xz) #Installing make because >> https://theos.dev/docs/parallel-building <<
         run: |
-          ls $HOME
-          echo "Test" $HOME
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
           brew install ldid make xz
           echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env
@@ -32,19 +30,22 @@ jobs:
       - name: Export Theos Install # Do not remove this step its critical.
         run: |
          echo "export THEOS=$(pwd)/theos" >> .env
-
+         echo "home" 
+         ls $HOME
+         echo current path
+         ls $pwd
       - name: Download iPhoneOS 14.1 SDK # Download SDKs
         run: |
-          cd $(pwd)/theos/sdks
+          cd $(HOME)/theos/sdks
           wget -q https://www.dropbox.com/s/jvonok3de24ibsz/14.1.zip > /dev/null 2>&1
           unzip 14.1.zip > /dev/null 2>&1
 
       - name: Download SparkColourPicker
         run: |
-          cd $(pwd)/theos/include
+          cd $(HOME)/theos/include
           wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerView.h > /dev/null 2>&1
           wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/headers/SparkColourPickerUtils.h > /dev/null 2>&1
-          cd $(pwd)/theos/lib
+          cd $(HOME)/theos/lib
           wget -q https://raw.githubusercontent.com/SparkDev97/libSparkColourPicker/master/lib/libsparkcolourpicker.dylib > /dev/null 2>&1
           sudo chmod 755 $(pwd)/theos/lib/libsparkcolourpicker.dylib
 
