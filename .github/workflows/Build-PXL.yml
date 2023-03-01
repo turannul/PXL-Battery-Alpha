@@ -14,14 +14,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install homebrew
+      - name: Install homebrew 
         run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-      - name: Install ldid
-        run: brew install ldid
-      
-      - name: Install make
-        run: brew install make
+      - name: Install Requirements (ldid,dpkg,make)
+        run:  brew install ldid make dpkg
 
       - name: Parallel Building #https://theos.dev/docs/parallel-building
         run: echo PATH=\"$(brew --prefix make)/libexec/gnubin:\$PATH\" >> .env
