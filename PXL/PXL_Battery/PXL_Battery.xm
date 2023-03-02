@@ -1,8 +1,11 @@
 #import "PXL_Battery.h"
 
+#define RED [UIColor colorWithRed:234.0/255.0 green:51.0/255.0 blue:35.0/255.0 alpha:1.0f]
+#define GREEN [UIColor colorWithRed:0.0/255.0 green:255.0/255.0 blue:12.0/255.0 alpha:1.0f]
+
 static NSString *GetNSString(NSString *pkey, NSString *defaultValue){
 	NSDictionary *Dict = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", @kPrefDomain]];
-
+	
 	return [Dict objectForKey:pkey] ? [Dict objectForKey:pkey] : defaultValue;
 }
 
@@ -170,26 +173,38 @@ static void loader(){
 //-----------------------------------------------
 
 //Colors
-			if ([self saverModeActive]){
-fill.backgroundColor = LowPowerModeColor; //This should return correctly formatted value.
+	if ([self saverModeActive]){
+		fill.backgroundColor = LowPowerModeColor; //This should return correctly formatted value.
+	} else {
+		if (isCharging){
+			fill.backgroundColor = ChargingColor;
+		} else {
+			if (actualPercentage >= 20) {
+				// Attempt 9 
+				if ([BatteryColor isEqual:[UIColor whiteColor]]) /* NOT sure about this */{ 
+					/* 
+					Explanation and Workaround Idea:
+					I made a mistake here If BatteryColor = white <read from plist> (#000000[:1.00]) apply labelColor. `May, my logic is wrong?` 
+					labelColor is Dark/Light switch introduced in iOS 13. Problem is, Black required when some apps not support Dark Mode. (eg Cydia) 
+					Actual idea was to use labelColor if BatteryColor = white. But I failed to implement it. 
+					Here whats left behind my attepmts. 
+					See Attempts.txt 
+					-Turann_
+					*/
 
-			}else{
-				if (isCharging){
-fill.backgroundColor = ChargingColor;
-				}else{
-					if (actualPercentage >= 20)
-						fill.backgroundColor = BatteryColor;
-						// BatteryColor = No Black/White, Custom 
-						// LabelColor = Black/White, no custom?
-						// How to merge 2 to create dynamic color Research required...
-					else
-fill.backgroundColor = LowBatteryColor;
-				}
+					fill.backgroundColor = [UIColor labelColor];
+    			} else { 
+    				fill.backgroundColor = BatteryColor; 
+    			}
+			} else {
+				fill.backgroundColor = LowBatteryColor; /* This executed for some reason while battery not even low (Because of my [failed] workaround) */
 			}
-
-			[self addSubview:fill];
 		}
 	}
+	[self addSubview:fill];
+	} 
+	}
+
 
 	//UIImageView *percentageLabel = 
 //-----------------------------------------------
