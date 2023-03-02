@@ -1,6 +1,3 @@
 .DS_Store
 .theos/
-PXL/PXL_Prefs/.DS_Store
-PXL/PXL_Prefs/Resources/.DS_Store
-PXL/PXL_Prefs/.DS_Store
-.vscode/settings.json
+.vscode/
