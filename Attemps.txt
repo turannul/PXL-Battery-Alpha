@@ -48,7 +48,7 @@
 																		fill.backgroundColor = BatteryColor;
 																	}*/
                                                                     /*
-																	if ([batteryColor isEqualToString:@"#FFFFFF:1.00"]) {
+																	if ([batteryColor colourWithHexString:@"#FFFFFF:1.00"]) {
 																			fill.backgroundColor = [UIColor labelColor];
 																		}else{
 																			if ([batteryColor isEqualToString:@"#000000:1.00"]) {
@@ -58,4 +58,6 @@
 																			}
 																		}
 */
-Other Attempts gone, while refactoring Colors part.
+Other Attempts deleted by my cat, while rewriting Colors part.
+I Know i tried same thing repeatedly i tryin to learn what methods valid and whats not.
+switch case can be used here not sure/need to learn more about it.
