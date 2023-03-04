@@ -179,9 +179,9 @@ static void loader(){
 		if (isCharging){
 			fill.backgroundColor = ChargingColor;
 		} else {
-			if (actualPercentage >= 20) {
+			if (actualPercentage >= 20) //{
 				// Attempt 9 
-				if ([BatteryColor isEqual:[UIColor whiteColor]]) /* NOT sure about this */{ 
+//				if ([BatteryColor colourWithHexString:@"#FFFFFF:1.00"]) /* NOT sure about this */{ 
 					/* 
 					Explanation and Workaround Idea:
 					I made a mistake here If BatteryColor = white <read from plist> (#000000[:1.00]) apply labelColor. `May, my logic is wrong?` 
@@ -192,13 +192,13 @@ static void loader(){
 					-Turann_
 					*/
 
-					fill.backgroundColor = [UIColor labelColor];
-    			} else { 
+				//	fill.backgroundColor = [UIColor labelColor];
+    			//} else { 
     				fill.backgroundColor = BatteryColor; 
-    			}
-			} else {
+    			//} 
+			/*} */else /*{*/
 				fill.backgroundColor = LowBatteryColor; /* This executed for some reason while battery not even low (Because of my [failed] workaround) */
-			}
+			//}
 		}
 	}
 	[self addSubview:fill];
