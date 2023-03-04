@@ -49,36 +49,12 @@
 
 - (void)resetConfirm {
     if ([self.navigationItem.rightBarButtonItem.title isEqualToString:@"Are you sure?"]) {
-        [self resetprefs]; [self reloadSpecifiers]; // ResetPRefs, update preferences
-		// What about dispatch loop ¯\_(ツ)_/¯ You can't know my pain right now. 
+        [self resetprefs]; [self reloadSpecifiers];
 		for (int i = 3; i > 0; i--) { dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((3-i) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"Respringing in %d", i]; }); if (i == 1) { dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ [self respring]; }); } }
-		/*// Lets try repeated Dispatch(s) instead of loop
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ self.navigationItem.rightBarButtonItem.title = @"Respringing in 3";});
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ self.navigationItem.rightBarButtonItem.title = @"Respringing in 2";});
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ self.navigationItem.rightBarButtonItem.title = @"Respringing in 1";});
-		//[self respring];
-		Sum: This is also freezes app*/
-		/*int countdown = 3; // Basic Countdown using loop
-		self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"Respringing in %d", countdown];
-		for (int i = countdown; i >= 0; i--) { 
-			[NSThread sleepForTimeInterval:1.0]; 
-			self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"Respringing in %d", i]; 
-			//[self respring];
-		}
-		// DO NOT FORGET THIS outside of block (after 11 min realized what the fuck i have done lmao for some reason settings app just get froze no respring lol) [self respring];
-		Well, basic countdown makes preferences app unresponsive... atleast for 3 secs*/
-
-		/*make do
-		Option 1:Say Respring Required. Wait for confirmation. This is the first idea ihave done but its weird current option better i think.
-		self.navigationItem.rightBarButtonItem.title = @"Respring Required to apply changes";
-		self.navigationItem.rightBarButtonItem.tintColor = [UIColor yellowColor];
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ [self respringConfirm]; });
-		*/
     } else {
         self.navigationItem.rightBarButtonItem.title = @"Are you sure?";
 		self.navigationItem.rightBarButtonItem.tintColor = [UIColor redColor];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ [self respringApply]; // dispatch waits 5 seconds if user not presses reset prefs reset prefs text will be gone, calling RespringApply again.
-		/* < uncomment this if you want to keep reset prefs text> self.navigationItem.rightBarButtonItem.title = @"Reset Preferences?"; */
         });
     }
 }
