@@ -45,9 +45,11 @@ Last Exception Backtrace:
 12  UIKitCore                     	       0x1839b6ab0 +[_UIViewVisitor _startTraversalOfVisitor:withView:] + 244
 13  UIKitCore                     	       0x18387aaa4 -[UIView _dispatchTintColorVisitorWithReasons:] + 144
 14  UIKitCore                     	       0x183807e40 -[UIView setTintColor:] + 256
+Crash reason:  EXC_CRASH (SIGABRT) someone called this signal more tweaks involved here may conflicted with NiceBarX?
 15  PXL_Battery.dylib             	       0x1034e58f8 _logos_method$PXLBattery$_UIBatteryView$updateIconColor(_UIBatteryView*, objc_selector*) + 484
 16  PXL_Battery.dylib             	       0x1034e5704 _logos_method$PXLBattery$_UIBatteryView$refreshIcon(_UIBatteryView*, objc_selector*) + 2056
 17  PXL_Battery.dylib             	       0x1034e4ccc _logos_method$PXLBattery$_UIBatteryView$setChargingState$(_UIBatteryView*, objc_selector*, long long) + 140
+OR iOS 15 Specific issue? never happened on iOS 14/13 More log required to investigate further.
 18  UIKitCore                     	       0x183c3fa04 -[_UIStatusBarBatteryItem applyUpdate:toDisplayItem:] + 1008
 19  NiceBarX.dylib                	       0x103c28dec 0x103c08000 + 134636
 20  UIKitCore                     	       0x183b47b68 -[_UIStatusBarItem _applyUpdate:toDisplayItem:] + 144
