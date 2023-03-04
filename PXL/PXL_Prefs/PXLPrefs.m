@@ -4,7 +4,6 @@
 
 -(instancetype)init{
 	myIcon = @"PXL";
-	//myTitle = @"PXL Battery";
 	self.BundlePath=@"/Library/PreferenceBundles/PXL.bundle";
 
 	self = [super init];
@@ -13,7 +12,6 @@
 
 -(NSArray *)specifiers{
 	self.plistName = @"MainPrefs";
-	self.chosenIDs = @[@"Bottom", @"example2"];
 	return [super specifiers];
 }
 
@@ -43,11 +41,60 @@
 	}
 }
 
+- (void)resetPrefs {
+    UIBarButtonItem *resetButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset Preferences" style:UIBarButtonItemStylePlain target:self action:@selector(resetConfirm)];
+   	resetButton.tintColor = [UIColor redColor];
+    self.navigationItem.rightBarButtonItem = resetButton;
+}
+
+- (void)resetConfirm {
+    if ([self.navigationItem.rightBarButtonItem.title isEqualToString:@"Are you sure?"]) {
+        [self resetprefs]; [self reloadSpecifiers]; // ResetPRefs, update preferences
+		// What about dispatch loop ¯\_(ツ)_/¯ You can't know my pain right now. 
+		for (int i = 3; i > 0; i--) { dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((3-i) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"Respringing in %d", i]; }); if (i == 1) { dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ [self respring]; }); } }
+		/*// Lets try repeated Dispatch(s) instead of loop
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ self.navigationItem.rightBarButtonItem.title = @"Respringing in 3";});
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ self.navigationItem.rightBarButtonItem.title = @"Respringing in 2";});
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ self.navigationItem.rightBarButtonItem.title = @"Respringing in 1";});
+		//[self respring];
+		Sum: This is also freezes app*/
+		/*int countdown = 3; // Basic Countdown using loop
+		self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"Respringing in %d", countdown];
+		for (int i = countdown; i >= 0; i--) { 
+			[NSThread sleepForTimeInterval:1.0]; 
+			self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"Respringing in %d", i]; 
+			//[self respring];
+		}
+		// DO NOT FORGET THIS outside of block (after 11 min realized what the fuck i have done lmao for some reason settings app just get froze no respring lol) [self respring];
+		Well, basic countdown makes preferences app unresponsive... atleast for 3 secs*/
+
+		/*make do
+		Option 1:Say Respring Required. Wait for confirmation. This is the first idea ihave done but its weird current option better i think.
+		self.navigationItem.rightBarButtonItem.title = @"Respring Required to apply changes";
+		self.navigationItem.rightBarButtonItem.tintColor = [UIColor yellowColor];
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ [self respringConfirm]; });
+		*/
+    } else {
+        self.navigationItem.rightBarButtonItem.title = @"Are you sure?";
+		self.navigationItem.rightBarButtonItem.tintColor = [UIColor redColor];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ [self respringApply]; // dispatch waits 5 seconds if user not presses reset prefs reset prefs text will be gone, calling RespringApply again.
+		/* < uncomment this if you want to keep reset prefs text> self.navigationItem.rightBarButtonItem.title = @"Reset Preferences?"; */
+        });
+    }
+}
+
 -(void)respring{
 	NSTask *killallBackboardd = [NSTask new];
 	[killallBackboardd setLaunchPath:@"/usr/bin/killall"];
-	[killallBackboardd setArguments:@[@"-9", @"backboardd"]];
+	[killallBackboardd setArguments:@[@"-9", @"SpringBoard"]];
 	[killallBackboardd launch];
+}
+
+-(void)resetprefs{
+	NSTask *resetprefs = [NSTask new];
+	[resetprefs setLaunchPath:@"/bin/rm"];
+	[resetprefs setArguments:@[@"-f", @"/var/mobile/Library/Preferences/xyz.turannul.pxlbattery.plist"]];
+	[resetprefs launch];
 }
 
 -(void)viewDidLoad
@@ -57,26 +104,9 @@
 }
 
 // Buttons
--(void)SourceCode
-{
-	[self link:@"https://github.com/turannul/PXL-Battery" name:@"Source Code"];
-}
-
--(void)Twitter
-{
-	[self link:@"https://twitter.com/ImNotTuran" name:@"Follow me on Twitter"];
-}
--(void)DonateMe
-{
-	[self link:@"https://cash.app/$TuranUl" name:@"Donate"];
-}
-
--(void)RandyTwitter
-{
-	[self link:@"https://twitter.com/rj_skins?s=21&t=YudSBh0iDY9C5zQIsJbXcA" name:@"Follow Randy on Twitter"];
-}
--(void)DonatetoRandy420
-{
-	[self link:@"https://www.paypal.com/paypalme/4Randy420" name:@"Donate to Randy"];
-}
+-(void)SourceCode { [self link:@"https://github.com/turannul/PXL-Battery" name:@"Source Code"]; }
+-(void)Twitter { [self link:@"https://twitter.com/ImNotTuran" name:@"Follow me on Twitter"]; }
+-(void)DonateMe { [self link:@"https://cash.app/$TuranUl" name:@"Donate"]; }
+-(void)RandyTwitter { [self link:@"https://twitter.com/rj_skins?s=21&t=YudSBh0iDY9C5zQIsJbXcA" name:@"Follow Randy on Twitter"]; }
+-(void)DonatetoRandy420 { [self link:@"https://www.paypal.com/paypalme/4Randy420" name:@"Donate to Randy"]; }
 @end
