@@ -14,11 +14,8 @@ SUBPROJECTS += PXL/PXL_Prefs             # Basic switch works no bugs, more Feat
 
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/aggregate.mk
-
-after-install::
-	install.exec "killall -9 SpringBoard"
 	
 c:
 	find . -name ".DS_Store" -delete
-	rm -rf .theos/
-#Clean caches using 'make c'
+	rm -rf .theos/ build/
+#Clean up using 'make c'
