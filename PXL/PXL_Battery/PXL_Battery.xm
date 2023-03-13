@@ -293,86 +293,105 @@ Code sets both tint color of icon and fill using appropriate color value.
  *
  * -[_UIStatusBarCellularSignalView refreshIcon]: unrecognized selector sent to instance 0x10c83d380 thats bad idea lol.
  *
- *
- *
-*/
-
-%hook _UIStatusBarCellularSignalView //_UIStatusBar Wrong Hook (safe mode)
--(void)setActiveColor:(UIColor *)color{
-	if (PXLEnabled && actualPercentage >= 20) {
-		if (isCharging == 1) { %orig(ChargingColor); }  
-			else if (actualPercentage <= 20) { %orig(LowBatteryColor); }
-				else { %orig(BatteryColor); }
-					} else {
-						%orig;
-						}
-						}
-%end
-/* 
- *To do Replace PXLEnabled here with a switch 
+ * 
+ * To do Replace PXLEnabled here with a switch 
  * if pxlenabled if switch [code] else do nothing
  *        >>>>>>>>>>>>>>>>>>>>>>>>>:UP
-*/ 
+ *
+*/
+// Other status bar items
+	%hook _UIStatusBarCellularItem // 3G, LTE, 4G, 5G, etc. // Clearly not working
+	-(void)setActiveColor:(UIColor *)color {
+		if (PXLEnabled && actualPercentage >= 20) {
+			if (isCharging == 1) {
+				%orig(ChargingColor);
+			} else if (actualPercentage <= 20) {
+				%orig(LowBatteryColor);
+			} else {
+				%orig(BatteryColor);
+			}
+		} else {
+			%orig;
+		}
+	}
+	%end
+	/* %hook _UIStatusBarImageView // Small logos in status bar (Rotation, DND, Alarm...) for non notched devices DONT know how usefull is this.
+		-(void)setActiveColor:(UIColor *)color {
+		if (PXLEnabled && actualPercentage >= 20) {
+			if (isCharging == 1) {
+				%orig(ChargingColor);
+			} else if (actualPercentage <= 20) {
+				%orig(LowBatteryColor);
+			} else {
+				%orig(BatteryColor);
+			}
+		} else {
+			%orig;
+		}
+	}
+	%end */
+	%hook _UIStatusBarActivityIndicator // indicator like location?? // i dobt know what this is
+		-(void)setActiveColor:(UIColor *)color {
+		if (PXLEnabled && actualPercentage >= 20) {
+			if (isCharging == 1) {
+				%orig(ChargingColor);
+			} else if (actualPercentage <= 20) {
+				%orig(LowBatteryColor);
+			} else {
+				%orig(BatteryColor);
+			}
+		} else {
+			%orig;
+		}
+	}
+	%end
+	%hook _UIStatusBarStringView //Labels for general including clock? this also responsible for 4g?
+		-(void)setActiveColor:(UIColor *)color {
+		if (PXLEnabled && actualPercentage >= 20) {
+			if (isCharging == 1) {
+				%orig(ChargingColor);
+			} else if (actualPercentage <= 20) {
+				%orig(LowBatteryColor);
+			} else {
+				%orig(BatteryColor);
+			}
+		} else {
+			%orig;
+		}
+	}
+	%end
+	%hook _UIStatusBarWifiSignalView // no need to explain right?
+		-(void)setActiveColor:(UIColor *)color {
+		if (PXLEnabled && actualPercentage >= 20) {
+			if (isCharging == 1) {
+				%orig(ChargingColor);
+			} else if (actualPercentage <= 20) {
+				%orig(LowBatteryColor);
+			} else {
+				%orig(BatteryColor);
+			}
+		} else {
+			%orig;
+		}
+	}
+	%end
+	%hook _UIStatusBarCellularSignalView //_UIStatusBar (more likely incorrect handling) Wrong Hook (safe mode) The first attempt to color the status bar
+		-(void)setActiveColor:(UIColor *)color {
+		if (PXLEnabled && actualPercentage >= 20) {
+			if (isCharging == 1) {
+				%orig(ChargingColor);
+			} else if (actualPercentage <= 20) {
+				%orig(LowBatteryColor);
+			} else {
+				%orig(BatteryColor);
+			}
+		} else {
+			%orig;
+		}
+	}
 
-%hook _UIStatusBarWifiSignalView
--(void)setActiveColor:(UIColor *)color{
-	if (PXLEnabled && actualPercentage >= 20) {
-		if (isCharging == 1) { %orig(ChargingColor); }  
-			else if (actualPercentage <= 20) { %orig(LowBatteryColor); }
-				else { %orig(BatteryColor); }
-					} else {
-						%orig;
-						}
-						}
-%end
-// Find Time View.
-%hook _UIStatusBarStringView //Labels for general including clock?
--(void)setActiveColor:(UIColor *)color{
-	if (PXLEnabled && actualPercentage >= 20) {
-		if (isCharging == 1){ 
-			%orig(ChargingColor); }  
-			else if (actualPercentage <= 20){ 
-				%orig(LowBatteryColor); }
-				else{ 
-					%orig(BatteryColor); }
-					} else {
-						%orig;
-						}
-						}
-%end
-%hook _UIStatusBarActivityIndicator
-
--(void)setActiveColor:(UIColor *)color{
-	if (PXLEnabled && actualPercentage >= 20) {
-		if (isCharging == 1){ 
-			%orig(ChargingColor); }  
-			else if (actualPercentage <= 20){ 
-				%orig(LowBatteryColor); }
-				else{ 
-					%orig(BatteryColor); }
-					} else {
-						%orig;
-						}
-						}
-    %end
-
-%hook _UIStatusBarImageView // Small logos in status bar (Rotation, DND, Alarm...)
-
-      -(void)setActiveColor:(UIColor *)color{
-	if (PXLEnabled && actualPercentage >= 20) {
-		if (isCharging == 1){ 
-			%orig(ChargingColor); }  
-			else if (actualPercentage <= 20){ 
-				%orig(LowBatteryColor); }
-				else{ 
-					%orig(BatteryColor); }
-					} else {
-						%orig;
-						}
-						}
-    %end
-
-%end
+	%end
+	%end
 %ctor{
 	loader();
 	%init(PXLBattery);
