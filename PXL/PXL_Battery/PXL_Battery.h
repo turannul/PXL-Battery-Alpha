@@ -1,6 +1,7 @@
 #define kPrefDomain "xyz.turannul.pxlbattery"
 #include "SparkColourPickerUtils.h"
 #import <QuartzCore/CoreAnimation.h>
+#import <UIKit/UIKit.h>
 #import "Battery_Images.h"
 
 UIImageView* icon;
@@ -36,4 +37,8 @@ static double percentY;
 -(void)updateIconColor;
 -(double)getCurrentBattery;
 -(void)cleanUpViews;
+// Status Bar method
+-(void)setActiveColor:(UIColor *)color; // when coloring iOS's status bar a method required to add colors with if one exists i unable to find.
+// Much harder than coloring own code
+// https://developer.limneos.net/?ios=14.4&framework=UIKitCore.framework&header=_UIStatusBarWifiSignalView.h
 @end
