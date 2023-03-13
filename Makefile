@@ -8,10 +8,9 @@ DEBUG = 0
 INSTALL_TARGET_PROCESSES = SpringBoard
 
 SUBPROJECTS += PXL/PXL_Battery           # Basic code works no bugs, more features coming. Completed:%50
-#SUBPROJECTS += PXL/PXL_CC_Modules/ON-OFF # It works.  Compeleted:%100
+SUBPROJECTS += PXL/PXL_CC_Modules/ON-OFF # It works.  Compeleted:%100
 #SUBPROJECTS += PXL/PXL_CC_Modules/LPM    # Development Stage  Completed:%0 I don't know how to do that
 SUBPROJECTS += PXL/PXL_Prefs             # Basic switch works no bugs, more Features needs to be implemented. Completed:%50
-#Speed up compling with not compling uneeded parts
 
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/aggregate.mk
