@@ -289,7 +289,6 @@ Code sets both tint color of icon and fill using appropriate color value.
 %end
 
 // Purpose of the code coloring other items in the status bar Poor impelementation sends straight to safe mode. 
-// Inactive (cell wifi color unhandled)
 /* 
  *
  * -[_UIStatusBarCellularSignalView refreshIcon]: unrecognized selector sent to instance 0x10c83d380 thats bad idea lol.
