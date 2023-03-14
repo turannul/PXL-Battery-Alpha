@@ -1,3 +1,9 @@
-Low power control centre module /* on its way. */
-More options, more customization and effects to create /* on its way. */
-Make Repo depictions /* No one cares. */
+Low power control centre module /* Forget it, it's not going to happen. */
+More options, more bugs (features) to do /* on its way. */ 
+// Idea 1: Ability to set Fake Battery Percentage
+// Idea 2: Ability to show detailed battery information
+// Idea 3: ???
+- (void)Think
+{
+    // How it works?
+}
