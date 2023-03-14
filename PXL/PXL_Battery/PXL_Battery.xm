@@ -174,9 +174,8 @@ static void loader(){
 					Explanation and Workaround Idea:
 					I made a mistake here If BatteryColor = white <read from plist> (#000000[:1.00]) apply labelColor. `May, my logic is wrong?` 
 					labelColor is Dark/Light switch introduced in iOS 13. Problem is, Black required when some apps not support Dark Mode. (eg Cydia) 
-					Actual idea was to use labelColor if BatteryColor = white. But I failed to implement it. 
+					Actual idea was to use labelColor if BatteryColor = white. 
 					Here whats left behind my attepmts. 
-					See Attempts.txt 
 					-Turann_
 					*/
 
@@ -244,14 +243,15 @@ fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTempla
 		}
 	}
 }
-/*
-This code sets colors for battery icon & fill. 
+/* 
+Explanation required in depth because, too many if else confusing here is what does:
+This code sets colors for battery icon (frame) & fill (tick). 
 Colors are determined by whether device is in low power mode, charging, or has a certain battery percentage. 
 If device is in low power mode, colors will be set to LowPowerModeColor. 
 If charging = 1, colors will be set to ChargingColor. 
 If device has a battery percentage of 20% or greater, colors will be set to BatteryColor. 
 If device has a battery percentage of less than 20%, colors will be set to LowBatteryColor. 
-Code sets both tint color of icon and fill using appropriate color value.
+Code sets both tint color of icon (frame) & fill (tick) using appropriate color value.
 */
 %end
 %end
