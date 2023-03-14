@@ -1,3 +1,5 @@
+To-Do List 
+Finish FirstInteraction view. /* Planned. */
 Low power control centre module /* Forget it, it's not going to happen. */
 More options, more bugs (features) to do /* on its way. */ 
 // Idea 1: Ability to set Fake Battery Percentage
