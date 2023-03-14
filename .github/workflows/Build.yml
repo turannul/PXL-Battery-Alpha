@@ -30,6 +30,7 @@ jobs:
       - name: Export Theos Install # Do not remove this step its critical.
         run: |
           echo "export THEOS=${{ github.workspace }}/theos" >> .env
+          sudo xcode-select --switch /Applications/Xcode_11.7.app/Contents/Developer
 
       - name: Download iPhoneOS 14.1 SDK # Download SDKs
         run: |
