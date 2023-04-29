@@ -8,6 +8,8 @@ UIImageView* icon;
 UIImageView* fill;
 UIImageView* lockscreenBatteryIconView;
 UIImageView* lockscreenBatteryChargerView;
+//Testing
+UIView *squareView; // While i can use icon or fill this will be unnecessary, taking notes :like (emoji {vscode dont do that L}). Question is can i use icon or fill?
 
 UIColor *LowPowerModeColor;
 UIColor *ChargingColor;

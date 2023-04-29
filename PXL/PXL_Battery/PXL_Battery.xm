@@ -167,32 +167,28 @@ static void loader(){
 		if (isCharging){
 			fill.backgroundColor = ChargingColor;
 		} else {
-			if (actualPercentage >= 20) //{
-				// Attempt 9 
-//				if ([BatteryColor colourWithHexString:@"#FFFFFF:1.00"]) /* NOT sure about this */{ 
-					/* 
-					Explanation and Workaround Idea:
-					I made a mistake here If BatteryColor = white <read from plist> (#000000[:1.00]) apply labelColor. `May, my logic is wrong?` 
-					labelColor is Dark/Light switch introduced in iOS 13. Problem is, Black required when some apps not support Dark Mode. (eg Cydia) 
-					Actual idea was to use labelColor if BatteryColor = white. 
-					Here whats left behind my attepmts. 
-					-Turann_
-					*/
-
-				//	fill.backgroundColor = [UIColor labelColor];
-    			//} else { 
-    				fill.backgroundColor = BatteryColor; 
-    			//} 
-			/*} */else /*{*/
-				fill.backgroundColor = LowBatteryColor; /* This executed for some reason while battery not even low (Because of my [failed] workaround) */
-			//}
+			if (actualPercentage >= 20) {
+					/*A Square which will be invisible later on top right which battery here (what if battery on left?) I mentioned later fixed bound is bad IDEA*/
+					/* Thanks to Randy420 for the tip, 30.4.23/02:46 I noticed i can use fill.colour?*/
+					UIView *squareView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width - 30, 0, 40, 15)];
+					squareView.backgroundColor = [UIColor clearColor]; // Successfully added, any time turn to greenColor and see pnly issue is fixed width may not fit for other devices
+					[self addSubview:squareView];
+					if ([squareView.backgroundColor isEqual:BatteryColor]) { /* Seems i have problem with this line */
+	    				// Invert the colors
+	    				fill.backgroundColor = [UIColor blackColor];
+	    				squareView.backgroundColor = [UIColor whiteColor];
+					} else {
+						// Do nothing if colors not same.
+						fill.backgroundColor = BatteryColor;
+					} 
+				} else {
+					fill.backgroundColor = LowBatteryColor;
+				}
+			}
 		}
-	}
-	[self addSubview:fill];
-	} 
-	}
+	}}
+				[self addSubview:fill];
 
-//UIImageView *percentageLabel = 
 //-----------------------------------------------
 //Loading Frame
 	if (actualPercentage >= 6)
