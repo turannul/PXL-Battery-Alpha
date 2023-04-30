@@ -159,40 +159,22 @@ static void loader(){
 			[fill setContentMode:UIViewContentModeScaleAspectFill];
 			[fill setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];	
 //-----------------------------------------------
-
 //Colors
 	if ([self saverModeActive]){
-		fill.backgroundColor = LowPowerModeColor; //This should return correctly formatted value.
+		fill.backgroundColor = LowPowerModeColor;
 	} else {
 		if (isCharging){
 			fill.backgroundColor = ChargingColor;
 		} else {
-			if (actualPercentage >= 20) //{
-				// Attempt 9 
-//				if ([BatteryColor colourWithHexString:@"#FFFFFF:1.00"]) /* NOT sure about this */{ 
-					/* 
-					Explanation and Workaround Idea:
-					I made a mistake here If BatteryColor = white <read from plist> (#000000[:1.00]) apply labelColor. `May, my logic is wrong?` 
-					labelColor is Dark/Light switch introduced in iOS 13. Problem is, Black required when some apps not support Dark Mode. (eg Cydia) 
-					Actual idea was to use labelColor if BatteryColor = white. 
-					Here whats left behind my attepmts. 
-					-Turann_
-					*/
-
-				//	fill.backgroundColor = [UIColor labelColor];
-    			//} else { 
-    				fill.backgroundColor = BatteryColor; 
-    			//} 
-			/*} */else /*{*/
-				fill.backgroundColor = LowBatteryColor; /* This executed for some reason while battery not even low (Because of my [failed] workaround) */
-			//}
+			if (actualPercentage >= 20)
+				fill.backgroundColor = BatteryColor;  
+			else 
+				fill.backgroundColor = LowBatteryColor;
+					[self addSubview:fill];
+			}
 		}
 	}
-	[self addSubview:fill];
-	} 
-	}
-
-//UIImageView *percentageLabel = 
+		}
 //-----------------------------------------------
 //Loading Frame
 	if (actualPercentage >= 6)
@@ -208,7 +190,7 @@ static void loader(){
 	if (!PXLEnabled)
 		return;
 
-icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]; // What this does actually?
+icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]; 
 fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
 	if (![self saverModeActive]){
