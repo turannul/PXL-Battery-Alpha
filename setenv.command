@@ -13,6 +13,7 @@ theoschk(){
     else 
         printf "\033[31m ==> It seems like THEOS is not installed or its installation path is incorrect."
         printf "\033[33m ==> Please follow the instructions at https://theos.dev/docs/installation to install it properly."
+        exit 98
     fi 
 }
 
@@ -34,9 +35,9 @@ wgetchk(){
 
 sdkchk(){
     if ! test -e "$THEOS/sdks/14.1.zip"; then
-        printf "\033[33m ==> \033[0m Downloading and installing SDK\n" && wget "$SDK_URL" -O $THEOS/sdks/14.1.zip > /dev/null 2>&1 && unzip -q $THEOS/sdks/14.1.zip -d $THEOS/sdks/  && rm $THEOS/sdks/14.1.zip 2>&1 && printf "\033[32m ==> \033[0m SDK successfully installed\n" || printf "\n\033[31m ==> \033[0m Oops! something goes wrong."
+        printf "\033[33m ==> \033[0m Downloading and installing 14.1 SDK\n" && wget "$SDK_URL" -O $THEOS/sdks/14.1.zip > /dev/null 2>&1 && unzip -q $THEOS/sdks/14.1.zip -d $THEOS/sdks/  && rm $THEOS/sdks/14.1.zip 2>&1 && printf "\033[32m ==> \033[0m SDK successfully installed\n" || printf "\n\033[31m ==> \033[0m Oops! something goes wrong."
     else
-        printf "\033[32m ==> \033[0m SDK is already installed\n"
+        printf "\033[32m ==> \033[0m 14.1 SDK is already installed\n"
     fi
 }
 
@@ -69,4 +70,11 @@ sdkchk
 viewchk
 utilschk
 pickerchk
-printf "\033[32m ==> \033[0m All done! You can now compile PXL\n"
+printf "\033[32m ==> \033[0m All done! You can now compile PXL :)\n"
+
+read -p "Compile now? [y/n]: " choice
+if [[ "$choice" =~ ^[Yy]$ ]]; then
+    make clean package
+else
+    printf "\033[33m ==> \033[0m use 'make clean package' when you want to."
+fi
