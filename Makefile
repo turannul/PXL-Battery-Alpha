@@ -2,8 +2,8 @@ export ARCHS = arm64 arm64e
 export TARGET = iphone:clang:latest:13.0
 export SYSROOT = $(THEOS)/sdks/iPhoneOS14.1.sdk
 
-FINALPACKAGE = 1
-DEBUG = 0
+FINALPACKAGE = 0
+DEBUG = 1
 
 INSTALL_TARGET_PROCESSES = SpringBoard
 
