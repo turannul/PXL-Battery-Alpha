@@ -10,24 +10,10 @@
     return self;
 }
 
--(NSArray *)specifiers {
-    self.plistName = @"MainPrefs";
-    NSMutableArray *updatedSpecifiers = [[super specifiers] mutableCopy];
-    
-    if (SingleColorMode) {        
-        NSArray *barIdentifiers = @[@"Bar1", @"Bar2", @"Bar3", @"Bar4", @"Bar5"];
-        
-        NSMutableArray *specifiersToRemove = [NSMutableArray array];
-        for (PSSpecifier *specifier in updatedSpecifiers) {
-            if ([barIdentifiers containsObject:specifier.identifier]) {
-                [specifiersToRemove addObject:specifier];
-            }
-        }
-        
-        [updatedSpecifiers removeObjectsInArray:specifiersToRemove];
-    }
-    
-    return updatedSpecifiers;
+- (NSArray *)specifiers {
+	self.plistName = @"vs";
+	self.chosenIDs = @[@"b0", @"b1", @"b2", @"b3", @"b4", @"b5"];
+	return [super specifiers];
 }
 
 
@@ -109,11 +95,38 @@
 }
 
 -(void)setPreferenceValue:(id)value specifier:(PSSpecifier *)specifier {
-    [super setPreferenceValue:value specifier:specifier];
-    if ([specifier.identifier isEqualToString:@"SingleColorMode"]) {
-        SingleColorMode = [value boolValue];
-        [self reloadSpecifiers];
-    }
+	[super setPreferenceValue:value specifier:specifier];
+	if (GetBool(@"SingleColorMode", YES, @"com.randy420.420tools")){
+		[self hideMe:@"b1" animate:YES];
+		[self hideMe:@"b2" animate:YES];
+		[self hideMe:@"b3" animate:YES];
+		[self hideMe:@"b4" animate:YES];
+		[self hideMe:@"b5" animate:YES];
+	}else{
+		[self showMe:@"b5" after:@"b0" animate:YES];
+		[self showMe:@"b4" after:@"b0" animate:YES];
+		[self showMe:@"b3" after:@"b0" animate:YES];
+		[self showMe:@"b2" after:@"b0" animate:YES];
+		[self showMe:@"b1" after:@"b0" animate:YES];
+	}
+}
+
+-(void)reloadSpecifiers{
+	[super reloadSpecifiers];
+
+	if (GetBool(@"SingleColorMode", YES, @"com.randy420.420tools")){
+		[self hideMe:@"b1" animate:YES];
+		[self hideMe:@"b2" animate:YES];
+		[self hideMe:@"b3" animate:YES];
+		[self hideMe:@"b4" animate:YES];
+		[self hideMe:@"b5" animate:YES];
+	}else{
+		[self showMe:@"b5" after:@"b0" animate:YES];
+		[self showMe:@"b4" after:@"b0" animate:YES];
+		[self showMe:@"b3" after:@"b0" animate:YES];
+		[self showMe:@"b2" after:@"b0" animate:YES];
+		[self showMe:@"b1" after:@"b0" animate:YES];
+	}
 }
 
 // Buttons
