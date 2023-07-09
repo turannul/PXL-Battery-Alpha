@@ -29,7 +29,7 @@ static void loader(){
 }
 
 %group PXLBattery // Here go again
-%hook _UIStaticBatteryView// Control Center Battery
+%hook _UIStaticBatteryView // Control Center Battery
 -(bool) _showsInlineChargingIndicator{return PXLEnabled?NO:%orig;} // Hide charging bolt
 -(bool) _shouldShowBolt{return PXLEnabled?NO:%orig;} // Hide charging bolt x2
 -(id) bodyColor{return PXLEnabled?[UIColor clearColor]:%orig;} // Hide the body
@@ -160,6 +160,33 @@ static void loader(){
 			[fill setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];	
 //-----------------------------------------------
 //Colors
+			if ([self saverModeActive]){
+				fill.backgroundColor = LowPowerModeColor;
+			} else if (isCharging){
+				fill.backgroundColor = ChargingColor;
+			} else if (i == 1) {
+				fill.backgroundColor = LowBatteryColor; // Custom color for the first tick
+			} else if (i == 2) {
+				CGFloat greenValue = (actualPercentage - 20) / 80.0; // Calculate the green color value based on battery percentage
+				fill.backgroundColor = [UIColor colorWithRed:1.0 green:greenValue blue:0.0 alpha:1.0]; // Custom color for the second tick (gradual transition from red to green)
+			} else if (i == 3) {
+				CGFloat greenValue = (actualPercentage - 40) / 80.0; // Calculate the green color value based on battery percentage
+				fill.backgroundColor = [UIColor colorWithRed:1.0 green:greenValue blue:0.0 alpha:1.0]; // Custom color for the second tick (gradual transition from red to green)
+			} else if (i == 4) {
+				CGFloat greenValue = (actualPercentage - 60) / 80.0; // Calculate the green color value based on battery percentage
+				fill.backgroundColor = [UIColor colorWithRed:1.0 green:greenValue blue:0.0 alpha:1.0]; // Custom color for the second tick (gradual transition from red to green)
+			} else if (i == 5) {
+    			CGFloat greenValue = (actualPercentage - 80) / 80.0; // Calculate the green color value based on battery percentage
+    			fill.backgroundColor = [UIColor colorWithRed:1.0 green:greenValue blue:0.0 alpha:1.0]; // Custom color for the second tick (gradual transition from red to green)
+			} else {
+				if (actualPercentage >= 20)
+					fill.backgroundColor = BatteryColor;
+				else
+					fill.backgroundColor = LowBatteryColor;
+			}
+
+			[self addSubview:fill];
+/*
 	if ([self saverModeActive]){
 		fill.backgroundColor = LowPowerModeColor;
 	} else {
@@ -172,7 +199,7 @@ static void loader(){
 				fill.backgroundColor = LowBatteryColor;
 			}
 		}
-		[self addSubview:fill];
+		[self addSubview:fill];*/
 	}
 }
 //-----------------------------------------------

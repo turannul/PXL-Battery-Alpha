@@ -9,10 +9,10 @@ printf "\033[32m ==> \033[0m Hello, this is the setup required to compile PXL.\n
 
 theoschk(){
     if [[ -d "$THEOS" ]]; then
-         printf "\033[32m ==> \033[0m THEOS is already installed at: %s ""$THEOS\n"
+         printf "\033[32m ==> \033[0m THEOS is already installed at:%s" "$THEOS\n"
     else 
         printf "\033[31m ==> It seems like THEOS is not installed or its installation path is incorrect: %s" "$THEOS"
-        printf "\033[33m ==> Please follow the instructions at https://theos.dev/docs/installation to install it properly.\n"
+        printf "\n\033[33m ==> Please follow the instructions at https://theos.dev/docs/installation to install it properly.\n"
         exit 98
     fi 
 }
