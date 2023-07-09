@@ -46,7 +46,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 		</dict>
-		<dict>
+		<dict>  <!-- b0 -->
 			<key>PostNotification</key>
 			<string>xyz.turannul.pxlbattery.settingschanged</string>
 			<key>cell</key>
@@ -55,11 +55,13 @@
 			<true/>
 			<key>defaults</key>
 			<string>xyz.turannul.pxlbattery</string>
+			<key>id</key>
+			<string>b0</string>
 			<key>key</key>
 			<string>SingleColorMode</string>
 			<key>label</key>
 			<string>Single Color Mode</string>
-		</dict>
+		</dict> <!-- b0 -->
 		<dict>
 			<key>PostNotification</key>
 			<string>xyz.turannul.pxlbattery.settingschanged</string>
@@ -85,111 +87,13 @@
 			<key>label</key>
 			<string>Battery Color</string>
 		</dict>
-		<dict>
+		<dict>  <!-- b1 -->
 			<key>PostNotification</key>
 			<string>xyz.turannul.pxlbattery.settingschanged</string>
 			<key>defaults</key> <!-- This key fixes creating <(null)>.plist -->
 			<string>xyz.turannul.pxlbattery</string>
-			<key>cell</key>
-			<string>PSLinkCell</string>
-			<key>cellClass</key>
-			<string>SparkColourPickerCell</string>
-			<key>libsparkcolourpicker</key>
-				<dict>
-					<key>defaults</key> <!-- This key fixes creating BatteryColor.plist -->
-					<string>xyz.turannul.pxlbattery</string>
-					<key>fallback</key>
-					<string>#FFFFFF</string>
-					<key>alpha</key>
-					<true/>
-					<key>PreviewGradient</key>
-					<false/>
-				</dict>
-			<key>label</key>
-			<string>Bar 5 Color</string>
-			<key>key</key>
-			<string>Bar5</string>
-		</dict>
-		<dict>
-			<key>PostNotification</key>
-			<string>xyz.turannul.pxlbattery.settingschanged</string>
-			<key>defaults</key> <!-- This key fixes creating <(null)>.plist -->
-			<string>xyz.turannul.pxlbattery</string>
-			<key>cell</key>
-			<string>PSLinkCell</string>
-			<key>cellClass</key>
-			<string>SparkColourPickerCell</string>
-			<key>libsparkcolourpicker</key>
-				<dict>
-					<key>defaults</key> <!-- This key fixes creating BatteryColor.plist -->
-					<string>xyz.turannul.pxlbattery</string>
-					<key>fallback</key>
-					<string>#FFFFFF</string>
-					<key>alpha</key>
-					<true/>
-					<key>PreviewGradient</key>
-					<false/>
-				</dict>
-			<key>label</key>
-			<string>Bar 4 Color</string>
-			<key>key</key>
-			<string>Bar4</string>
-		</dict>
-		<dict>
-			<key>PostNotification</key>
-			<string>xyz.turannul.pxlbattery.settingschanged</string>
-			<key>defaults</key> <!-- This key fixes creating <(null)>.plist -->
-			<string>xyz.turannul.pxlbattery</string>
-			<key>cell</key>
-			<string>PSLinkCell</string>
-			<key>cellClass</key>
-			<string>SparkColourPickerCell</string>
-			<key>libsparkcolourpicker</key>
-				<dict>
-					<key>defaults</key> <!-- This key fixes creating BatteryColor.plist -->
-					<string>xyz.turannul.pxlbattery</string>
-					<key>fallback</key>
-					<string>#FFFFFF</string>
-					<key>alpha</key>
-					<true/>
-					<key>PreviewGradient</key>
-					<false/>
-				</dict>
-			<key>label</key>
-			<string>Bar 3 Color</string>
-			<key>key</key>
-			<string>Bar3</string>
-		</dict>
-		<dict>
-			<key>PostNotification</key>
-			<string>xyz.turannul.pxlbattery.settingschanged</string>
-			<key>defaults</key> <!-- This key fixes creating <(null)>.plist -->
-			<string>xyz.turannul.pxlbattery</string>
-			<key>cell</key>
-			<string>PSLinkCell</string>
-			<key>cellClass</key>
-			<string>SparkColourPickerCell</string>
-			<key>libsparkcolourpicker</key>
-				<dict>
-					<key>defaults</key> <!-- This key fixes creating BatteryColor.plist -->
-					<string>xyz.turannul.pxlbattery</string>
-					<key>fallback</key>
-					<string>#FFFFFF</string>
-					<key>alpha</key>
-					<true/>
-					<key>PreviewGradient</key>
-					<false/>
-				</dict>
-			<key>label</key>
-			<string>Bar 2 Color</string>
-			<key>key</key>
-			<string>Bar2</string>
-		</dict>
-		<dict>
-			<key>PostNotification</key>
-			<string>xyz.turannul.pxlbattery.settingschanged</string>
-			<key>defaults</key> <!-- This key fixes creating <(null)>.plist -->
-			<string>xyz.turannul.pxlbattery</string>
+			<key>id</key>
+   			<string>b1</string>
 			<key>cell</key>
 			<string>PSLinkCell</string>
 			<key>cellClass</key>
@@ -209,7 +113,115 @@
 			<string>Bar 1 Color</string>
 			<key>key</key>
 			<string>Bar1</string>
-		</dict>
+		</dict> <!-- b1 -->
+		<dict>  <!-- b2 -->
+			<key>PostNotification</key>
+			<string>xyz.turannul.pxlbattery.settingschanged</string>
+			<key>defaults</key> <!-- This key fixes creating <(null)>.plist -->
+			<string>xyz.turannul.pxlbattery</string>
+			<key>id</key>
+   			<string>b2</string>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>SparkColourPickerCell</string>
+			<key>libsparkcolourpicker</key>
+				<dict>
+					<key>defaults</key> <!-- This key fixes creating BatteryColor.plist -->
+					<string>xyz.turannul.pxlbattery</string>
+					<key>fallback</key>
+					<string>#FFFFFF</string>
+					<key>alpha</key>
+					<true/>
+					<key>PreviewGradient</key>
+					<false/>
+				</dict>
+			<key>label</key>
+			<string>Bar 2 Color</string>
+			<key>key</key>
+			<string>Bar2</string>
+		</dict> <!-- b2 -->
+		<dict>  <!-- b3 -->
+			<key>PostNotification</key>
+			<string>xyz.turannul.pxlbattery.settingschanged</string>
+			<key>defaults</key> <!-- This key fixes creating <(null)>.plist -->
+			<string>xyz.turannul.pxlbattery</string>
+			<key>id</key>
+   			<string>b3</string>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>SparkColourPickerCell</string>
+			<key>libsparkcolourpicker</key>
+				<dict>
+					<key>defaults</key> <!-- This key fixes creating BatteryColor.plist -->
+					<string>xyz.turannul.pxlbattery</string>
+					<key>fallback</key>
+					<string>#FFFFFF</string>
+					<key>alpha</key>
+					<true/>
+					<key>PreviewGradient</key>
+					<false/>
+				</dict>
+			<key>label</key>
+			<string>Bar 3 Color</string>
+			<key>key</key>
+			<string>Bar3</string>
+		</dict> <!-- b3 -->
+		<dict>  <!-- b4 -->
+			<key>PostNotification</key>
+			<string>xyz.turannul.pxlbattery.settingschanged</string>
+			<key>defaults</key> <!-- This key fixes creating <(null)>.plist -->
+			<string>xyz.turannul.pxlbattery</string>
+			<key>id</key>
+   			<string>b4</string>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>SparkColourPickerCell</string>
+			<key>libsparkcolourpicker</key>
+				<dict>
+					<key>defaults</key> <!-- This key fixes creating BatteryColor.plist -->
+					<string>xyz.turannul.pxlbattery</string>
+					<key>fallback</key>
+					<string>#FFFFFF</string>
+					<key>alpha</key>
+					<true/>
+					<key>PreviewGradient</key>
+					<false/>
+				</dict>
+			<key>label</key>
+			<string>Bar 4 Color</string>
+			<key>key</key>
+			<string>Bar4</string>
+		</dict> <!-- b4 -->
+		<dict>  <!-- b5 -->
+			<key>PostNotification</key>
+			<string>xyz.turannul.pxlbattery.settingschanged</string>
+			<key>defaults</key> <!-- This key fixes creating <(null)>.plist -->
+			<string>xyz.turannul.pxlbattery</string>
+			<key>id</key>
+   			<string>b5</string>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>SparkColourPickerCell</string>
+			<key>libsparkcolourpicker</key>
+				<dict>
+					<key>defaults</key> <!-- This key fixes creating BatteryColor.plist -->
+					<string>xyz.turannul.pxlbattery</string>
+					<key>fallback</key>
+					<string>#FFFFFF</string>
+					<key>alpha</key>
+					<true/>
+					<key>PreviewGradient</key>
+					<false/>
+				</dict>
+			<key>label</key>
+			<string>Bar 5 Color</string>
+			<key>key</key>
+			<string>Bar5</string>
+		</dict> <!-- b5 -->
 		<dict>
 			<key>PostNotification</key>
 			<string>xyz.turannul.pxlbattery.settingschanged</string>
