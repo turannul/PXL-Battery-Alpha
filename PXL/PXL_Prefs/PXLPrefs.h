@@ -2,7 +2,7 @@
 #import <Foundation/Foundation.h>
 #import "Functions/Turann.h"
 #import "Functions/SparkColourPickerUtils.h"
-@interface PXLPrefs:Turann{}
+@interface PXLPrefs:Turann{BOOL SingleColorMode;}
 @property (nonatomic, retain) UIBarButtonItem *respringApplyButton;
 @property (nonatomic, retain) UIBarButtonItem *respringConfirmButton;
 @end

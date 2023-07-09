@@ -14,6 +14,7 @@ static BOOL GetBool(NSString *pkey, BOOL defaultValue){
 
 static void loader(){
 	PXLEnabled = GetBool(@"pxlEnabled", YES);
+	SingleColorMode = GetBool(@"SingleColorMode",YES);
 
 	NSString *Color = GetNSString(@"BatteryColor", @"#FFFFFF");
 	BatteryColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
@@ -179,7 +180,9 @@ static void loader(){
 				fill.backgroundColor = LowPowerModeColor;
 			} else if (isCharging){
 				fill.backgroundColor = ChargingColor;
-			} else if (i == 1 && actualPercentage >=  0) {
+			} else if (SingleColorMode && (i >= 1 && i <= 5)) {
+				fill.backgroundColor = BatteryColor;
+			} else if (i == 1 && actualPercentage >=  0) { 
 				fill.backgroundColor = Bar1;
 			} else if (i == 2 && actualPercentage >= 20) {
 				fill.backgroundColor = Bar2;

@@ -21,6 +21,7 @@ UIColor *Bar5;
 
 BOOL isCharging = NO;
 BOOL PXLEnabled;
+BOOL SingleColorMode;
 
 double actualPercentage;
 static double percentX;
