@@ -46,7 +46,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 		</dict>
-		<dict>
+		<dict>  <!-- b0 -->
 			<key>PostNotification</key>
 			<string>xyz.turannul.pxlbattery.settingschanged</string>
 			<key>cell</key>
@@ -55,11 +55,13 @@
 			<true/>
 			<key>defaults</key>
 			<string>xyz.turannul.pxlbattery</string>
+			<key>id</key>
+			<string>b0</string>
 			<key>key</key>
 			<string>SingleColorMode</string>
 			<key>label</key>
 			<string>Single Color Mode</string>
-		</dict>
+		</dict> <!-- b0 -->
 		<dict>
 			<key>PostNotification</key>
 			<string>xyz.turannul.pxlbattery.settingschanged</string>
