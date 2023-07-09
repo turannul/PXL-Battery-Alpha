@@ -26,6 +26,21 @@ static void loader(){
 
 	Color = GetNSString(@"ChargingColor", @"#00FF0C");
 	ChargingColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#00FF0C"];
+
+	Color = GetNSString(@"Bar1", @"#FFFFFF");
+	Bar1 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
+
+	Color = GetNSString(@"Bar2", @"#FFFFFF");
+	Bar2 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
+
+	Color = GetNSString(@"Bar3", @"#FFFFFF");
+	Bar3 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
+
+	Color = GetNSString(@"Bar4", @"#FFFFFF");
+	Bar4 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
+
+	Color = GetNSString(@"Bar5", @"#FFFFFF");
+	Bar5 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
 }
 
 %group PXLBattery // Here go again
@@ -164,44 +179,21 @@ static void loader(){
 				fill.backgroundColor = LowPowerModeColor;
 			} else if (isCharging){
 				fill.backgroundColor = ChargingColor;
-			} else if (i == 1) {
-				fill.backgroundColor = LowBatteryColor; // Custom color for the first tick
-			} else if (i == 2) {
-				CGFloat greenValue = (actualPercentage - 20) / 80.0; // Calculate the green color value based on battery percentage
-				fill.backgroundColor = [UIColor colorWithRed:1.0 green:greenValue blue:0.0 alpha:1.0]; // Custom color for the second tick (gradual transition from red to green)
-			} else if (i == 3) {
-				CGFloat greenValue = (actualPercentage - 40) / 80.0; // Calculate the green color value based on battery percentage
-				fill.backgroundColor = [UIColor colorWithRed:1.0 green:greenValue blue:0.0 alpha:1.0]; // Custom color for the second tick (gradual transition from red to green)
-			} else if (i == 4) {
-				CGFloat greenValue = (actualPercentage - 60) / 80.0; // Calculate the green color value based on battery percentage
-				fill.backgroundColor = [UIColor colorWithRed:1.0 green:greenValue blue:0.0 alpha:1.0]; // Custom color for the second tick (gradual transition from red to green)
-			} else if (i == 5) {
-    			CGFloat greenValue = (actualPercentage - 80) / 80.0; // Calculate the green color value based on battery percentage
-    			fill.backgroundColor = [UIColor colorWithRed:1.0 green:greenValue blue:0.0 alpha:1.0]; // Custom color for the second tick (gradual transition from red to green)
-			} else {
-				if (actualPercentage >= 20)
-					fill.backgroundColor = BatteryColor;
-				else
-					fill.backgroundColor = LowBatteryColor;
-			}
-
-			[self addSubview:fill];
-/*
-	if ([self saverModeActive]){
-		fill.backgroundColor = LowPowerModeColor;
-	} else {
-		if (isCharging){
-			fill.backgroundColor = ChargingColor;
-		} else {
+			} else if (i == 1 && actualPercentage >=  0) {
+				fill.backgroundColor = Bar1;
+			} else if (i == 2 && actualPercentage >= 20) {
+				fill.backgroundColor = Bar2;
+			} else if (i == 3 && actualPercentage >= 40) {
+				fill.backgroundColor = Bar3;
+			} else if (i == 4 && actualPercentage >= 60) {
+				fill.backgroundColor = Bar4;
+			} else if (i == 5 && actualPercentage >= 80) {
+    			fill.backgroundColor = Bar5;
 			if (actualPercentage >= 20)
-				fill.backgroundColor = BatteryColor;  
-			else 
+				fill.backgroundColor = BatteryColor;
+			else
 				fill.backgroundColor = LowBatteryColor;
-			}
-		}
-		[self addSubview:fill];*/
-	}
-}
+			} [self addSubview:fill]; } }
 //-----------------------------------------------
 //Loading Frame
 	if (actualPercentage >= 6)

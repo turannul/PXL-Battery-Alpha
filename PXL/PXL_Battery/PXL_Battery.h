@@ -13,6 +13,11 @@ UIColor *LowPowerModeColor;
 UIColor *ChargingColor;
 UIColor *LowBatteryColor;
 UIColor *BatteryColor;
+UIColor *Bar1;
+UIColor *Bar2;
+UIColor *Bar3;
+UIColor *Bar4;
+UIColor *Bar5;
 
 BOOL isCharging = NO;
 BOOL PXLEnabled;
