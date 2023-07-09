@@ -9,17 +9,33 @@
 	self = [super init];
 	return self;
 }
-
--(NSArray *)specifiers{
-	self.plistName = @"MainPrefs";
-	return [super specifiers];
+-(NSArray *)specifiers {
+    self.plistName = @"MainPrefs";
+    NSMutableArray *updatedSpecifiers = [[super specifiers] mutableCopy];
+    
+    if (SingleColorMode) {        
+        PSSpecifier *bar1Specifier = [self specifierForID:@"Bar1"];
+        [updatedSpecifiers removeObject:bar1Specifier];
+        
+        PSSpecifier *bar2Specifier = [self specifierForID:@"Bar2"];
+        [updatedSpecifiers removeObject:bar2Specifier];
+        
+        PSSpecifier *bar3Specifier = [self specifierForID:@"Bar3"];
+        [updatedSpecifiers removeObject:bar3Specifier];
+        
+        PSSpecifier *bar4Specifier = [self specifierForID:@"Bar4"];
+        [updatedSpecifiers removeObject:bar4Specifier];
+        
+        PSSpecifier *bar5Specifier = [self specifierForID:@"Bar5"];
+        [updatedSpecifiers removeObject:bar5Specifier];
+    }
+    return updatedSpecifiers;
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
-	[super viewWillDisappear:animated];
-	[UIView animateWithDuration:INFINITY animations:^{
-		[[[[self navigationController] navigationController] navigationBar] setTintColor:nil];
-	}];
+    [super viewWillDisappear:animated];
+    [UIView animateWithDuration:INFINITY animations:^{
+        [[[[self navigationController] navigationController] navigationBar] setTintColor:nil];}];
 }
 
 -(void)respringApply{
@@ -77,6 +93,14 @@
 {
 	[super viewDidLoad];
 	[self respringApply];
+}
+
+-(void)setPreferenceValue:(id)value specifier:(PSSpecifier *)specifier {
+    [super setPreferenceValue:value specifier:specifier];
+    if ([specifier.identifier isEqualToString:@"SingleColorMode"]) {
+        SingleColorMode = [value boolValue];
+        [self reloadSpecifiers];
+    }
 }
 
 // Buttons
