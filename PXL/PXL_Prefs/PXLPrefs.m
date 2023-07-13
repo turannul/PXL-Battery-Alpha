@@ -12,7 +12,7 @@
 
 - (NSArray *)specifiers {
 	self.plistName = @"MainPrefs";
-	self.chosenIDs = @[@"b0", @"b1", @"b2", @"b3", @"b4", @"b5"];
+    self.chosenIDs = @[@"switch0", @"switch1", @"a0",@"a1",@"a2",@"a3",@"a4",@"a5",@"a6",@"a7",@"a8",@"a9",@"a10",@"a11",@"a12",@"a13",@"a14",@"a15",@"a16",@"a17",@"a18",@"a19",@"a20",@"a21"];
 	return [super specifiers];
 }
 
@@ -44,22 +44,22 @@
 }
 
 - (void)resetPrefs {
-    UIBarButtonItem *resetButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset Preferences" style:UIBarButtonItemStylePlain target:self action:@selector(resetConfirm)];
+    UIBarButtonItem *resetButton = [[UIBarButtonItem alloc] initWithTitle:@"Restore Defaults?" style:UIBarButtonItemStylePlain target:self action:@selector(Confirm)];
     resetButton.tintColor = [UIColor redColor];
     self.navigationItem.rightBarButtonItem = resetButton;
 }
 
-- (void)resetConfirm {
+- (void)Confirm {
     if ([self.navigationItem.rightBarButtonItem.title isEqualToString:@"Are you sure?"]) {
         [self resetprefs];
         [self reloadSpecifiers];
         
-        for (int i = 3; i > 0; i--) {
+        for (int i = 3; i > -1; i--) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((3-i) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"Respringing in %d", i];
             });
             
-            if (i == 1) {
+            if (i == 0) {
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [self respring];
                 });
@@ -95,42 +95,120 @@
 }
 
 -(void)setPreferenceValue:(id)value specifier:(PSSpecifier *)specifier {
-	[super setPreferenceValue:value specifier:specifier];
+    [super setPreferenceValue:value specifier:specifier];
+    NSString *key = [specifier propertyForKey:@"key"];
 
-	NSString *key = [specifier propertyForKey:@"key"];
-	if ([key isEqualToString:@"SingleColorMode"]){
+    	/*if ([key isEqualToString:@"CustomTicks"]){
 		if ([value boolValue]){
-			[self hideMe:@"b1" animate:YES];
-			[self hideMe:@"b2" animate:YES];
-			[self hideMe:@"b3" animate:YES];
-			[self hideMe:@"b4" animate:YES];
-			[self hideMe:@"b5" animate:YES];
+			[self hideMe:@"a4" animate:YES];
+			[self hideMe:@"a5" animate:YES];
+			[self hideMe:@"a6" animate:YES];
+			[self hideMe:@"a7" animate:YES];
+			[self hideMe:@"a8" animate:YES];
 		}else{
-			[self showMe:@"b5" after:@"b0" animate:YES];
-			[self showMe:@"b4" after:@"b0" animate:YES];
-			[self showMe:@"b3" after:@"b0" animate:YES];
-			[self showMe:@"b2" after:@"b0" animate:YES];
-			[self showMe:@"b1" after:@"b0" animate:YES];
-		}
-	}
+			[self showMe:@"a4" after:@"switch1" animate:YES];
+			[self showMe:@"a5" after:@"switch1" animate:YES];
+			[self showMe:@"a6" after:@"switch1" animate:YES];
+			[self showMe:@"a7" after:@"switch1" animate:YES];
+			[self showMe:@"a7" after:@"switch1" animate:YES];
+		}*/
+    if ([key isEqualToString:@"pxlEnabled"]) {
+        BOOL pxlEnabled = [value boolValue];
+        if (!pxlEnabled) {
+            [self hideMe:@"a0" animate:YES];
+            [self hideMe:@"a1" animate:YES];
+            [self hideMe:@"a2" animate:YES];
+            [self hideMe:@"a3" animate:YES];
+            [self hideMe:@"a4" animate:YES];
+            [self hideMe:@"a5" animate:YES];
+            [self hideMe:@"a6" animate:YES];
+            [self hideMe:@"a7" animate:YES];
+            [self hideMe:@"a8" animate:YES];
+            [self hideMe:@"a9" animate:YES];
+            [self hideMe:@"a10" animate:YES];
+            [self hideMe:@"a11" animate:YES];
+            [self hideMe:@"a12" animate:YES];
+            [self hideMe:@"a14" animate:YES];
+            [self hideMe:@"a15" animate:YES];
+            [self hideMe:@"a16" animate:YES];
+            [self hideMe:@"a17" animate:YES];
+            [self hideMe:@"a18" animate:YES];
+            [self hideMe:@"a19" animate:YES];
+            [self hideMe:@"a20" animate:YES];
+            [self hideMe:@"a21" animate:YES];
+        } else {
+            [self showMe:@"a0" after:@"switch0" animate:YES];
+            [self showMe:@"a1" after:@"a0" animate:YES];
+            [self showMe:@"a2" after:@"a1" animate:YES];
+            [self showMe:@"a3" after:@"a2" animate:YES];
+            [self showMe:@"a4" after:@"a3" animate:YES];
+            [self showMe:@"a5" after:@"a4" animate:YES];
+            [self showMe:@"a6" after:@"a5" animate:YES];
+            [self showMe:@"a7" after:@"a6" animate:YES];
+            [self showMe:@"a8" after:@"a7" animate:YES];
+            [self showMe:@"a9" after:@"a8" animate:YES];
+            [self showMe:@"a10" after:@"a9" animate:YES];
+            [self showMe:@"a11" after:@"a10" animate:YES];
+            [self showMe:@"a14" after:@"a11" animate:YES];
+            [self showMe:@"a15" after:@"a14" animate:YES];
+            [self showMe:@"a16" after:@"a15" animate:YES];
+            [self showMe:@"a17" after:@"a16" animate:YES];
+            [self showMe:@"a18" after:@"a17" animate:YES];
+            [self showMe:@"a19" after:@"a18" animate:YES];
+            [self showMe:@"a20" after:@"a19" animate:YES];
+            [self showMe:@"a21" after:@"a20" animate:YES];
+        }
+    }
 }
 
--(void)reloadSpecifiers{
-	[super reloadSpecifiers];
+-(void)reloadSpecifiers {
+    [super reloadSpecifiers];
 
-	if (GetBool(@"SingleColorMode", YES, @"com.randy420.420tools")){
-		[self hideMe:@"b1" animate:YES];
-		[self hideMe:@"b2" animate:YES];
-		[self hideMe:@"b3" animate:YES];
-		[self hideMe:@"b4" animate:YES];
-		[self hideMe:@"b5" animate:YES];
-	}else{
-		[self showMe:@"b5" after:@"b0" animate:YES];
-		[self showMe:@"b4" after:@"b0" animate:YES];
-		[self showMe:@"b3" after:@"b0" animate:YES];
-		[self showMe:@"b2" after:@"b0" animate:YES];
-		[self showMe:@"b1" after:@"b0" animate:YES];
-	}
+    BOOL pxlEnabled = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
+    if (!pxlEnabled) {
+        [self hideMe:@"a0" animate:YES];
+        [self hideMe:@"a1" animate:YES];
+        [self hideMe:@"a2" animate:YES];
+        [self hideMe:@"a3" animate:YES];
+        [self hideMe:@"a4" animate:YES];
+        [self hideMe:@"a5" animate:YES];
+        [self hideMe:@"a6" animate:YES];
+        [self hideMe:@"a7" animate:YES];
+        [self hideMe:@"a8" animate:YES];
+        [self hideMe:@"a9" animate:YES];
+        [self hideMe:@"a10" animate:YES];
+        [self hideMe:@"a11" animate:YES];
+        [self hideMe:@"a12" animate:YES];
+        [self hideMe:@"a14" animate:YES];
+        [self hideMe:@"a15" animate:YES];
+        [self hideMe:@"a16" animate:YES];
+        [self hideMe:@"a17" animate:YES];
+        [self hideMe:@"a18" animate:YES];
+        [self hideMe:@"a19" animate:YES];
+        [self hideMe:@"a20" animate:YES];
+        [self hideMe:@"a21" animate:NO];
+    } else {
+        [self showMe:@"a0" after:@"switch0" animate:YES];
+        [self showMe:@"a1" after:@"a0" animate:YES];
+        [self showMe:@"a2" after:@"a1" animate:YES];
+        [self showMe:@"a3" after:@"a2" animate:YES];
+        [self showMe:@"a4" after:@"a3" animate:YES];
+        [self showMe:@"a5" after:@"a4" animate:YES];
+        [self showMe:@"a6" after:@"a5" animate:YES];
+        [self showMe:@"a7" after:@"a6" animate:YES];
+        [self showMe:@"a8" after:@"a7" animate:YES];
+        [self showMe:@"a9" after:@"a8" animate:YES];
+        [self showMe:@"a10" after:@"switch1" animate:YES];
+        [self showMe:@"a11" after:@"a10" animate:YES];
+        [self showMe:@"a14" after:@"a11" animate:YES];
+        [self showMe:@"a15" after:@"a14" animate:YES];
+        [self showMe:@"a16" after:@"a15" animate:YES];
+        [self showMe:@"a17" after:@"a16" animate:YES];
+        [self showMe:@"a18" after:@"a17" animate:YES];
+        [self showMe:@"a19" after:@"a18" animate:YES];
+        [self showMe:@"a20" after:@"a19" animate:YES];
+        [self showMe:@"a21" after:@"a20" animate:YES];
+    }
 }
 
 // Buttons
