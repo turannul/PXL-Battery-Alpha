@@ -12,7 +12,7 @@
 
 - (NSArray *)specifiers {
 	self.plistName = @"MainPrefs";
-    self.chosenIDs = @[@"switch0", @"switch1", @"a0",@"a1",@"a2",@"a3",@"a4",@"a5",@"a6",@"a7",@"a8",@"a9",@"a10",@"a11",@"a12",@"a13",@"a14",@"a15",@"a16",@"a17",@"a18",@"a19",@"a20",@"a21"];
+    self.chosenIDs = @[@"a0", @"b1", @"switch0", @"b2", @"switch1", @"c1", @"c2", @"c3", @"c4", @"c5", @"c6", @"c7", @"c8", @"c9", @"c10", @"d1", @"d2", @"d3", @"e1", @"e2", @"e3", @"f1", @"f2", @"f3", @"g1", @"g2"];
 	return [super specifiers];
 }
 
@@ -94,123 +94,128 @@
     [self respringApply];
 }
 
--(void)setPreferenceValue:(id)value specifier:(PSSpecifier *)specifier {
+- (void)setPreferenceValue:(id)value specifier:(PSSpecifier *)specifier {
     [super setPreferenceValue:value specifier:specifier];
-    NSString *key = [specifier propertyForKey:@"key"];
-
-    	/*if ([key isEqualToString:@"CustomTicks"]){
-		if ([value boolValue]){
-			[self hideMe:@"a4" animate:YES];
-			[self hideMe:@"a5" animate:YES];
-			[self hideMe:@"a6" animate:YES];
-			[self hideMe:@"a7" animate:YES];
-			[self hideMe:@"a8" animate:YES];
-		}else{
-			[self showMe:@"a4" after:@"switch1" animate:YES];
-			[self showMe:@"a5" after:@"switch1" animate:YES];
-			[self showMe:@"a6" after:@"switch1" animate:YES];
-			[self showMe:@"a7" after:@"switch1" animate:YES];
-			[self showMe:@"a7" after:@"switch1" animate:YES];
-		}*/
-    if ([key isEqualToString:@"pxlEnabled"]) {
-        BOOL pxlEnabled = [value boolValue];
-        if (!pxlEnabled) {
-            [self hideMe:@"a0" animate:YES];
-            [self hideMe:@"a1" animate:YES];
-            [self hideMe:@"a2" animate:YES];
-            [self hideMe:@"a3" animate:YES];
-            [self hideMe:@"a4" animate:YES];
-            [self hideMe:@"a5" animate:YES];
-            [self hideMe:@"a6" animate:YES];
-            [self hideMe:@"a7" animate:YES];
-            [self hideMe:@"a8" animate:YES];
-            [self hideMe:@"a9" animate:YES];
-            [self hideMe:@"a10" animate:YES];
-            [self hideMe:@"a11" animate:YES];
-            [self hideMe:@"a12" animate:YES];
-            [self hideMe:@"a14" animate:YES];
-            [self hideMe:@"a15" animate:YES];
-            [self hideMe:@"a16" animate:YES];
-            [self hideMe:@"a17" animate:YES];
-            [self hideMe:@"a18" animate:YES];
-            [self hideMe:@"a19" animate:YES];
-            [self hideMe:@"a20" animate:YES];
-            [self hideMe:@"a21" animate:YES];
+    BOOL CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
+        if (CustomTicks) {
+            [self hideMe:@"c3" animate:NO]; // bar 1
+            [self hideMe:@"c4" animate:NO]; // bar 2
+            [self hideMe:@"c5" animate:NO]; // bar 3
+            [self hideMe:@"c6" animate:NO]; // bar 4
+            [self hideMe:@"c7" animate:NO]; // bar 5
         } else {
-            [self showMe:@"a0" after:@"switch0" animate:YES];
-            [self showMe:@"a1" after:@"a0" animate:YES];
-            [self showMe:@"a2" after:@"a1" animate:YES];
-            [self showMe:@"a3" after:@"a2" animate:YES];
-            [self showMe:@"a4" after:@"a3" animate:YES];
-            [self showMe:@"a5" after:@"a4" animate:YES];
-            [self showMe:@"a6" after:@"a5" animate:YES];
-            [self showMe:@"a7" after:@"a6" animate:YES];
-            [self showMe:@"a8" after:@"a7" animate:YES];
-            [self showMe:@"a9" after:@"a8" animate:YES];
-            [self showMe:@"a10" after:@"a9" animate:YES];
-            [self showMe:@"a11" after:@"a10" animate:YES];
-            [self showMe:@"a14" after:@"a11" animate:YES];
-            [self showMe:@"a15" after:@"a14" animate:YES];
-            [self showMe:@"a16" after:@"a15" animate:YES];
-            [self showMe:@"a17" after:@"a16" animate:YES];
-            [self showMe:@"a18" after:@"a17" animate:YES];
-            [self showMe:@"a19" after:@"a18" animate:YES];
-            [self showMe:@"a20" after:@"a19" animate:YES];
-            [self showMe:@"a21" after:@"a20" animate:YES];
+            [self showMe:@"c3" after:@"switch1" animate:NO];
+            [self showMe:@"c4" after:@"switch1" animate:NO];
+            [self showMe:@"c5" after:@"switch1" animate:NO];
+            [self showMe:@"c6" after:@"switch1" animate:NO];
+            [self showMe:@"c7" after:@"switch1" animate:NO];
         }
-    }
+    
+    BOOL pxlEnabled = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
+        if (!pxlEnabled) {
+            [self hideMe:@"switch1" animate:NO];
+            [self hideMe:@"c1" animate:NO];
+            [self hideMe:@"c2" animate:NO];
+            [self hideMe:@"c3" animate:NO];
+            [self hideMe:@"c4" animate:NO];
+            [self hideMe:@"c5" animate:NO];
+            [self hideMe:@"c6" animate:NO];
+            [self hideMe:@"c7" animate:NO];
+            [self hideMe:@"c8" animate:NO];
+            [self hideMe:@"c9" animate:NO];
+            [self hideMe:@"c10" animate:NO];
+            [self hideMe:@"d1" animate:NO];
+            [self hideMe:@"d2" animate:NO];
+            [self hideMe:@"d3" animate:NO];
+            [self hideMe:@"e1" animate:NO];
+            [self hideMe:@"e2" animate:NO];
+            [self hideMe:@"e3" animate:NO];
+            [self hideMe:@"f2" animate:NO];
+            [self hideMe:@"f3" animate:NO];
+            [self hideMe:@"g1" animate:NO];
+        } else {
+            [self showMe:@"g2" after:@"g1" animate:NO];
+            [self showMe:@"f3" after:@"f2" animate:NO];
+            [self showMe:@"f1" after:@"e3" animate:NO];
+            [self showMe:@"e2" after:@"e1" animate:NO];
+            [self showMe:@"d3" after:@"d2" animate:NO];
+            [self showMe:@"c10" after:@"c9" animate:NO];
+            [self showMe:@"c9" after:@"c8" animate:NO];
+            [self showMe:@"c8" after:@"c7" animate:NO];
+            [self showMe:@"c7" after:@"c6" animate:NO];
+            [self showMe:@"c6" after:@"c5" animate:NO];
+            [self showMe:@"c5" after:@"c4" animate:NO];
+            [self showMe:@"c4" after:@"c3" animate:NO];
+            [self showMe:@"c3" after:@"c2" animate:NO];
+            [self showMe:@"c2" after:@"c1" animate:NO];
+            [self showMe:@"c1" after:@"b2" animate:NO];
+            [self showMe:@"b2" after:@"b1" animate:NO];
+            [self showMe:@"switch1" after:@"switch0" animate:NO];
+            [self showMe:@"switch0" after:@"a0" animate:NO];
+        }
 }
 
--(void)reloadSpecifiers {
+- (void)reloadSpecifiers {
     [super reloadSpecifiers];
 
-    BOOL pxlEnabled = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
-    if (!pxlEnabled) {
-        [self hideMe:@"a0" animate:YES];
-        [self hideMe:@"a1" animate:YES];
-        [self hideMe:@"a2" animate:YES];
-        [self hideMe:@"a3" animate:YES];
-        [self hideMe:@"a4" animate:YES];
-        [self hideMe:@"a5" animate:YES];
-        [self hideMe:@"a6" animate:YES];
-        [self hideMe:@"a7" animate:YES];
-        [self hideMe:@"a8" animate:YES];
-        [self hideMe:@"a9" animate:YES];
-        [self hideMe:@"a10" animate:YES];
-        [self hideMe:@"a11" animate:YES];
-        [self hideMe:@"a12" animate:YES];
-        [self hideMe:@"a14" animate:YES];
-        [self hideMe:@"a15" animate:YES];
-        [self hideMe:@"a16" animate:YES];
-        [self hideMe:@"a17" animate:YES];
-        [self hideMe:@"a18" animate:YES];
-        [self hideMe:@"a19" animate:YES];
-        [self hideMe:@"a20" animate:YES];
-        [self hideMe:@"a21" animate:NO];
-    } else {
-        [self showMe:@"a0" after:@"switch0" animate:YES];
-        [self showMe:@"a1" after:@"a0" animate:YES];
-        [self showMe:@"a2" after:@"a1" animate:YES];
-        [self showMe:@"a3" after:@"a2" animate:YES];
-        [self showMe:@"a4" after:@"a3" animate:YES];
-        [self showMe:@"a5" after:@"a4" animate:YES];
-        [self showMe:@"a6" after:@"a5" animate:YES];
-        [self showMe:@"a7" after:@"a6" animate:YES];
-        [self showMe:@"a8" after:@"a7" animate:YES];
-        [self showMe:@"a9" after:@"a8" animate:YES];
-        [self showMe:@"a10" after:@"switch1" animate:YES];
-        [self showMe:@"a11" after:@"a10" animate:YES];
-        [self showMe:@"a14" after:@"a11" animate:YES];
-        [self showMe:@"a15" after:@"a14" animate:YES];
-        [self showMe:@"a16" after:@"a15" animate:YES];
-        [self showMe:@"a17" after:@"a16" animate:YES];
-        [self showMe:@"a18" after:@"a17" animate:YES];
-        [self showMe:@"a19" after:@"a18" animate:YES];
-        [self showMe:@"a20" after:@"a19" animate:YES];
-        [self showMe:@"a21" after:@"a20" animate:YES];
-    }
-}
+    BOOL CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
+        if (CustomTicks) {
+            [self hideMe:@"c3" animate:NO]; // bar 1
+            [self hideMe:@"c4" animate:NO]; // bar 2
+            [self hideMe:@"c5" animate:NO]; // bar 3
+            [self hideMe:@"c6" animate:NO]; // bar 4
+            [self hideMe:@"c7" animate:NO]; // bar 5
+        } else {
+            [self showMe:@"c3" after:@"switch1" animate:NO];
+            [self showMe:@"c4" after:@"switch1" animate:NO];
+            [self showMe:@"c5" after:@"switch1" animate:NO];
+            [self showMe:@"c6" after:@"switch1" animate:NO];
+            [self showMe:@"c7" after:@"switch1" animate:NO];
+        }
 
+    BOOL pxlEnabled = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
+        if (!pxlEnabled) {
+            [self hideMe:@"switch1" animate:NO];
+            [self hideMe:@"c1" animate:NO];
+            [self hideMe:@"c2" animate:NO];
+            [self hideMe:@"c3" animate:NO];
+            [self hideMe:@"c4" animate:NO];
+            [self hideMe:@"c5" animate:NO];
+            [self hideMe:@"c6" animate:NO];
+            [self hideMe:@"c7" animate:NO];
+            [self hideMe:@"c8" animate:NO];
+            [self hideMe:@"c9" animate:NO];
+            [self hideMe:@"c10" animate:NO];
+            [self hideMe:@"d1" animate:NO];
+            [self hideMe:@"d2" animate:NO];
+            [self hideMe:@"d3" animate:NO];
+            [self hideMe:@"e1" animate:NO];
+            [self hideMe:@"e2" animate:NO];
+            [self hideMe:@"e3" animate:NO];
+            [self hideMe:@"f2" animate:NO];
+            [self hideMe:@"f3" animate:NO];
+            [self hideMe:@"g1" animate:NO];
+        } else {
+            [self showMe:@"g2" after:@"g1" animate:NO];
+            [self showMe:@"f3" after:@"f2" animate:NO];
+            [self showMe:@"f1" after:@"e3" animate:NO];
+            [self showMe:@"e2" after:@"e1" animate:NO];
+            [self showMe:@"d3" after:@"d2" animate:NO];
+            [self showMe:@"c10" after:@"c9" animate:NO];
+            [self showMe:@"c9" after:@"c8" animate:NO];
+            [self showMe:@"c8" after:@"c7" animate:NO];
+            [self showMe:@"c7" after:@"c6" animate:NO];
+            [self showMe:@"c6" after:@"c5" animate:NO];
+            [self showMe:@"c5" after:@"c4" animate:NO];
+            [self showMe:@"c4" after:@"c3" animate:NO];
+            [self showMe:@"c3" after:@"c2" animate:NO];
+            [self showMe:@"c2" after:@"c1" animate:NO];
+            [self showMe:@"c1" after:@"b2" animate:NO];
+            [self showMe:@"b2" after:@"b1" animate:NO];
+            [self showMe:@"switch1" after:@"switch0" animate:NO];
+            [self showMe:@"switch0" after:@"a0" animate:NO];
+        }
+}
 // Buttons
 -(void)SourceCode { [self link:@"https://github.com/turannul/PXL-Battery" name:@"Source Code"]; }
 -(void)Twitter { [self link:@"https://twitter.com/ImNotTuran" name:@"Follow me on Twitter"]; }
