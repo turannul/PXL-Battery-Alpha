@@ -105,7 +105,6 @@
             [self hideMe:@"c7" animate:YES]; // Hide bar 5
         } else {
             NSString *originalStr = @"Battery Color"; originalStr = [originalStr stringByReplacingOccurrencesOfString:originalStr withString:@"Frame Color"];
-            // :( What i doin wrong?
             [self showMe:@"c3" after:@"switch1" animate:YES]; // Show bar 1
             [self showMe:@"c4" after:@"c3" animate:YES];      // Show bar 2
             [self showMe:@"c5" after:@"c4" animate:YES];      // Show bar 3
@@ -162,17 +161,18 @@
 
     BOOL CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
         if (CustomTicks) {
-            [self hideMe:@"c3" animate:YES]; // bar 1
-            [self hideMe:@"c4" animate:YES]; // bar 2
-            [self hideMe:@"c5" animate:YES]; // bar 3
-            [self hideMe:@"c6" animate:YES]; // bar 4
-            [self hideMe:@"c7" animate:YES]; // bar 5
+            [self hideMe:@"c3" animate:YES]; // Hide bar 1
+            [self hideMe:@"c4" animate:YES]; // Hide bar 2
+            [self hideMe:@"c5" animate:YES]; // Hide bar 3
+            [self hideMe:@"c6" animate:YES]; // Hide bar 4
+            [self hideMe:@"c7" animate:YES]; // Hide bar 5
         } else {
-            [self showMe:@"c3" after:@"switch1" animate:YES];
-            [self showMe:@"c4" after:@"switch1" animate:YES];
-            [self showMe:@"c5" after:@"switch1" animate:YES];
-            [self showMe:@"c6" after:@"switch1" animate:YES];
-            [self showMe:@"c7" after:@"switch1" animate:YES];
+            NSString *originalStr = @"Battery Color"; originalStr = [originalStr stringByReplacingOccurrencesOfString:originalStr withString:@"Frame Color"];
+            [self showMe:@"c3" after:@"switch1" animate:YES]; // Show bar 1
+            [self showMe:@"c4" after:@"c3" animate:YES];      // Show bar 2
+            [self showMe:@"c5" after:@"c4" animate:YES];      // Show bar 3
+            [self showMe:@"c6" after:@"c5" animate:YES];      // Show bar 4
+            [self showMe:@"c7" after:@"c6" animate:YES];      // Show bar 5
         }
 
     BOOL pxlEnabled = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
