@@ -98,60 +98,62 @@
     [super setPreferenceValue:value specifier:specifier];
     BOOL CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
         if (CustomTicks) {
-            [self hideMe:@"c3" animate:NO]; // bar 1
-            [self hideMe:@"c4" animate:NO]; // bar 2
-            [self hideMe:@"c5" animate:NO]; // bar 3
-            [self hideMe:@"c6" animate:NO]; // bar 4
-            [self hideMe:@"c7" animate:NO]; // bar 5
+            [self hideMe:@"c3" animate:YES]; // Hide bar 1
+            [self hideMe:@"c4" animate:YES]; // Hide bar 2
+            [self hideMe:@"c5" animate:YES]; // Hide bar 3
+            [self hideMe:@"c6" animate:YES]; // Hide bar 4
+            [self hideMe:@"c7" animate:YES]; // Hide bar 5
         } else {
-            [self showMe:@"c3" after:@"switch1" animate:NO];
-            [self showMe:@"c4" after:@"switch1" animate:NO];
-            [self showMe:@"c5" after:@"switch1" animate:NO];
-            [self showMe:@"c6" after:@"switch1" animate:NO];
-            [self showMe:@"c7" after:@"switch1" animate:NO];
+            NSString *originalStr = @"Battery Color"; originalStr = [originalStr stringByReplacingOccurrencesOfString:originalStr withString:@"Frame Color"];
+            // :( What i doin wrong?
+            [self showMe:@"c3" after:@"switch1" animate:YES]; // Show bar 1
+            [self showMe:@"c4" after:@"c3" animate:YES];      // Show bar 2
+            [self showMe:@"c5" after:@"c4" animate:YES];      // Show bar 3
+            [self showMe:@"c6" after:@"c5" animate:YES];      // Show bar 4
+            [self showMe:@"c7" after:@"c6" animate:YES];      // Show bar 5
         }
     
     BOOL pxlEnabled = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
         if (!pxlEnabled) {
-            [self hideMe:@"switch1" animate:NO];
-            [self hideMe:@"c1" animate:NO];
-            [self hideMe:@"c2" animate:NO];
-            [self hideMe:@"c3" animate:NO];
-            [self hideMe:@"c4" animate:NO];
-            [self hideMe:@"c5" animate:NO];
-            [self hideMe:@"c6" animate:NO];
-            [self hideMe:@"c7" animate:NO];
-            [self hideMe:@"c8" animate:NO];
-            [self hideMe:@"c9" animate:NO];
-            [self hideMe:@"c10" animate:NO];
-            [self hideMe:@"d1" animate:NO];
-            [self hideMe:@"d2" animate:NO];
-            [self hideMe:@"d3" animate:NO];
-            [self hideMe:@"e1" animate:NO];
-            [self hideMe:@"e2" animate:NO];
-            [self hideMe:@"e3" animate:NO];
-            [self hideMe:@"f2" animate:NO];
-            [self hideMe:@"f3" animate:NO];
-            [self hideMe:@"g1" animate:NO];
+            [self hideMe:@"switch1" animate:YES];
+            [self hideMe:@"c1" animate:YES];
+            [self hideMe:@"c2" animate:YES];
+            [self hideMe:@"c3" animate:YES];
+            [self hideMe:@"c4" animate:YES];
+            [self hideMe:@"c5" animate:YES];
+            [self hideMe:@"c6" animate:YES];
+            [self hideMe:@"c7" animate:YES];
+            [self hideMe:@"c8" animate:YES];
+            [self hideMe:@"c9" animate:YES];
+            [self hideMe:@"c10" animate:YES];
+            [self hideMe:@"d1" animate:YES];
+            [self hideMe:@"d2" animate:YES];
+            [self hideMe:@"d3" animate:YES];
+            [self hideMe:@"e1" animate:YES];
+            [self hideMe:@"e2" animate:YES];
+            [self hideMe:@"e3" animate:YES];
+            [self hideMe:@"f2" animate:YES];
+            [self hideMe:@"f3" animate:YES];
+            [self hideMe:@"g1" animate:YES];
         } else {
-            [self showMe:@"g2" after:@"g1" animate:NO];
-            [self showMe:@"f3" after:@"f2" animate:NO];
-            [self showMe:@"f1" after:@"e3" animate:NO];
-            [self showMe:@"e2" after:@"e1" animate:NO];
-            [self showMe:@"d3" after:@"d2" animate:NO];
-            [self showMe:@"c10" after:@"c9" animate:NO];
-            [self showMe:@"c9" after:@"c8" animate:NO];
-            [self showMe:@"c8" after:@"c7" animate:NO];
-            [self showMe:@"c7" after:@"c6" animate:NO];
-            [self showMe:@"c6" after:@"c5" animate:NO];
-            [self showMe:@"c5" after:@"c4" animate:NO];
-            [self showMe:@"c4" after:@"c3" animate:NO];
-            [self showMe:@"c3" after:@"c2" animate:NO];
-            [self showMe:@"c2" after:@"c1" animate:NO];
-            [self showMe:@"c1" after:@"b2" animate:NO];
-            [self showMe:@"b2" after:@"b1" animate:NO];
-            [self showMe:@"switch1" after:@"switch0" animate:NO];
-            [self showMe:@"switch0" after:@"a0" animate:NO];
+            [self showMe:@"g2" after:@"g1" animate:YES];
+            [self showMe:@"f3" after:@"f2" animate:YES];
+            [self showMe:@"f1" after:@"e3" animate:YES];
+            [self showMe:@"e2" after:@"e1" animate:YES];
+            [self showMe:@"d3" after:@"d2" animate:YES];
+            [self showMe:@"c10" after:@"c9" animate:YES];
+            [self showMe:@"c9" after:@"c8" animate:YES];
+            [self showMe:@"c8" after:@"c7" animate:YES];
+            [self showMe:@"c7" after:@"c6" animate:YES];
+            [self showMe:@"c6" after:@"c5" animate:YES];
+            [self showMe:@"c5" after:@"c4" animate:YES];
+            [self showMe:@"c4" after:@"c3" animate:YES];
+            [self showMe:@"c3" after:@"c2" animate:YES];
+            [self showMe:@"c2" after:@"c1" animate:YES];
+            [self showMe:@"c1" after:@"b2" animate:YES];
+            [self showMe:@"b2" after:@"b1" animate:YES];
+            [self showMe:@"switch1" after:@"switch0" animate:YES];
+            [self showMe:@"switch0" after:@"a0" animate:YES];
         }
 }
 
@@ -160,60 +162,60 @@
 
     BOOL CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
         if (CustomTicks) {
-            [self hideMe:@"c3" animate:NO]; // bar 1
-            [self hideMe:@"c4" animate:NO]; // bar 2
-            [self hideMe:@"c5" animate:NO]; // bar 3
-            [self hideMe:@"c6" animate:NO]; // bar 4
-            [self hideMe:@"c7" animate:NO]; // bar 5
+            [self hideMe:@"c3" animate:YES]; // bar 1
+            [self hideMe:@"c4" animate:YES]; // bar 2
+            [self hideMe:@"c5" animate:YES]; // bar 3
+            [self hideMe:@"c6" animate:YES]; // bar 4
+            [self hideMe:@"c7" animate:YES]; // bar 5
         } else {
-            [self showMe:@"c3" after:@"switch1" animate:NO];
-            [self showMe:@"c4" after:@"switch1" animate:NO];
-            [self showMe:@"c5" after:@"switch1" animate:NO];
-            [self showMe:@"c6" after:@"switch1" animate:NO];
-            [self showMe:@"c7" after:@"switch1" animate:NO];
+            [self showMe:@"c3" after:@"switch1" animate:YES];
+            [self showMe:@"c4" after:@"switch1" animate:YES];
+            [self showMe:@"c5" after:@"switch1" animate:YES];
+            [self showMe:@"c6" after:@"switch1" animate:YES];
+            [self showMe:@"c7" after:@"switch1" animate:YES];
         }
 
     BOOL pxlEnabled = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
         if (!pxlEnabled) {
-            [self hideMe:@"switch1" animate:NO];
-            [self hideMe:@"c1" animate:NO];
-            [self hideMe:@"c2" animate:NO];
-            [self hideMe:@"c3" animate:NO];
-            [self hideMe:@"c4" animate:NO];
-            [self hideMe:@"c5" animate:NO];
-            [self hideMe:@"c6" animate:NO];
-            [self hideMe:@"c7" animate:NO];
-            [self hideMe:@"c8" animate:NO];
-            [self hideMe:@"c9" animate:NO];
-            [self hideMe:@"c10" animate:NO];
-            [self hideMe:@"d1" animate:NO];
-            [self hideMe:@"d2" animate:NO];
-            [self hideMe:@"d3" animate:NO];
-            [self hideMe:@"e1" animate:NO];
-            [self hideMe:@"e2" animate:NO];
-            [self hideMe:@"e3" animate:NO];
-            [self hideMe:@"f2" animate:NO];
-            [self hideMe:@"f3" animate:NO];
-            [self hideMe:@"g1" animate:NO];
+            [self hideMe:@"switch1" animate:YES];
+            [self hideMe:@"c1" animate:YES];
+            [self hideMe:@"c2" animate:YES];
+            [self hideMe:@"c3" animate:YES];
+            [self hideMe:@"c4" animate:YES];
+            [self hideMe:@"c5" animate:YES];
+            [self hideMe:@"c6" animate:YES];
+            [self hideMe:@"c7" animate:YES];
+            [self hideMe:@"c8" animate:YES];
+            [self hideMe:@"c9" animate:YES];
+            [self hideMe:@"c10" animate:YES];
+            [self hideMe:@"d1" animate:YES];
+            [self hideMe:@"d2" animate:YES];
+            [self hideMe:@"d3" animate:YES];
+            [self hideMe:@"e1" animate:YES];
+            [self hideMe:@"e2" animate:YES];
+            [self hideMe:@"e3" animate:YES];
+            [self hideMe:@"f2" animate:YES];
+            [self hideMe:@"f3" animate:YES];
+            [self hideMe:@"g1" animate:YES];
         } else {
-            [self showMe:@"g2" after:@"g1" animate:NO];
-            [self showMe:@"f3" after:@"f2" animate:NO];
-            [self showMe:@"f1" after:@"e3" animate:NO];
-            [self showMe:@"e2" after:@"e1" animate:NO];
-            [self showMe:@"d3" after:@"d2" animate:NO];
-            [self showMe:@"c10" after:@"c9" animate:NO];
-            [self showMe:@"c9" after:@"c8" animate:NO];
-            [self showMe:@"c8" after:@"c7" animate:NO];
-            [self showMe:@"c7" after:@"c6" animate:NO];
-            [self showMe:@"c6" after:@"c5" animate:NO];
-            [self showMe:@"c5" after:@"c4" animate:NO];
-            [self showMe:@"c4" after:@"c3" animate:NO];
-            [self showMe:@"c3" after:@"c2" animate:NO];
-            [self showMe:@"c2" after:@"c1" animate:NO];
-            [self showMe:@"c1" after:@"b2" animate:NO];
-            [self showMe:@"b2" after:@"b1" animate:NO];
-            [self showMe:@"switch1" after:@"switch0" animate:NO];
-            [self showMe:@"switch0" after:@"a0" animate:NO];
+            [self showMe:@"g2" after:@"g1" animate:YES];
+            [self showMe:@"f3" after:@"f2" animate:YES];
+            [self showMe:@"f1" after:@"e3" animate:YES];
+            [self showMe:@"e2" after:@"e1" animate:YES];
+            [self showMe:@"d3" after:@"d2" animate:YES];
+            [self showMe:@"c10" after:@"c9" animate:YES];
+            [self showMe:@"c9" after:@"c8" animate:YES];
+            [self showMe:@"c8" after:@"c7" animate:YES];
+            [self showMe:@"c7" after:@"c6" animate:YES];
+            [self showMe:@"c6" after:@"c5" animate:YES];
+            [self showMe:@"c5" after:@"c4" animate:YES];
+            [self showMe:@"c4" after:@"c3" animate:YES];
+            [self showMe:@"c3" after:@"c2" animate:YES];
+            [self showMe:@"c2" after:@"c1" animate:YES];
+            [self showMe:@"c1" after:@"b2" animate:YES];
+            [self showMe:@"b2" after:@"b1" animate:YES];
+            [self showMe:@"switch1" after:@"switch0" animate:YES];
+            [self showMe:@"switch0" after:@"a0" animate:YES];
         }
 }
 // Buttons
