@@ -96,7 +96,7 @@
 
 - (void)setPreferenceValue:(id)value specifier:(PSSpecifier *)specifier {
     [super setPreferenceValue:value specifier:specifier];
-    BOOL CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
+    BOOL CustomTicks = GetBool(@"CustomTicks", NO, @"xyz.turannul.pxlbattery");
         if (CustomTicks) {
             [self hideMe:@"c3" animate:YES]; // Hide bar 1
             [self hideMe:@"c4" animate:YES]; // Hide bar 2
@@ -117,11 +117,6 @@
             [self hideMe:@"switch1" animate:YES];
             [self hideMe:@"c1" animate:YES];
             [self hideMe:@"c2" animate:YES];
-            [self hideMe:@"c3" animate:YES];
-            [self hideMe:@"c4" animate:YES];
-            [self hideMe:@"c5" animate:YES];
-            [self hideMe:@"c6" animate:YES];
-            [self hideMe:@"c7" animate:YES];
             [self hideMe:@"c8" animate:YES];
             [self hideMe:@"c9" animate:YES];
             [self hideMe:@"c10" animate:YES];
@@ -143,15 +138,7 @@
             [self showMe:@"c10" after:@"c9" animate:YES];
             [self showMe:@"c9" after:@"c8" animate:YES];
             [self showMe:@"c8" after:@"c7" animate:YES];
-            [self showMe:@"c7" after:@"c6" animate:YES];
-            [self showMe:@"c6" after:@"c5" animate:YES];
-            [self showMe:@"c5" after:@"c4" animate:YES];
-            [self showMe:@"c4" after:@"c3" animate:YES];
-            [self showMe:@"c3" after:@"c2" animate:YES];
-            [self showMe:@"c2" after:@"c1" animate:YES];
-            [self showMe:@"c1" after:@"b2" animate:YES];
             [self showMe:@"b2" after:@"b1" animate:YES];
-            [self showMe:@"switch1" after:@"switch0" animate:YES];
             [self showMe:@"switch0" after:@"a0" animate:YES];
         }
 }
@@ -180,11 +167,6 @@
             [self hideMe:@"switch1" animate:YES];
             [self hideMe:@"c1" animate:YES];
             [self hideMe:@"c2" animate:YES];
-            [self hideMe:@"c3" animate:YES];
-            [self hideMe:@"c4" animate:YES];
-            [self hideMe:@"c5" animate:YES];
-            [self hideMe:@"c6" animate:YES];
-            [self hideMe:@"c7" animate:YES];
             [self hideMe:@"c8" animate:YES];
             [self hideMe:@"c9" animate:YES];
             [self hideMe:@"c10" animate:YES];
@@ -206,15 +188,7 @@
             [self showMe:@"c10" after:@"c9" animate:YES];
             [self showMe:@"c9" after:@"c8" animate:YES];
             [self showMe:@"c8" after:@"c7" animate:YES];
-            [self showMe:@"c7" after:@"c6" animate:YES];
-            [self showMe:@"c6" after:@"c5" animate:YES];
-            [self showMe:@"c5" after:@"c4" animate:YES];
-            [self showMe:@"c4" after:@"c3" animate:YES];
-            [self showMe:@"c3" after:@"c2" animate:YES];
-            [self showMe:@"c2" after:@"c1" animate:YES];
-            [self showMe:@"c1" after:@"b2" animate:YES];
             [self showMe:@"b2" after:@"b1" animate:YES];
-            [self showMe:@"switch1" after:@"switch0" animate:YES];
             [self showMe:@"switch0" after:@"a0" animate:YES];
         }
 }
