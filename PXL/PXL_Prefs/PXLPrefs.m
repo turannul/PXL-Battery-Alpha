@@ -12,9 +12,9 @@
 
 - (NSArray *)specifiers {
 	self.plistName = @"MainPrefs";
-    self.chosenIDs = @[@"group_1", @"group_2", @"swtch_enabled", @"group_3", @"swtch_custom_ticks", @"tick_1", @"tick_2", @"tick_3", @"tick_4", @"tick_5", @"battery_color", @"low_battery_color", @"low_power_mode_color", @"charging_color", @"group_4", @"group_5", @"source_code", @"group_6", @"follow_twitter", @"contribute_coffee", @"group_7", @"follow_randy", @"donate_randy", @"group_8", @"restore_defaults"];
-    self.IDgroup1 = @[@"group_1", @"group_2", @"group_3", @"swtch_custom_ticks", @"tick_1", @"tick_2", @"tick_3", @"tick_4", @"tick_5", @"battery_color", @"low_battery_color", @"low_power_mode_color", @"charging_color", @"group_4", @"group_5", @"group_6", @"follow_twitter", @"contribute_coffee", @"group_7", @"follow_randy", @"donate_randy", @"group_8", @"restore_defaults"];
-    self.IDgroupTicks = @[@"tick_1", @"tick_2", @"tick_3", @"tick_4", @"tick_5",];
+    self.chosenIDs = @[@"IDgroup1", @"IDgroupTicks"];
+    self.IDgroup1 = @[@"chosenIDs", @"group_1", @"group_2", @"group_3", @"swtch_custom_ticks", @"tick_1", @"tick_2", @"tick_3", @"tick_4", @"tick_5", @"battery_color", @"low_battery_color", @"low_power_mode_color", @"charging_color", @"group_4", @"group_5", @"group_6", @"follow_twitter", @"contribute_coffee", @"group_7", @"follow_randy", @"donate_randy", @"group_8", @"restore_defaults"];
+    self.IDgroupTicks = @[@"tick_1", @"tick_2", @"tick_3", @"tick_4", @"tick_5"];
 	return [super specifiers];
 }
 
@@ -100,18 +100,20 @@
     [super setPreferenceValue:value specifier:specifier];
     BOOL CustomTicks = GetBool(@"CustomTicks", NO, @"xyz.turannul.pxlbattery");
         if (CustomTicks) {
+            [self hideMe:@"IDgroupTicks" animate:YES];
+            /*
             [self hideMe:@"c3" animate:YES]; // Hide bar 1
             [self hideMe:@"c4" animate:YES]; // Hide bar 2
             [self hideMe:@"c5" animate:YES]; // Hide bar 3
             [self hideMe:@"c6" animate:YES]; // Hide bar 4
-            [self hideMe:@"c7" animate:YES]; // Hide bar 5
+            [self hideMe:@"c7" animate:YES]; // Hide bar 5*/
         } else {
             NSString *originalStr = @"Battery Color"; originalStr = [originalStr stringByReplacingOccurrencesOfString:originalStr withString:@"Frame Color"];
-            [self showMe:@"c3" after:@"switch1" animate:YES]; // Show bar 1
+           /* [self showMe:@"c3" after:@"switch1" animate:YES]; // Show bar 1
             [self showMe:@"c4" after:@"c3" animate:YES];      // Show bar 2
             [self showMe:@"c5" after:@"c4" animate:YES];      // Show bar 3
             [self showMe:@"c6" after:@"c5" animate:YES];      // Show bar 4
-            [self showMe:@"c7" after:@"c6" animate:YES];      // Show bar 5
+            [self showMe:@"c7" after:@"c6" animate:YES];      // Show bar 5*/
         }
     
     BOOL pxlEnabled = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
