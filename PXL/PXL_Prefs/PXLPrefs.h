@@ -6,5 +6,5 @@
 @property (nonatomic, retain) UIBarButtonItem *respringApplyButton;
 @property (nonatomic, retain) UIBarButtonItem *respringConfirmButton;
 @property (nonatomic, strong) NSArray *IDgroup1;
-@property (nonatomic, strong) NSArray *IDgroupTicks;
+@property (nonatomic, strong) NSArray *theRest;
 @end

@@ -12,12 +12,11 @@
 
 - (NSArray *)specifiers {
 	self.plistName = @"MainPrefs";
-    self.IDgroup1 = @[@"group_1", @"group_2", @"group_3", @"swtch_custom_ticks", @"tick_1", @"tick_2", @"tick_3", @"tick_4", @"tick_5", @"battery_color", @"low_battery_color", @"low_power_mode_color", @"charging_color", @"group_4", @"group_5", @"group_6", @"follow_twitter", @"contribute_coffee", @"group_7", @"follow_randy", @"donate_randy", @"group_8", @"restore_defaults"];
-    self.IDgroupTicks = @[@"tick_1", @"tick_2", @"tick_3", @"tick_4", @"tick_5"];
-    self.chosenIDs = @[@"anchorForGroup1", IDgroup1, @"anchorForTicks", IDgroupTicks];
+    self.IDgroup1 = @[@"tick_5", @"tick_4", @"tick_3", @"tick_2", @"tick_1", @"group_3"];
+    self.theRest = @[@"restore_defaults", @"group_8", @"donate_randy", @"follow_randy", @"group_7", @"contribute_coffee", @"follow_twitter", @"group_6", @"group_5", @"group_4", @"charging_color", @"low_power_mode_color", @"low_battery_color"];
+    self.chosenIDs = @[@"MasterSwitch", @"swtch_custom_ticks", self.IDgroup1, @"battery_color", self.theRest];
 	return [super specifiers];
 }
-
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -97,27 +96,28 @@
 }
 
 - (void)setPreferenceValue:(id)value specifier:(PSSpecifier *)specifier {
-    [super setPreferenceValue:value specifier:specifier];
-    BOOL CustomTicks = GetBool(@"CustomTicks", NO, @"xyz.turannul.pxlbattery");
-        if (CustomTicks) {
-for (NSString *whichTick in IDgroupTicks)
-  [self hideMe:_whichTick animated:YES];
+	[super setPreferenceValue:value specifier:specifier];
+	CustomTicks = GetBool(@"CustomTicks", NO, @"xyz.turannul.pxlbattery");
+	if (CustomTicks) {
+		for (NSString *whichTick in self.theRest)
+			[self hideMe:whichTick animate:YES];
             /*
             [self hideMe:@"c3" animate:YES]; // Hide bar 1
             [self hideMe:@"c4" animate:YES]; // Hide bar 2
             [self hideMe:@"c5" animate:YES]; // Hide bar 3
             [self hideMe:@"c6" animate:YES]; // Hide bar 4
             [self hideMe:@"c7" animate:YES]; // Hide bar 5*/
-        } else {
-            NSString *originalStr = @"Battery Color"; originalStr = [originalStr stringByReplacingOccurrencesOfString:originalStr withString:@"Frame Color"];
-          
-          for (NSString *whichTick in IDgroupTicks)
-  [self showMe:_whichTick after:@"anchor" animated:YES]; /* [self showMe:@"c3" after:@"switch1" animate:YES]; // Show bar 1
+		} else {
+			NSString *originalStr = @"Battery Color"; 
+			originalStr = [originalStr stringByReplacingOccurrencesOfString:originalStr withString:@"Frame Color"];
+
+			for (NSString *whichTick in self.theRest)
+				[self showMe:whichTick after:@"anchor" animate:YES]; /* [self showMe:@"c3" after:@"switch1" animate:YES]; // Show bar 1
             [self showMe:@"c4" after:@"c3" animate:YES];      // Show bar 2
             [self showMe:@"c5" after:@"c4" animate:YES];      // Show bar 3
             [self showMe:@"c6" after:@"c5" animate:YES];      // Show bar 4
             [self showMe:@"c7" after:@"c6" animate:YES];      // Show bar 5*/
-        }
+		}
     
     BOOL pxlEnabled = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
         if (!pxlEnabled) {
@@ -153,7 +153,7 @@ for (NSString *whichTick in IDgroupTicks)
 - (void)reloadSpecifiers {
     [super reloadSpecifiers];
 
-    BOOL CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
+    CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
         if (CustomTicks) {
             [self hideMe:@"c3" animate:YES]; // Hide bar 1
             [self hideMe:@"c4" animate:YES]; // Hide bar 2
