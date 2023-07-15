@@ -101,7 +101,7 @@
     BOOL CustomTicks = GetBool(@"CustomTicks", NO, @"xyz.turannul.pxlbattery");
         if (CustomTicks) {
 for (NSString *whichTick in IDgroupTicks)
-  [self hideMe:whichTick animated:YES];
+  [self hideMe:_whichTick animated:YES];
             /*
             [self hideMe:@"c3" animate:YES]; // Hide bar 1
             [self hideMe:@"c4" animate:YES]; // Hide bar 2
@@ -112,7 +112,7 @@ for (NSString *whichTick in IDgroupTicks)
             NSString *originalStr = @"Battery Color"; originalStr = [originalStr stringByReplacingOccurrencesOfString:originalStr withString:@"Frame Color"];
           
           for (NSString *whichTick in IDgroupTicks)
-  [self showMe:whichTick after:@"anchor" animated:YES]; /* [self showMe:@"c3" after:@"switch1" animate:YES]; // Show bar 1
+  [self showMe:_whichTick after:@"anchor" animated:YES]; /* [self showMe:@"c3" after:@"switch1" animate:YES]; // Show bar 1
             [self showMe:@"c4" after:@"c3" animate:YES];      // Show bar 2
             [self showMe:@"c5" after:@"c4" animate:YES];      // Show bar 3
             [self showMe:@"c6" after:@"c5" animate:YES];      // Show bar 4
