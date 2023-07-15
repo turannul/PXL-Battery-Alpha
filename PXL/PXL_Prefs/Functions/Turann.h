@@ -19,7 +19,7 @@
 	NSString *myTitle;
 	UITableView *_table;
 }
-@property (nonatomic, strong) NSArray *chosenIDs;
+@property (nonatomic, strong) NSMutableArray *chosenIDs;
 @property (nonatomic, strong) NSString *plistName;
 @property (nonatomic, strong) NSString *BundlePath;
 @property (nonatomic, retain) UIView *headerView;

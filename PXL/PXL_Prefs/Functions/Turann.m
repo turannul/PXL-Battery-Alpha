@@ -42,7 +42,15 @@ extern char **environ;
 
 - (NSArray *)specifiers {
 	if (!_specifiers) {
+		self.chosenIDs = [[NSMutableArray alloc] init];
 		_specifiers = [self loadSpecifiersFromPlistName:self.plistName target:self];
+
+		for (PSSpecifier *specifier in _specifiers) {
+			NSString *specifierID = [specifier propertyForKey:@"id"];
+			if (specifierID)
+				[self.chosenIDs addObject:specifierID];
+		}
+
 		self.savedSpecifiers = [NSMutableDictionary dictionary];
 		for(PSSpecifier *specifier in _specifiers){
 			if([self.chosenIDs containsObject:[specifier propertyForKey:@"id"]]){
@@ -50,6 +58,7 @@ extern char **environ;
 			}
 		}
 	}
+
 	return _specifiers;
 }
 
@@ -57,11 +66,19 @@ extern char **environ;
 
 
 - (void)showMe:(NSString *)showMe after: (NSString*)after animate:(bool)animate {
-	![self containsSpecifier: self.savedSpecifiers[showMe]] ? [self insertContiguousSpecifiers:@[self.savedSpecifiers[showMe]] afterSpecifierID: after animated: animate] : 0;
+	@try{
+		![self containsSpecifier: self.savedSpecifiers[showMe]] ? [self insertContiguousSpecifiers:@[self.savedSpecifiers[showMe]] afterSpecifierID: after animated: animate] : 0;
+	}@catch(NSException *exception){
+		NSLog(@"Randy420: showMe:%@ after:%@", showMe, after);
+	}
 }
 
 - (void)hideMe:(NSString *)hideMe animate:(bool)animate {
-	[self containsSpecifier:self.savedSpecifiers[hideMe]] ? [self removeContiguousSpecifiers:@[self.savedSpecifiers[hideMe]] animated:animate] : 0;
+	@try{
+		[self containsSpecifier:self.savedSpecifiers[hideMe]] ? [self removeContiguousSpecifiers:@[self.savedSpecifiers[hideMe]] animated:animate] : 0;
+	}@catch(NSException *exception){
+		NSLog(@"Randy420: hideMe:%@", hideMe);
+	}
 }
 
 -(id)readPreferenceValue:(PSSpecifier *)specifier{
