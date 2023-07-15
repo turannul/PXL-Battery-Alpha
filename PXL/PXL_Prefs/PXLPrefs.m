@@ -12,7 +12,7 @@
 
 - (NSArray *)specifiers {
 	self.plistName = @"MainPrefs";
-    self.chosenIDs = @[@"a0", @"b1", @"switch0", @"b2", @"switch1", @"c1", @"c2", @"c3", @"c4", @"c5", @"c6", @"c7", @"c8", @"c9", @"c10", @"d1", @"d2", @"d3", @"e1", @"e2", @"e3", @"f1", @"f2", @"f3", @"g1", @"g2"];
+    self.chosenIDs = @[@"group_1", @"group_2", @"swtch_enabled", @"group_3", @"swtch_custom_ticks", @"tick_1", @"tick_2", @"tick_3", @"tick_4", @"tick_5", @"battery_color", @"low_battery_color", @"low_power_mode_color", @"charging_color", @"group_4", @"group_5", @"source_code", @"group_6", @"follow_twitter", @"contribute_coffee", @"group_7", @"follow_randy", @"donate_randy", @"group_8", @"restore_defaults"];
 	return [super specifiers];
 }
 
