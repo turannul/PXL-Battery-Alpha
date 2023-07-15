@@ -13,7 +13,7 @@
 - (NSArray *)specifiers {
 	self.plistName = @"MainPrefs";
     self.chosenIDs = @[@"IDgroup1", @"IDgroupTicks"];
-    self.IDgroup1 = @[@"chosenIDs", @"group_1", @"group_2", @"group_3", @"swtch_custom_ticks", @"tick_1", @"tick_2", @"tick_3", @"tick_4", @"tick_5", @"battery_color", @"low_battery_color", @"low_power_mode_color", @"charging_color", @"group_4", @"group_5", @"group_6", @"follow_twitter", @"contribute_coffee", @"group_7", @"follow_randy", @"donate_randy", @"group_8", @"restore_defaults"];
+    self.IDgroup1 = @[@"group_1", @"group_2", @"group_3", @"swtch_custom_ticks", @"tick_1", @"tick_2", @"tick_3", @"tick_4", @"tick_5", @"battery_color", @"low_battery_color", @"low_power_mode_color", @"charging_color", @"group_4", @"group_5", @"group_6", @"follow_twitter", @"contribute_coffee", @"group_7", @"follow_randy", @"donate_randy", @"group_8", @"restore_defaults"];
     self.IDgroupTicks = @[@"tick_1", @"tick_2", @"tick_3", @"tick_4", @"tick_5"];
 	return [super specifiers];
 }
@@ -98,7 +98,7 @@
 
 - (void)setPreferenceValue:(id)value specifier:(PSSpecifier *)specifier {
     [super setPreferenceValue:value specifier:specifier];
-    BOOL CustomTicks = GetBool(@"CustomTicks", NO, @"xyz.turannul.pxlbattery");
+    BOOL CustomTicks = GetBool(@"CustomTicks", @"xyz.turannul.pxlbattery");
         if (CustomTicks) {
             [self hideMe:@"IDgroupTicks" animate:YES];
             /*
@@ -116,7 +116,7 @@
             [self showMe:@"c7" after:@"c6" animate:YES];      // Show bar 5*/
         }
     
-    BOOL pxlEnabled = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
+    BOOL pxlEnabled = GetBool(@"pxlEnabled", @"xyz.turannul.pxlbattery");
         if (!pxlEnabled) {
             [self hideMe:@"switch1" animate:YES];
             [self hideMe:@"c1" animate:YES];
