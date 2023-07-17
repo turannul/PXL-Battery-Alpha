@@ -3,6 +3,7 @@
 @implementation PXLPrefs {
     NSDictionary *plist;
     NSArray *_BarGroup;
+    NSArray *_onSwitchIDs;
 }
 
 -(instancetype)init {
@@ -263,7 +264,7 @@
     if (!_specifiers) {
         self.plistName = @"MainPrefs";
         self.BarGroup = @[@"tick_5", @"tick_4", @"tick_3", @"tick_2", @"tick_1"];
-        self.onSwitchIDs = @[/*@"restore_defaults",*/ @"group_8", @"donate_randy", @"follow_randy", @"group_7", @"contribute_coffee", @"follow_twitter", @"group_6", /*@"source_code",*/ @"group_5", @"group_4", @"charging_color", @"low_power_mode_color", @"low_battery_color", @"battery_color", /*self.BarGroup?,*/, @"group_3", @"swtch_custom_ticks", @"group_2"];
+        self.onSwitchIDs = @[/*@"restore_defaults",*/ @"group_8", @"donate_randy", @"follow_randy", @"group_7", @"contribute_coffee", @"follow_twitter", @"group_6", /*@"source_code",*/ @"group_5", @"group_4", @"charging_color", @"low_power_mode_color", @"low_battery_color", @"battery_color", /*self.BarGroup,*/ @"group_3", @"swtch_custom_ticks", @"group_2"];
     }
     return [super specifiers];
 }
@@ -361,6 +362,13 @@
                 }
             }
     }
+        MasterSwitch = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
+        if (!MasterSwitch) {
+            for (NSString *onSwitchIDs in self.onSwitchIDs)
+                [self hideMe:onSwitchIDs animate:YES];
+        } else {
+                [self showMe:onSwitchIDs after:@"pkg_header" animate:YES];
+        }
 }
 
 - (void)reloadSpecifiers {
@@ -377,13 +385,13 @@
             [self showMe:BarGroup after:@"swtch_custom_ticks" animate:YES];
     }
 
- /*   MasterSwitch = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
+    MasterSwitch = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
         if (!MasterSwitch) {
             for (NSString *onSwitchIDs in self.onSwitchIDs)
                 [self hideMe:onSwitchIDs animate:YES];
         } else {
-[self showMe:self.onSwitchIDs after:@"pkg_header" animate:YES];
-        }*/
+                [self showMe:onSwitchIDs after:@"pkg_header" animate:YES];
+        }
 }
 
 
