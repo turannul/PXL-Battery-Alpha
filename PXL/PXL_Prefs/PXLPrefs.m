@@ -2,13 +2,12 @@
 
 @implementation PXLPrefs {
     NSDictionary *plist;
-    NSArray *BarGroup;
+    NSArray *_BarGroup;
 }
 
 -(instancetype)init {
     myIcon = @"PXL";
     self.BundlePath = @"/Library/PreferenceBundles/PXL.bundle";
-    self.BarGroup = @[@"Bar1", @"Bar2", @"Bar3", @"Bar4", @"Bar5"];
     self = [super init];
     return self;
 }
@@ -261,12 +260,14 @@
 }
 
 - (NSArray *)specifiers {
-    if (!_specifiers){
+    if (!_specifiers) {
         self.plistName = @"MainPrefs";
+        self.BarGroup = @[@"tick_5", @"tick_4", @"tick_3", @"tick_2", @"tick_1"];
         self.theRest = @[@"restore_defaults", @"group_8", @"donate_randy", @"follow_randy", @"group_7", @"contribute_coffee", @"follow_twitter", @"group_6", @"source_code", @"group_5", @"group_4", @"charging_color", @"low_power_mode_color", @"low_battery_color"];
     }
     return [super specifiers];
 }
+
 
 -(void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
@@ -349,20 +350,18 @@
     [super setPreferenceValue:value specifier:specifier];
     NSString *key = [specifier propertyForKey:@"key"];
     if ([key isEqualToString:@"CustomTicks"]) {
-        BOOL customTicksEnabled = [value boolValue];
-        if (customTicksEnabled) {
-            for (NSString *BarGroup in BarGroup) {
-                [self showMe:BarGroup animate:YES];
+        CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
+            if (CustomTicks) {
+                for (NSString *BarGroup in self.BarGroup) {
+                    [self showMe:BarGroup after:@"battery_color" animate:YES];
+                }
+            } else {
+                for (NSString *BarGroup in self.BarGroup) {
+                    [self hideMe:BarGroup animate:YES];
+                }
             }
-        } else {
-            for (NSString *BarGroup in BarGroup) {
-                [self hideMe:BarGroup animate:YES];
-            }
-        }
     }
-    
 }
-
 
 - (void)reloadSpecifiers {
     [super reloadSpecifiers];
@@ -370,19 +369,24 @@
     CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
     if (CustomTicks) {
         NSLog(@"Randy420:reload:hideMe:");
-        for (NSString *whichTick in self.IDgroup1)
-            [self hideMe:whichTick animate:NO];
+        for (NSString *BarGroup in self.BarGroup)
+            [self hideMe:BarGroup animate:YES];
 
     } else {
-        for (NSString *whichTick in self.IDgroup1)
-            [self showMe:whichTick after:@"swtch_custom_ticks" animate:YES];
+        for (NSString *BarGroup in self.BarGroup)
+            [self showMe:BarGroup after:@"swtch_custom_ticks" animate:YES];
     }
 
-    BOOL pxlEnabled = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
-    if (!pxlEnabled) {
-    } else {
-    }
+ /*   MasterSwitch = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
+        if (!MasterSwitch) {
+            for (NSString *theRestof in self.theRest)
+                [self hideMe:theRestof animate:YES];
+        } else {
+[self showMe:self.theRestof after:@"pkg_header" animate:YES];
+        }*/
 }
+
+
 
 // Buttons
 -(void)SourceCode { [self link:@"https://github.com/turannul/PXL-Battery" name:@"Source Code"]; }
