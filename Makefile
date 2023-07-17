@@ -5,7 +5,8 @@ export SYSROOT = $(THEOS)/sdks/iPhoneOS14.1.sdk
 FINALPACKAGE = 0
 DEBUG = 1
 
-INSTALL_TARGET_PROCESSES = SpringBoard
+#INSTALL_TARGET_PROCESSES = SpringBoard
+INSTALL_TARGET_PROCESSES = Preferences
 
 SUBPROJECTS += PXL/PXL_Battery           # It works.  Completed:%75 (See the README.md)
 SUBPROJECTS += PXL/PXL_CC                # It works.  Compeleted:%100
