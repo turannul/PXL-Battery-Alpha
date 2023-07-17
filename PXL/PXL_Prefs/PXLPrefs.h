@@ -3,6 +3,7 @@
 #import "Functions/Turann.h"
 #import "Functions/SparkColourPickerUtils.h"
 @interface PXLPrefs:Turann {
+    NSDictionary *plist;
     BOOL CustomTicks;
     BOOL MasterSwitch;
     }

@@ -1,9 +1,6 @@
 #import "PXLPrefs.h"
 
 @implementation PXLPrefs {
-    NSDictionary *plist;
-    NSArray *_BarGroup;
-    NSArray *_onSwitchIDs;
 }
 
 -(instancetype)init {
@@ -353,6 +350,7 @@
     if ([key isEqualToString:@"CustomTicks"]) {
         CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
             if (CustomTicks) {
+                NSLog(@"Randy420:reload:hideMe:");
                 for (NSString *BarGroup in self.BarGroup) {
                     [self showMe:BarGroup after:@"battery_color" animate:YES];
                 }
@@ -362,13 +360,14 @@
                 }
             }
     }
-        MasterSwitch = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
-        if (!MasterSwitch) {
-            for (NSString *onSwitchIDs in self.onSwitchIDs)
-                [self hideMe:onSwitchIDs animate:YES];
-        } else {
-                [self showMe:onSwitchIDs after:@"pkg_header" animate:YES];
-        }
+        MasterSwitch = GetBool(@"pxlEnabled", YES, @"xyz.turannul.pxlbattery");
+            if (MasterSwitch) {
+                NSLog(@"Randy420:reload:hideMe:");
+                for (NSString *onSwitchIDs in self.onSwitchIDs)
+                    [self showMe:onSwitchIDs after:@"pkg_header" animate:YES];
+            } else {
+                    [self hideMe:onSwitchIDs animate:YES];
+            }
 }
 
 - (void)reloadSpecifiers {
@@ -385,12 +384,13 @@
             [self showMe:BarGroup after:@"swtch_custom_ticks" animate:YES];
     }
 
-    MasterSwitch = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
-        if (!MasterSwitch) {
+    MasterSwitch = GetBool(@"pxlEnabled", YES, @"xyz.turannul.pxlbattery");
+        if (MasterSwitch) {
+            NSLog(@"Randy420:reload:hideMe:");
             for (NSString *onSwitchIDs in self.onSwitchIDs)
-                [self hideMe:onSwitchIDs animate:YES];
-        } else {
                 [self showMe:onSwitchIDs after:@"pkg_header" animate:YES];
+        } else {
+                [self hideMe:onSwitchIDs animate:YES];
         }
 }
 
