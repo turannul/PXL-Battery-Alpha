@@ -261,7 +261,7 @@
     if (!_specifiers) {
         self.plistName = @"MainPrefs";
         self.BarGroup = @[@"tick_5", @"tick_4", @"tick_3", @"tick_2", @"tick_1"];
-        self.onSwitchIDs = @[/* @"restore_defaults", @"group_8", @"donate_randy", @"follow_randy", @"group_7", */@"source_code", @"contribute_coffee", @"follow_twitter", @"group_6", @"group_5", @"group_4", @"group_3", self.BarGroup, /* @"tick_5", */ /* @"tick_4", */ /* @"tick_3", */ /* @"tick_2", */ /* @"tick_1", */ @"battery_color", /* @"swtch_custom_ticks", */ @"group_2", /* @"swtch_enabled", @"group_1", @"pkg_header" */];
+        self.onSwitchIDs = @[/*@"restore_defaults",*/@"group_8", @"donate_randy", @"follow_randy", @"group_7", @"contribute_coffee", @"follow_twitter", @"group_6", /*@"source_code",*/ @"group_5", @"group_4", @"charging_color", @"low_power_mode_color", @"low_battery_color", /*@"pkg_header", @"group_1", @"swtch_enabled",*/ @"group_2", @"swtch_custom_ticks", @"group_3", @"battery_color", self.BarGroup, /*@"tick_5", @"tick_4", @"tick_3", @"tick_2", @"tick_1"*/]; 
  }
     return [super specifiers];
 }
