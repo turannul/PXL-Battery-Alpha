@@ -263,7 +263,7 @@
     if (!_specifiers) {
         self.plistName = @"MainPrefs";
         self.BarGroup = @[@"tick_5", @"tick_4", @"tick_3", @"tick_2", @"tick_1"];
-        self.theRest = @[@"restore_defaults", @"group_8", @"donate_randy", @"follow_randy", @"group_7", @"contribute_coffee", @"follow_twitter", @"group_6", @"source_code", @"group_5", @"group_4", @"charging_color", @"low_power_mode_color", @"low_battery_color"];
+        self.onSwitchIDs = @[/*@"restore_defaults",*/ @"group_8", @"donate_randy", @"follow_randy", @"group_7", @"contribute_coffee", @"follow_twitter", @"group_6", /*@"source_code",*/ @"group_5", @"group_4", @"charging_color", @"low_power_mode_color", @"low_battery_color", @"battery_color", /*self.BarGroup?,*/, @"group_3", @"swtch_custom_ticks", @"group_2"];
     }
     return [super specifiers];
 }
@@ -379,10 +379,10 @@
 
  /*   MasterSwitch = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
         if (!MasterSwitch) {
-            for (NSString *theRestof in self.theRest)
-                [self hideMe:theRestof animate:YES];
+            for (NSString *onSwitchIDs in self.onSwitchIDs)
+                [self hideMe:onSwitchIDs animate:YES];
         } else {
-[self showMe:self.theRestof after:@"pkg_header" animate:YES];
+[self showMe:self.onSwitchIDs after:@"pkg_header" animate:YES];
         }*/
 }
 
