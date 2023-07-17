@@ -261,7 +261,7 @@
     if (!_specifiers) {
         self.plistName = @"MainPrefs";
         self.BarGroup = @[@"tick_5", @"tick_4", @"tick_3", @"tick_2", @"tick_1"];
-        self.onSwitchIDs = @[/*@"restore_defaults",*/@"group_8", @"donate_randy", @"follow_randy", @"group_7", @"contribute_coffee", @"follow_twitter", @"group_6", /*@"source_code",*/ @"group_5", @"group_4", @"charging_color", @"low_power_mode_color", @"low_battery_color", /*@"pkg_header", @"group_1", @"swtch_enabled",*/ @"group_2", @"swtch_custom_ticks", @"group_3", @"battery_color", self.BarGroup, /*@"tick_5", @"tick_4", @"tick_3", @"tick_2", @"tick_1"*/]; 
+        self.onSwitchIDs = @[@"group_8", @"donate_randy", @"follow_randy", @"group_7", @"contribute_coffee", @"follow_twitter", @"group_6", @"source_code", @"group_5", @"group_4", @"charging_color", @"low_power_mode_color", @"low_battery_color", self.BarGroup, @"battery_color", @"group_3", @"swtch_custom_ticks", @"group_2", @"pkg_header"];
  }
     return [super specifiers];
 }
@@ -396,8 +396,6 @@
                                 [self showMe:onSwitchIDs after:@"pkg_header" animate:YES];
         }
 }
-
-
 
 // Buttons
 -(void)SourceCode { [self link:@"https://github.com/turannul/PXL-Battery" name:@"Source Code"]; }
