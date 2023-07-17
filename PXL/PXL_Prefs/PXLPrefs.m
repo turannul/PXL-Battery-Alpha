@@ -1,23 +1,271 @@
 #import "PXLPrefs.h"
 
-@implementation PXLPrefs 
+@implementation PXLPrefs {
+    NSDictionary *plist;
+    NSArray *BarGroup;
+}
 
 -(instancetype)init {
-	myIcon = @"PXL";
-	self.BundlePath = @"/Library/PreferenceBundles/PXL.bundle";
-	
-	self = [super init];
-	return self;
+    myIcon = @"PXL";
+    self.BundlePath = @"/Library/PreferenceBundles/PXL.bundle";
+    self.BarGroup = @[@"Bar1", @"Bar2", @"Bar3", @"Bar4", @"Bar5"];
+    self = [super init];
+    return self;
+}
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        plist = @{
+            @"items": @[
+                @{
+                    @"cell": @"PSGroupCell",
+                    @"condensed": @YES,
+                    @"headerCellClass": @"HBPackageNameHeaderCell",
+                    @"icon": @"icon.png",
+                    @"packageIdentifier": @"xyz.turannul.pxlbattery",
+                    @"id": @"pkg_header",
+                    @"packageNameOverride": @"PXL Battery"
+                },
+                @{
+                    @"cell": @"PSGroupCell",
+                    @"id": @"group_1"
+                },
+                @{
+                    @"PostNotification": @"xyz.turannul.pxlbattery.settingschanged",
+                    @"cell": @"PSSwitchCell",
+                    @"default": @YES,
+                    @"defaults": @"xyz.turannul.pxlbattery",
+                    @"id": @"swtch_enabled",
+                    @"key": @"pxlEnabled", // Now modify code to IF this key NO DO NOT Show anything except this button & pkg header
+                    @"label": @"Enabled"
+                },
+                @{
+                    @"cell": @"PSGroupCell",
+                    @"id": @"group_2"
+                },
+                @{
+                    @"PostNotification": @"xyz.turannul.pxlbattery.settingschanged",
+                    @"cell": @"PSSwitchCell",
+                    @"default": @YES,
+                    @"defaults": @"xyz.turannul.pxlbattery",
+                    @"id": @"swtch_custom_ticks",
+                    @"key": @"CustomTicks",
+                    @"label": @"Custom Tick color"
+                },
+                @{
+                    @"cell": @"PSGroupCell",
+                    @"id": @"group_3"
+                },
+                @{
+                    @"PostNotification": @"xyz.turannul.pxlbattery.settingschanged",
+                    @"defaults": @"xyz.turannul.pxlbattery",
+                    @"id": @"battery_color",
+                    @"cell": @"PSLinkCell",
+                    @"cellClass": @"SparkColourPickerCell",
+                    @"libsparkcolourpicker": @{
+                        @"defaults": @"xyz.turannul.pxlbattery",
+                        @"fallback": @"#FFFFFF",
+                        @"alpha": @YES,
+                        @"PreviewGradient": @NO
+                    },
+                    @"key": @"BatteryColor",
+                    @"label": @"Battery Color"
+                },
+                @{
+                    @"PostNotification": @"xyz.turannul.pxlbattery.settingschanged",
+                    @"defaults": @"xyz.turannul.pxlbattery",
+                    @"id": @"tick_1",
+                    @"cell": @"PSLinkCell",
+                    @"cellClass": @"SparkColourPickerCell",
+                    @"libsparkcolourpicker": @{
+                        @"defaults": @"xyz.turannul.pxlbattery",
+                        @"fallback": @"#FFFFFF",
+                        @"alpha": @YES,
+                        @"PreviewGradient": @NO
+                    },
+                    @"label": @"Tick 1",
+                    @"key": @"Bar1"
+                },
+                @{
+                    @"PostNotification": @"xyz.turannul.pxlbattery.settingschanged",
+                    @"defaults": @"xyz.turannul.pxlbattery",
+                    @"id": @"tick_2",
+                    @"cell": @"PSLinkCell",
+                    @"cellClass": @"SparkColourPickerCell",
+                    @"libsparkcolourpicker": @{
+                        @"defaults": @"xyz.turannul.pxlbattery",
+                        @"fallback": @"#FFFFFF",
+                        @"alpha": @YES,
+                        @"PreviewGradient": @NO
+                    },
+                    @"label": @"Tick 2",
+                    @"key": @"Bar2"
+                },
+                @{
+                    @"PostNotification": @"xyz.turannul.pxlbattery.settingschanged",
+                    @"defaults": @"xyz.turannul.pxlbattery",
+                    @"id": @"tick_3",
+                    @"cell": @"PSLinkCell",
+                    @"cellClass": @"SparkColourPickerCell",
+                    @"libsparkcolourpicker": @{
+                        @"defaults": @"xyz.turannul.pxlbattery",
+                        @"fallback": @"#FFFFFF",
+                        @"alpha": @YES,
+                        @"PreviewGradient": @NO
+                    },
+                    @"label": @"Tick 3",
+                    @"key": @"Bar3"
+                },
+                @{
+                    @"PostNotification": @"xyz.turannul.pxlbattery.settingschanged",
+                    @"defaults": @"xyz.turannul.pxlbattery",
+                    @"id": @"tick_4",
+                    @"cell": @"PSLinkCell",
+                    @"cellClass": @"SparkColourPickerCell",
+                    @"libsparkcolourpicker": @{
+                        @"defaults": @"xyz.turannul.pxlbattery",
+                        @"fallback": @"#FFFFFF",
+                        @"alpha": @YES,
+                        @"PreviewGradient": @NO
+                    },
+                    @"label": @"Tick 4",
+                    @"key": @"Bar4"
+                },
+                @{
+                    @"PostNotification": @"xyz.turannul.pxlbattery.settingschanged",
+                    @"defaults": @"xyz.turannul.pxlbattery",
+                    @"id": @"tick_5",
+                    @"cell": @"PSLinkCell",
+                    @"cellClass": @"SparkColourPickerCell",
+                    @"libsparkcolourpicker": @{
+                        @"defaults": @"xyz.turannul.pxlbattery",
+                        @"fallback": @"#FFFFFF",
+                        @"alpha": @YES,
+                        @"PreviewGradient": @NO
+                    },
+                    @"label": @"Tick 5",
+                    @"key": @"Bar5"
+                },
+                @{
+                    @"PostNotification": @"xyz.turannul.pxlbattery.settingschanged",
+                    @"defaults": @"xyz.turannul.pxlbattery",
+                    @"id": @"low_battery_color",
+                    @"cell": @"PSLinkCell",
+                    @"cellClass": @"SparkColourPickerCell",
+                    @"libsparkcolourpicker": @{
+                        @"defaults": @"xyz.turannul.pxlbattery",
+                        @"fallback": @"#EA3323",
+                        @"alpha": @YES,
+                        @"PreviewGradient": @NO
+                    },
+                    @"label": @"Low Battery Color",
+                    @"key": @"LowBatteryColor"
+                },
+                @{
+                    @"PostNotification": @"xyz.turannul.pxlbattery.settingschanged",
+                    @"defaults": @"xyz.turannul.pxlbattery",
+                    @"id": @"low_power_mode_color",
+                    @"cell": @"PSLinkCell",
+                    @"cellClass": @"SparkColourPickerCell",
+                    @"libsparkcolourpicker": @{
+                        @"defaults": @"xyz.turannul.pxlbattery",
+                        @"fallback": @"#FFCC02",
+                        @"alpha": @YES,
+                        @"PreviewGradient": @NO
+                    },
+                    @"label": @"Low Power Mode Color",
+                    @"key": @"LowPowerModeColor"
+                },
+                @{
+                    @"PostNotification": @"xyz.turannul.pxlbattery.settingschanged",
+                    @"defaults": @"xyz.turannul.pxlbattery",
+                    @"id": @"charging_color",
+                    @"cell": @"PSLinkCell",
+                    @"cellClass": @"SparkColourPickerCell",
+                    @"libsparkcolourpicker": @{
+                        @"defaults": @"xyz.turannul.pxlbattery",
+                        @"fallback": @"#00FF0C",
+                        @"alpha": @YES,
+                        @"PreviewGradient": @NO
+                    },
+                    @"label": @"Charging Color",
+                    @"key": @"ChargingColor"
+                },
+                @{
+                    @"cell": @"PSGroupCell",
+                    @"id": @"group_4"
+                },
+                @{
+                    @"cell": @"PSGroupCell",
+                    @"footerText": @"Made with ❤️",
+                    @"id": @"group_5"
+                },
+                @{
+                    @"action": @"SourceCode",
+                    @"cell": @"PSButtonCell",
+                    @"icon": @"Github.png",
+                    @"label": @"View source code",
+                    @"id": @"source_code"
+                },
+                @{
+                    @"cell": @"PSGroupCell",
+                    @"id": @"group_6"
+                },
+                @{
+                    @"action": @"Twitter",
+                    @"cell": @"PSButtonCell",
+                    @"icon": @"Twitter.png",
+                    @"id": @"follow_twitter",
+                    @"label": @"Follow on Twitter"
+                },
+                @{
+                    @"action": @"DonateMe",
+                    @"cell": @"PSButtonCell",
+                    @"icon": @"CashApp.png",
+                    @"id": @"contribute_coffee",
+                    @"label": @"Contribute a Coffee"
+                },
+                @{
+                    @"cell": @"PSGroupCell",
+                    @"id": @"group_7"
+                },
+                @{
+                    @"action": @"RandyTwitter",
+                    @"cell": @"PSButtonCell",
+                    @"icon": @"Twitter.png",
+                    @"id": @"follow_randy",
+                    @"label": @"Follow Randy420 on Twitter"
+                },
+                @{
+                    @"action": @"DonatetoRandy420",
+                    @"cell": @"PSButtonCell",
+                    @"icon": @"PayPal.png",
+                    @"label": @"Donate to Randy420",
+                    @"id": @"donate_randy"
+                },
+                @{
+                    @"cell": @"PSGroupCell",
+                    @"id": @"group_8"
+                },
+                @{
+                    @"action": @"resetPrefs",
+                    @"cell": @"PSButtonCell",
+                    @"label": @"Restore Defaults",
+                    @"id": @"restore_defaults"
+                }
+            ]
+        };
+    }
+    return self;
 }
 
 - (NSArray *)specifiers {
-	if (!_specifiers){
-		self.plistName = @"MainPrefs";
-		self.IDgroup1 = @[@"tick_5", @"tick_4", @"tick_3", @"tick_2", @"tick_1", @"battery_color", @"group_3"];
-		self.theRest = @[@"restore_defaults", @"group_8", @"donate_randy", @"follow_randy", @"group_7", @"contribute_coffee", @"follow_twitter", @"group_6", @"source_code", @"group_5", @"group_4", @"charging_color", @"low_power_mode_color", @"low_battery_color"];
-	}
-
-	return [super specifiers];
+    if (!_specifiers){
+        self.plistName = @"MainPrefs";
+        self.theRest = @[@"restore_defaults", @"group_8", @"donate_randy", @"follow_randy", @"group_7", @"contribute_coffee", @"follow_twitter", @"group_6", @"source_code", @"group_5", @"group_4", @"charging_color", @"low_power_mode_color", @"low_battery_color"];
+    }
+    return [super specifiers];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -98,95 +346,44 @@
 }
 
 - (void)setPreferenceValue:(id)value specifier:(PSSpecifier *)specifier {
-	[super setPreferenceValue:value specifier:specifier];
-	NSString *key = [specifier propertyForKey:@"key"];
-	if ([key isEqualToString:@"CustomTicks"]){
-		if ([value boolValue]){
-			for (NSString *whichTick in self.IDgroup1)
-				[self hideMe:whichTick animate:NO];
-			NSLog(@"Randy420:setPreferenceValue:hideMe:");
-		} else {
-			for (NSString *whichTick in self.IDgroup1)
-				[self showMe:whichTick after:@"swtch_custom_ticks" animate:NO];
-			NSLog(@"Randy420:setPreferenceValue:showMe:");
-		}
-	}
-/*	
-	BOOL pxlEnabled = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
-		if (!pxlEnabled) {
-			[self hideMe:@"switch1" animate:YES];
-			[self hideMe:@"c1" animate:YES];
-			[self hideMe:@"c2" animate:YES];
-			[self hideMe:@"c8" animate:YES];
-			[self hideMe:@"c9" animate:YES];
-			[self hideMe:@"c10" animate:YES];
-			[self hideMe:@"d1" animate:YES];
-			[self hideMe:@"d2" animate:YES];
-			[self hideMe:@"d3" animate:YES];
-			[self hideMe:@"e1" animate:YES];
-			[self hideMe:@"e2" animate:YES];
-			[self hideMe:@"e3" animate:YES];
-			[self hideMe:@"f2" animate:YES];
-			[self hideMe:@"f3" animate:YES];
-			[self hideMe:@"g1" animate:YES];
-		} else {
-			[self showMe:@"g2" after:@"g1" animate:YES];
-			[self showMe:@"f3" after:@"f2" animate:YES];
-			[self showMe:@"f1" after:@"e3" animate:YES];
-			[self showMe:@"e2" after:@"e1" animate:YES];
-			[self showMe:@"d3" after:@"d2" animate:YES];
-			[self showMe:@"c10" after:@"c9" animate:YES];
-			[self showMe:@"c9" after:@"c8" animate:YES];
-			[self showMe:@"c8" after:@"c7" animate:YES];
-			[self showMe:@"b2" after:@"b1" animate:YES];
-			[self showMe:@"switch0" after:@"a0" animate:YES];
-		}*/
+    [super setPreferenceValue:value specifier:specifier];
+    NSString *key = [specifier propertyForKey:@"key"];
+    if ([key isEqualToString:@"CustomTicks"]) {
+        BOOL customTicksEnabled = [value boolValue];
+        if (customTicksEnabled) {
+            for (NSString *BarGroup in BarGroup) {
+                [self showMe:BarGroup animate:YES];
+            }
+        } else {
+            for (NSString *BarGroup in BarGroup) {
+                [self hideMe:BarGroup animate:YES];
+            }
+        }
+    }
+    
 }
+
 
 - (void)reloadSpecifiers {
-	[super reloadSpecifiers];
+    [super reloadSpecifiers];
 
-	CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
-		if (CustomTicks) {
-			NSLog(@"Randy420:reload:hideMe:");
-			for (NSString *whichTick in self.IDgroup1)
-				[self hideMe:whichTick animate:NO];
+    CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
+    if (CustomTicks) {
+        NSLog(@"Randy420:reload:hideMe:");
+        for (NSString *whichTick in self.IDgroup1)
+            [self hideMe:whichTick animate:NO];
 
-			} else {
-				/*for (NSString *whichTick in self.IDgroup1)
-					[self showMe:whichTick after:@"swtch_custom_ticks" animate:YES];*/
-			}
+    } else {
+        for (NSString *whichTick in self.IDgroup1)
+            [self showMe:whichTick after:@"swtch_custom_ticks" animate:YES];
+    }
 
-/*	BOOL pxlEnabled = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
-		if (!pxlEnabled) {
-			[self hideMe:@"switch1" animate:YES];
-			[self hideMe:@"c1" animate:YES];
-			[self hideMe:@"c2" animate:YES];
-			[self hideMe:@"c8" animate:YES];
-			[self hideMe:@"c9" animate:YES];
-			[self hideMe:@"c10" animate:YES];
-			[self hideMe:@"d1" animate:YES];
-			[self hideMe:@"d2" animate:YES];
-			[self hideMe:@"d3" animate:YES];
-			[self hideMe:@"e1" animate:YES];
-			[self hideMe:@"e2" animate:YES];
-			[self hideMe:@"e3" animate:YES];
-			[self hideMe:@"f2" animate:YES];
-			[self hideMe:@"f3" animate:YES];
-			[self hideMe:@"g1" animate:YES];
-		} else {
-			[self showMe:@"g2" after:@"g1" animate:YES];
-			[self showMe:@"f3" after:@"f2" animate:YES];
-			[self showMe:@"f1" after:@"e3" animate:YES];
-			[self showMe:@"e2" after:@"e1" animate:YES];
-			[self showMe:@"d3" after:@"d2" animate:YES];
-			[self showMe:@"c10" after:@"c9" animate:YES];
-			[self showMe:@"c9" after:@"c8" animate:YES];
-			[self showMe:@"c8" after:@"c7" animate:YES];
-			[self showMe:@"b2" after:@"b1" animate:YES];
-			[self showMe:@"switch0" after:@"a0" animate:YES];
-		}*/
+    BOOL pxlEnabled = GetBool(@"pxlEnabled", NO, @"xyz.turannul.pxlbattery");
+    if (!pxlEnabled) {
+    } else {
+    }
 }
+
 // Buttons
 -(void)SourceCode { [self link:@"https://github.com/turannul/PXL-Battery" name:@"Source Code"]; }
 -(void)Twitter { [self link:@"https://twitter.com/ImNotTuran" name:@"Follow me on Twitter"]; }
