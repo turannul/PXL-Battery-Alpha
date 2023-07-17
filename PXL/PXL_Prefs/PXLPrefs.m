@@ -261,8 +261,8 @@
     if (!_specifiers) {
         self.plistName = @"MainPrefs";
         self.BarGroup = @[@"tick_5", @"tick_4", @"tick_3", @"tick_2", @"tick_1"];
-        self.onSwitchIDs = @[/*@"restore_defaults",*/ @"group_8", @"donate_randy", @"follow_randy", @"group_7", @"contribute_coffee", @"follow_twitter", @"group_6", /*@"source_code",*/ @"group_5", @"group_4", @"charging_color", @"low_power_mode_color", @"low_battery_color", @"battery_color", /*self.BarGroup,*/ @"group_3", @"swtch_custom_ticks", @"group_2"];
-    }
+        self.onSwitchIDs = @[/* @"restore_defaults", @"group_8", @"donate_randy", @"follow_randy", @"group_7", */@"source_code", @"contribute_coffee", @"follow_twitter", @"group_6", @"group_5", @"group_4", @"group_3", self.BarGroup, /* @"tick_5", */ /* @"tick_4", */ /* @"tick_3", */ /* @"tick_2", */ /* @"tick_1", */ @"battery_color", /* @"swtch_custom_ticks", */ @"group_2", /* @"swtch_enabled", @"group_1", @"pkg_header" */];
+ }
     return [super specifiers];
 }
 
@@ -366,6 +366,7 @@
                 for (NSString *onSwitchIDs in self.onSwitchIDs)
                     [self showMe:onSwitchIDs after:@"pkg_header" animate:YES];
             } else {
+                    for (NSString *onSwitchIDs in self.onSwitchIDs)
                     [self hideMe:onSwitchIDs animate:YES];
             }
 }
@@ -385,12 +386,14 @@
     }
 
     MasterSwitch = GetBool(@"pxlEnabled", YES, @"xyz.turannul.pxlbattery");
-        if (MasterSwitch) {
-            NSLog(@"Randy420:reload:hideMe:");
-            for (NSString *onSwitchIDs in self.onSwitchIDs)
-                [self showMe:onSwitchIDs after:@"pkg_header" animate:YES];
+    if (MasterSwitch) {
+        NSLog(@"Randy420:reload:hideMe:");
+        for (NSString *onSwitchIDs in self.onSwitchIDs)
+        [self hideMe:onSwitchIDs animate:YES];
+
         } else {
-                [self hideMe:onSwitchIDs animate:YES];
+                    for (NSString *onSwitchIDs in self.onSwitchIDs)
+                                [self showMe:onSwitchIDs after:@"pkg_header" animate:YES];
         }
 }
 
