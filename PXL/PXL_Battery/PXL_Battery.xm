@@ -45,6 +45,14 @@ static void loader(){
 }
 
 %group PXLBattery // Here go again
+%hook CSCoverSheetViewController
+// find the lock screen charging view? +
+// Explore elements in the view +
+// Hide em *
+// load PXL working on it... (It may take years to complete.)
+/* !!!!!!!!!! Note to myself or Randy This is not linked to PXLEnabled bool.  I do not have time to do.. */
+- (void)_transitionChargingViewToVisible:(bool)arg1 showBattery:(bool)arg2 animated:(bool)arg3 { arg1 = NO; %orig;}
+%end
 %hook _UIStaticBatteryView // Control Center Battery
 -(bool) _showsInlineChargingIndicator{return PXLEnabled?NO:%orig;} // Hide charging bolt
 -(bool) _shouldShowBolt{return PXLEnabled?NO:%orig;} // Hide charging bolt x2
@@ -53,10 +61,7 @@ static void loader(){
 -(id) pinColor{return PXLEnabled?[UIColor clearColor]:%orig;}// Hide the pin
 -(CGFloat) pinColorAlpha{return PXLEnabled?0.0:%orig;} // Hide battery pin x2
 -(id) _batteryFillColor{return PXLEnabled?[UIColor clearColor]:%orig;} // Hide the fill
-
--(void)_updateFillLayer{
-	PXLEnabled?[self refreshIcon]:%orig; 
-}
+-(void)_updateFillLayer{PXLEnabled?[self refreshIcon]:%orig;}
 %end
 %hook _UIBatteryView // SpringBoard Battery
 %new
@@ -177,8 +182,10 @@ static void loader(){
 //-----------------------------------------------
 //Colors
 			if ([self saverModeActive]){
+				NSLog(@"LPM is Enabled.");
 				fill.backgroundColor = LowPowerModeColor;
 			} else if (isCharging){
+				NSLog(@"Battery Charging %f%%", actualPercentage);
 				fill.backgroundColor = ChargingColor;
 			} else if (SingleColorMode && (i >= 1 && i <= 5)) {
 				fill.backgroundColor = BatteryColor;
@@ -193,8 +200,10 @@ static void loader(){
 			} else if (i == 5 && actualPercentage >= 80) {
     			fill.backgroundColor = Bar5;
 			if (actualPercentage >= 20)
+				//NSLog(@"Battery is not charging and LPM is disabled. %f%%", actualPercentage); /* Afaik this if-else chain can't take another modification adding somethng requires re-write */
 				fill.backgroundColor = BatteryColor;
-			else
+			else 
+				NSLog(@"Charger required here innidately ASAP! %f%%", actualPercentage);
 				fill.backgroundColor = LowBatteryColor;
 			} [self addSubview:fill]; } }
 //-----------------------------------------------
