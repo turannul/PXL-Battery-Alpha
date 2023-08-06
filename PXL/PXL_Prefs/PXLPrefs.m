@@ -1,7 +1,6 @@
 #import "PXLPrefs.h"
 
-@implementation PXLPrefs {
-}
+@implementation PXLPrefs {}
 
 -(instancetype)init {
     myIcon = @"PXL";
@@ -34,12 +33,22 @@
                     @"default": @YES,
                     @"defaults": @"xyz.turannul.pxlbattery",
                     @"id": @"swtch_enabled",
-                    @"key": @"pxlEnabled", // Now modify code to IF this key NO DO NOT Show anything except this button & pkg header
+                    @"key": @"pxlEnabled", // Now modify code to IF this key NO DO NOT Show anything except this switch & pkg header also reset prefs button.
                     @"label": @"Enabled"
                 },
                 @{
                     @"cell": @"PSGroupCell",
                     @"id": @"group_2"
+                },
+                @{
+                    @"PostNotification": @"xyz.turannul.pxlbattery.settingschanged",
+                    @"cell": @"PSSwitchCell",
+                    @"default": @YES,
+                    @"defaults": @"xyz.turannul.pxlbattery",
+                    @"id": @"hideLSCharging",
+                    @"key": @"hideCharging",
+                    @"label": @"Hide Lock Screen charging View"
+
                 },
                 @{
                     @"PostNotification": @"xyz.turannul.pxlbattery.settingschanged",
@@ -260,8 +269,8 @@
 - (NSArray *)specifiers {
     if (!_specifiers) {
         self.plistName = @"MainPrefs";
-        self.BarGroup = @[@"tick_5", @"tick_4", @"tick_3", @"tick_2", @"tick_1"];
-        self.onSwitchIDs = @[@"group_8", @"donate_randy", @"follow_randy", @"group_7", @"contribute_coffee", @"follow_twitter", @"group_6", @"source_code", @"group_5", @"group_4", @"charging_color", @"low_power_mode_color", @"low_battery_color", self.BarGroup, @"battery_color", @"group_3", @"swtch_custom_ticks", @"group_2", @"pkg_header"];
+       // self.BarGroup = @[@"tick_5", @"tick_4", @"tick_3", @"tick_2", @"tick_1"];
+     //   self.onSwitchIDs = @[@"group_8", @"donate_randy", @"follow_randy", @"group_7", @"contribute_coffee", @"follow_twitter", @"group_6", @"source_code", @"group_5", @"group_4", @"charging_color", @"low_power_mode_color", @"low_battery_color", self.BarGroup, @"battery_color", @"group_3", @"swtch_custom_ticks", @"group_2", @"hideLSCharging", @"pkg_header"];
  }
     return [super specifiers];
 }
@@ -346,7 +355,7 @@
 
 - (void)setPreferenceValue:(id)value specifier:(PSSpecifier *)specifier {
     [super setPreferenceValue:value specifier:specifier];
-    NSString *key = [specifier propertyForKey:@"key"];
+  /*  NSString *key = [specifier propertyForKey:@"key"];
     if ([key isEqualToString:@"CustomTicks"]) {
         CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
             if (CustomTicks) {
@@ -368,13 +377,13 @@
             } else {
                     for (NSString *onSwitchIDs in self.onSwitchIDs)
                     [self hideMe:onSwitchIDs animate:YES];
-            }
+            }*/
 }
 
 - (void)reloadSpecifiers {
     [super reloadSpecifiers];
 
-    CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
+    /*CustomTicks = GetBool(@"CustomTicks", YES, @"xyz.turannul.pxlbattery");
     if (CustomTicks) {
         NSLog(@"Randy420:reload:hideMe:");
         for (NSString *BarGroup in self.BarGroup)
@@ -394,7 +403,7 @@
         } else {
                     for (NSString *onSwitchIDs in self.onSwitchIDs)
                                 [self showMe:onSwitchIDs after:@"pkg_header" animate:YES];
-        }
+        }*/
 }
 
 // Buttons

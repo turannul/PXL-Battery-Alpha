@@ -45,14 +45,26 @@ static void loader(){
 }
 
 %group PXLBattery // Here go again
-%hook CSCoverSheetViewController
-// find the lock screen charging view? +
-// Explore elements in the view +
-// Hide em *
-// load PXL working on it... (It may take years to complete.)
-/* !!!!!!!!!! Note to myself or Randy This is not linked to PXLEnabled bool.  I do not have time to do.. */
-- (void)_transitionChargingViewToVisible:(bool)arg1 showBattery:(bool)arg2 animated:(bool)arg3 { arg1 = NO; %orig;}
+/* I don't give shit anymore
+%hook SBDashBoardViewController // iOS 13+ I'm clueless why this failing?
+- (void)_transitionChargingViewToVisible:(BOOL)arg1 showBattery:(BOOL)arg2 animated:(BOOL)arg3 {
+	if(hideCharging) {
+		NSLog(@"PXL: Im trying shit");
+		%orig(NO,NO,NO);
+	}
+}
 %end
+
+%hook CSCoverSheetViewController // This is wrong %100 
+- (void)_transitionChargingViewToVisible:(BOOL)arg1 showBattery:(BOOL)arg2 animated:(BOOL)arg3 force:(BOOL)arg4 { //might just be ios12
+	if(hideCharging) {
+		NSLog(@"PXL: Mission failed successfully.");
+		%orig(NO,NO,NO,NO);
+	
+	}
+}
+
+%end*/
 %hook _UIStaticBatteryView // Control Center Battery
 -(bool) _showsInlineChargingIndicator{return PXLEnabled?NO:%orig;} // Hide charging bolt
 -(bool) _shouldShowBolt{return PXLEnabled?NO:%orig;} // Hide charging bolt x2

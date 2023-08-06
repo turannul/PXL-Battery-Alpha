@@ -20,6 +20,7 @@ UIColor *Bar4;
 UIColor *Bar5;
 
 BOOL isCharging = NO;
+BOOL hideCharging;
 BOOL PXLEnabled;
 BOOL SingleColorMode;
 
