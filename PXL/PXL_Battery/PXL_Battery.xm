@@ -212,7 +212,7 @@ static void loader(){
 			} else if (i == 5 && actualPercentage >= 80) {
     			fill.backgroundColor = Bar5;
 			if (actualPercentage >= 20)
-				//NSLog(@"Battery is not charging and LPM is disabled. %f%%", actualPercentage); /* Afaik this if-else chain can't take another modification adding somethng requires re-write */
+				//NSLog(@"Battery is not charging and LPM is disabled. %f%%", actualPercentage); Afaik this if-else chain can't take another modification adding somethng requires re-write */
 				fill.backgroundColor = BatteryColor;
 			else 
 				NSLog(@"Charger required here innidately ASAP! %f%%", actualPercentage);
