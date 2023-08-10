@@ -62,21 +62,18 @@ static void loader(){
 %hook _UIBatteryView // SpringBoard Battery
 %new
 - (UIColor *)statusBarColor {
-    UIStatusBarManager *statusBarManager = [UIApplication sharedApplication].windows.firstObject.windowScene.statusBarManager;
-    UIView *statusBar = [statusBarManager performSelector:@selector(statusBar)];
+    UIWindow *statusBarWindow = UIApplication.sharedApplication.windows.firstObject;
+    CGRect statusBarFrame = statusBarWindow.windowScene.statusBarManager.statusBarFrame;
 
-    SEL statusBarStyleSel = NSSelectorFromString(@"statusBarStyle");
-    if ([statusBar respondsToSelector:statusBarStyleSel]) {
-        // Swizzle the statusBarStyle method and call it to get the style
-        int (*statusBarStyleFunc)(id, SEL) = (int (*)(id, SEL))[statusBar methodForSelector:statusBarStyleSel];
-        int statusBarStyle = statusBarStyleFunc(statusBar, statusBarStyleSel);
+    if (statusBarFrame.size.height > 0) {
+        UIGraphicsBeginImageContextWithOptions(statusBarFrame.size, NO, 0);
+        [statusBarWindow drawViewHierarchyInRect:statusBarFrame afterScreenUpdates:NO];
+        UIImage *statusBarImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
         
-        // Check the status bar style and return appropriate color
-        if (statusBarStyle == 1) { // UIStatusBarStyleDarkContent
-            return [UIColor blackColor];
-        } else {
-            return [UIColor whiteColor];
-        }
+        UIColor *averageColor = [statusBarImage averageColorOfImage:statusBarImage];
+        
+        return averageColor;
     }
     
     return [UIColor clearColor]; // Return a default color if unable to determine status bar color
@@ -246,10 +243,13 @@ static void loader(){
 	if (!PXLEnabled)
 		return;
 
-UIColor *statusBarColor = [self statusBarColor];
-    CGFloat statusBarLuminance = [self luminanceForColor:statusBarColor];
+//UIColor *statusBarColor = [self statusBarColor];
+  //  CGFloat statusBarLuminance = [self luminanceForColor:statusBarColor];
 
-NSLog(@"Randy420: %@ Color StatusBar!", (statusBarLuminance > 0.5) ? @"Light" : @"Dark");
+//SLog(@"Randy420: %@ Color StatusBar!", (statusBarLuminance > 0.5) ? @"Light" : @"Dark");
+//NSLog(@"Randy420: StartusBarLum %f",statusBarLuminance);
+//NSLog(@"Randy420: StatusBarColor %@", statusBarColor);
+
 
 icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]; 
 fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -297,6 +297,31 @@ If device has a battery percentage of less than 20%, colors will be set to LowBa
 Code sets both tint color of icon (frame) & fill (tick) using appropriate color value.
 */
 %end
+%hook _UIStatusBarStyleAttributes
+
+- (UIColor *)textColor {
+    UIColor *textColor = %orig;
+    CGFloat red, green, blue, alpha;
+    [textColor getRed:&red green:&green blue:&blue alpha:&alpha];
+    
+    // Calculate the distance to black (0, 0, 0)
+    CGFloat distanceToBlack = sqrt(red * red + green * green + blue * blue);
+    CGFloat distanceToWhite = sqrt((1 - red) * (1 - red) + (1 - green) * (1 - green) + (1 - blue) * (1 - blue));
+    
+    NSString *colorString;
+    
+    if (distanceToBlack != 0) {
+        colorString = @"dark"; // distance 0 = the color
+    } else {
+        colorString = @"light"; // same logic applies
+    }
+
+	NSLog(@"Randy420: StatusBar Color: %@  toW: %f toB: %f", colorString, distanceToWhite, distanceToBlack);
+    return textColor;
+}
+
+%end
+
 %end
 %ctor{
 	loader();
