@@ -20,7 +20,6 @@ UIColor *Bar4;
 UIColor *Bar5;
 
 BOOL isCharging = NO;
-BOOL hideCharging;
 BOOL PXLEnabled;
 BOOL SingleColorMode;
 
@@ -28,13 +27,20 @@ double actualPercentage;
 static double percentX;
 static double percentY;
 
-@interface _UIBatteryView : UIView{}
+@interface UIStatusBarManager (StatusBarStyle)
+- (int)statusBarStyle; // Declare the method signature
+@end
+
+@interface _UIBatteryView : UIView{
+}
 @property (nonatomic, copy, readwrite) UIColor* fillColor;
 @property (nonatomic, copy, readwrite) UIColor* bodyColor;
 @property (nonatomic, copy, readwrite) UIColor* pinColor;
 @property (assign,nonatomic) BOOL saverModeActive;
 
 +(instancetype)sharedInstance;
+-(CGFloat)luminanceForColor:(UIColor *)color;
+-(UIColor *)statusBarColor;
 -(CGFloat)chargePercent;
 -(long long)chargingState;
 -(BOOL)saverModeActive;
@@ -43,5 +49,4 @@ static double percentY;
 -(void)updateIconColor;
 -(double)getCurrentBattery;
 -(void)cleanUpViews;
--(void)adjustBarColorsBasedOnStatusBar;
 @end
