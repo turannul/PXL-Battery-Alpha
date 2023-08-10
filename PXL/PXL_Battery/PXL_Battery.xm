@@ -307,8 +307,7 @@ fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTempla
 }
 - (void)adjustBarColorsBasedOnStatusBar {
     // Sample the background color at a specific point
-    CGPoint statusBarSamplingPoint = CGPointMake(x, y); // Replace with actual coordinates
-    
+    CGPoint statusBarSamplingPoint = CGPointMake(x, y); // Replace with actual coordinates, how to find it that depends on device? instead use iconLocationX iconLocationY.
     UIColor *sampledColor = [self statusBarColorAtPoint:statusBarSamplingPoint];
     
     CGFloat brightness = [self perceivedBrightnessForColor:sampledColor];
