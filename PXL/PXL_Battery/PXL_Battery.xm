@@ -1,4 +1,6 @@
 #import "PXL_Battery.h"
+#import <Foundation/Foundation.h>
+#import <syslog.h>
 
 static NSString *GetNSString(NSString *pkey, NSString *defaultValue){
 	NSDictionary *Dict = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", @kPrefDomain]];
@@ -60,36 +62,6 @@ static void loader(){
 %end
 
 %hook _UIBatteryView // SpringBoard Battery
-%new
-- (UIColor *)statusBarColor {
-    UIWindow *statusBarWindow = UIApplication.sharedApplication.windows.firstObject;
-    CGRect statusBarFrame = statusBarWindow.windowScene.statusBarManager.statusBarFrame;
-
-    if (statusBarFrame.size.height > 0) {
-        UIGraphicsBeginImageContextWithOptions(statusBarFrame.size, NO, 0);
-        [statusBarWindow drawViewHierarchyInRect:statusBarFrame afterScreenUpdates:NO];
-        UIImage *statusBarImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        UIColor *averageColor = [statusBarImage averageColorOfImage:statusBarImage];
-        
-        return averageColor;
-    }
-    
-    return [UIColor clearColor]; // Return a default color if unable to determine status bar color
-}
-
-%new
-- (CGFloat)luminanceForColor:(UIColor *)color {
-    CGFloat red, green, blue, alpha;
-    [color getRed:&red green:&green blue:&blue alpha:&alpha];
-    
-    // Calculate luminance using the relative luminance formula
-    CGFloat luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue;
-    
-    return luminance;
-}
-
 %new
 + (instancetype)sharedInstance{
 	static _UIBatteryView *sharedInstance = nil;
@@ -222,7 +194,7 @@ static void loader(){
 			} else if (i == 4 && actualPercentage >= 60) {
 				fill.backgroundColor = Bar4;
 			} else if (i == 5 && actualPercentage >= 80) {
-    			fill.backgroundColor = Bar5;
+				fill.backgroundColor = Bar5;
 			if (actualPercentage >= 20)
 				fill.backgroundColor = BatteryColor;
 			else
@@ -263,11 +235,11 @@ fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTempla
 				[icon setTintColor:BatteryColor];
 				[fill setTintColor:BatteryColor];
 			}else{
-            	[icon setTintColor:fill.backgroundColor = BatteryColor];
-                [fill setTintColor:fill.backgroundColor = LowBatteryColor];
+				[icon setTintColor:fill.backgroundColor = BatteryColor];
+				[fill setTintColor:fill.backgroundColor = LowBatteryColor];
 				if (actualPercentage >= 10){
-                    [icon setTintColor:BatteryColor];
-                    [fill setTintColor:BatteryColor];
+					[icon setTintColor:BatteryColor];
+					[fill setTintColor:BatteryColor];
 				}else{
 					[icon setTintColor:fill.backgroundColor = LowBatteryColor];
 					[fill setTintColor:fill.backgroundColor = LowBatteryColor];
@@ -297,33 +269,53 @@ If device has a battery percentage of less than 20%, colors will be set to LowBa
 Code sets both tint color of icon (frame) & fill (tick) using appropriate color value.
 */
 %end
-%hook _UIStatusBarStyleAttributes
 
+%hook UIStatusBarManager
+- (long long)statusBarStyle {
+	long long style = %orig;
+	NSLog(@"Randy420: STYLE: %lld", style);
+
+	NSString *filePath = @"/var/mobile/zStatusBar.txt";
+	NSString *logMessage = [NSString stringWithFormat:@"Randy420: STYLE: %lld\n", style];
+
+	syslog(LOG_NOTICE, "%s", logMessage.UTF8String);
+	NSError *error = nil;
+	BOOL success = [logMessage writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+	if (!success) {
+		NSLog(@"Error writing to file: %@", error);
+	}
+
+	return style;
+}
+%end
+
+
+
+/*%hook _UIStatusBarStyleAttributes
 - (UIColor *)textColor {
-    UIColor *textColor = %orig;
-    CGFloat red, green, blue, alpha;
-    [textColor getRed:&red green:&green blue:&blue alpha:&alpha];
-    
-    // Calculate the distance to black (0, 0, 0)
-    CGFloat distanceToBlack = sqrt(red * red + green * green + blue * blue);
-    CGFloat distanceToWhite = sqrt((1 - red) * (1 - red) + (1 - green) * (1 - green) + (1 - blue) * (1 - blue));
-    
-    NSString *colorString;
-    
-    if (distanceToBlack != 0) {
-        colorString = @"dark"; // distance 0 = the color
-    } else {
-        colorString = @"light"; // same logic applies
-    }
+	UIColor *textColor = %orig;
+	CGFloat red, green, blue, alpha;
+	[textColor getRed:&red green:&green blue:&blue alpha:&alpha];
+	
+	// Calculate the distance to black (0, 0, 0)
+	CGFloat distanceToBlack = sqrt(red * red + green * green + blue * blue);
+	CGFloat distanceToWhite = sqrt((1 - red) * (1 - red) + (1 - green) * (1 - green) + (1 - blue) * (1 - blue));
+	
+	NSString *colorString;
+	
+	if (distanceToBlack != 0) {
+		colorString = @"dark"; // distance 0 = the color
+	} else {
+		colorString = @"light"; // same logic applies
+	}
 
 	NSLog(@"Randy420: StatusBar Color: %@  toW: %f toB: %f", colorString, distanceToWhite, distanceToBlack);
-    return textColor;
+	return textColor;
 }
-
-%end
+%end*/
 
 %end
 %ctor{
 	loader();
 	%init(PXLBattery);
-}
+	}

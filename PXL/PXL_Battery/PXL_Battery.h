@@ -2,7 +2,6 @@
 #include "SparkColourPickerUtils.h"
 #import <QuartzCore/CoreAnimation.h>
 #import "Battery_Images.h"
-#import "UIImage+AverageColor.h"
 
 UIImageView* icon;
 UIImageView* fill;
@@ -39,8 +38,6 @@ static double percentY;
 @property (assign,nonatomic) BOOL saverModeActive;
 
 +(instancetype)sharedInstance;
--(CGFloat)luminanceForColor:(UIColor *)color;
--(UIColor *)statusBarColor;
 -(CGFloat)chargePercent;
 -(long long)chargingState;
 -(BOOL)saverModeActive;
