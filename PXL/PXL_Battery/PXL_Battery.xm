@@ -136,6 +136,43 @@ static void loader(){
 -(void)refreshIcon{
 	if (!PXLEnabled)
 		return;
+		        [self adjustBarColorsBasedOnStatusBar]; // Adjust bar colors based on status bar
+
+
+%new
+- (UIColor *)statusBarColorAtPoint:(CGPoint)point {
+    UIImage *screenImage = [self screenshotOfScreen]; 
+    UIColor *sampledColor = [screenImage colorAtPixel:point];
+    
+    return sampledColor;
+}
+
+%new
+- (UIWindow *)keyWindow {
+    UIWindowScene *windowScene = (UIWindowScene *)[UIApplication sharedApplication].connectedScenes.anyObject;
+    return windowScene.windows.firstObject;
+}
+
+%new
+- (UIImage *)screenshotOfScreen {
+    UIWindow *keyWindow = [self keyWindow];
+    UIGraphicsBeginImageContextWithOptions(keyWindow.bounds.size, YES, 0.0);
+    [keyWindow.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return screenshot;
+}
+
+%new
+- (UIColor *)colorAtPixel:(CGPoint)point {
+    UIImage *screenshot = [self screenshotOfScreen];
+    
+    CGImageRef imageRef = CGImageCreateWithImageInRect(screenshot.CGImage, CGRectMake(point.x, point.y, 1, 1));
+    UIColor *color = [UIColor colorWithPatternImage:[UIImage imageWithCGImage:imageRef]];
+    CGImageRelease(imageRef);
+    
+    return color;
+}
 
 	[self chargePercent];
 	icon = nil;
@@ -267,6 +304,28 @@ fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTempla
 			[fill setTintColor:fill.backgroundColor = LowPowerModeColor];
 		}
 	}
+}
+- (void)adjustBarColorsBasedOnStatusBar {
+    // Sample the background color at a specific point
+    CGPoint statusBarSamplingPoint = CGPointMake(x, y); // Replace with actual coordinates
+    
+    UIColor *sampledColor = [self statusBarColorAtPoint:statusBarSamplingPoint];
+    
+    CGFloat brightness = [self perceivedBrightnessForColor:sampledColor];
+
+    if (brightness > 0.5) {
+        Bar1 = [UIColor darkColor]; 
+        Bar2 = [UIColor darkColor];
+		Bar3 = [UIColor darkColor];
+		Bar4 = [UIColor darkColor];
+		Bar5 = [UIColor darkColor];
+    } else {
+        Bar1 = [UIColor lightColor];
+        Bar2 = [UIColor lightColor];
+		Bar3 = [UIColor lightColor];
+		Bar4 = [UIColor lightColor];
+		Bar5 = [UIColor lightColor];
+    }
 }
 /* 
 Explanation required in depth because, too many if else confusing here is what does:
