@@ -43,4 +43,5 @@ static double percentY;
 -(void)updateIconColor;
 -(double)getCurrentBattery;
 -(void)cleanUpViews;
+-(void)adjustBarColorsBasedOnStatusBar;
 @end
