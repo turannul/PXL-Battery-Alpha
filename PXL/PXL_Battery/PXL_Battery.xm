@@ -45,26 +45,6 @@ static void loader(){
 }
 
 %group PXLBattery // Here go again
-/* I don't give shit anymore
-%hook SBDashBoardViewController // iOS 13+ I'm clueless why this failing?
-- (void)_transitionChargingViewToVisible:(BOOL)arg1 showBattery:(BOOL)arg2 animated:(BOOL)arg3 {
-	if(hideCharging) {
-		NSLog(@"PXL: Im trying shit");
-		%orig(NO,NO,NO);
-	}
-}
-%end
-
-%hook CSCoverSheetViewController // This is wrong %100 
-- (void)_transitionChargingViewToVisible:(BOOL)arg1 showBattery:(BOOL)arg2 animated:(BOOL)arg3 force:(BOOL)arg4 { //might just be ios12
-	if(hideCharging) {
-		NSLog(@"PXL: Mission failed successfully.");
-		%orig(NO,NO,NO,NO);
-	
-	}
-}
-
-%end*/
 %hook _UIStaticBatteryView // Control Center Battery
 -(bool) _showsInlineChargingIndicator{return PXLEnabled?NO:%orig;} // Hide charging bolt
 -(bool) _shouldShowBolt{return PXLEnabled?NO:%orig;} // Hide charging bolt x2
@@ -73,9 +53,46 @@ static void loader(){
 -(id) pinColor{return PXLEnabled?[UIColor clearColor]:%orig;}// Hide the pin
 -(CGFloat) pinColorAlpha{return PXLEnabled?0.0:%orig;} // Hide battery pin x2
 -(id) _batteryFillColor{return PXLEnabled?[UIColor clearColor]:%orig;} // Hide the fill
--(void)_updateFillLayer{PXLEnabled?[self refreshIcon]:%orig;}
+
+-(void)_updateFillLayer{
+	PXLEnabled?[self refreshIcon]:%orig; 
+}
 %end
+
 %hook _UIBatteryView // SpringBoard Battery
+%new
+- (UIColor *)statusBarColor {
+    UIStatusBarManager *statusBarManager = [UIApplication sharedApplication].windows.firstObject.windowScene.statusBarManager;
+    UIView *statusBar = [statusBarManager performSelector:@selector(statusBar)];
+
+    SEL statusBarStyleSel = NSSelectorFromString(@"statusBarStyle");
+    if ([statusBar respondsToSelector:statusBarStyleSel]) {
+        // Swizzle the statusBarStyle method and call it to get the style
+        int (*statusBarStyleFunc)(id, SEL) = (int (*)(id, SEL))[statusBar methodForSelector:statusBarStyleSel];
+        int statusBarStyle = statusBarStyleFunc(statusBar, statusBarStyleSel);
+        
+        // Check the status bar style and return appropriate color
+        if (statusBarStyle == 1) { // UIStatusBarStyleDarkContent
+            return [UIColor blackColor];
+        } else {
+            return [UIColor whiteColor];
+        }
+    }
+    
+    return [UIColor clearColor]; // Return a default color if unable to determine status bar color
+}
+
+%new
+- (CGFloat)luminanceForColor:(UIColor *)color {
+    CGFloat red, green, blue, alpha;
+    [color getRed:&red green:&green blue:&blue alpha:&alpha];
+    
+    // Calculate luminance using the relative luminance formula
+    CGFloat luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+    
+    return luminance;
+}
+
 %new
 + (instancetype)sharedInstance{
 	static _UIBatteryView *sharedInstance = nil;
@@ -136,43 +153,6 @@ static void loader(){
 -(void)refreshIcon{
 	if (!PXLEnabled)
 		return;
-		        [self adjustBarColorsBasedOnStatusBar]; // Adjust bar colors based on status bar
-
-
-%new
-- (UIColor *)statusBarColorAtPoint:(CGPoint)point {
-    UIImage *screenImage = [self screenshotOfScreen]; 
-    UIColor *sampledColor = [screenImage colorAtPixel:point];
-    
-    return sampledColor;
-}
-
-%new
-- (UIWindow *)keyWindow {
-    UIWindowScene *windowScene = (UIWindowScene *)[UIApplication sharedApplication].connectedScenes.anyObject;
-    return windowScene.windows.firstObject;
-}
-
-%new
-- (UIImage *)screenshotOfScreen {
-    UIWindow *keyWindow = [self keyWindow];
-    UIGraphicsBeginImageContextWithOptions(keyWindow.bounds.size, YES, 0.0);
-    [keyWindow.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return screenshot;
-}
-
-%new
-- (UIColor *)colorAtPixel:(CGPoint)point {
-    UIImage *screenshot = [self screenshotOfScreen];
-    
-    CGImageRef imageRef = CGImageCreateWithImageInRect(screenshot.CGImage, CGRectMake(point.x, point.y, 1, 1));
-    UIColor *color = [UIColor colorWithPatternImage:[UIImage imageWithCGImage:imageRef]];
-    CGImageRelease(imageRef);
-    
-    return color;
-}
 
 	[self chargePercent];
 	icon = nil;
@@ -231,10 +211,8 @@ static void loader(){
 //-----------------------------------------------
 //Colors
 			if ([self saverModeActive]){
-				NSLog(@"LPM is Enabled.");
 				fill.backgroundColor = LowPowerModeColor;
 			} else if (isCharging){
-				NSLog(@"Battery Charging %f%%", actualPercentage);
 				fill.backgroundColor = ChargingColor;
 			} else if (SingleColorMode && (i >= 1 && i <= 5)) {
 				fill.backgroundColor = BatteryColor;
@@ -249,10 +227,8 @@ static void loader(){
 			} else if (i == 5 && actualPercentage >= 80) {
     			fill.backgroundColor = Bar5;
 			if (actualPercentage >= 20)
-				//NSLog(@"Battery is not charging and LPM is disabled. %f%%", actualPercentage); Afaik this if-else chain can't take another modification adding somethng requires re-write */
 				fill.backgroundColor = BatteryColor;
-			else 
-				NSLog(@"Charger required here innidately ASAP! %f%%", actualPercentage);
+			else
 				fill.backgroundColor = LowBatteryColor;
 			} [self addSubview:fill]; } }
 //-----------------------------------------------
@@ -269,6 +245,11 @@ static void loader(){
 -(void)updateIconColor{
 	if (!PXLEnabled)
 		return;
+
+UIColor *statusBarColor = [self statusBarColor];
+    CGFloat statusBarLuminance = [self luminanceForColor:statusBarColor];
+
+NSLog(@"Randy420: %@ Color StatusBar!", (statusBarLuminance > 0.5) ? @"Light" : @"Dark");
 
 icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]; 
 fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -304,27 +285,6 @@ fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTempla
 			[fill setTintColor:fill.backgroundColor = LowPowerModeColor];
 		}
 	}
-}
-- (void)adjustBarColorsBasedOnStatusBar {
-    // Sample the background color at a specific point
-    CGPoint statusBarSamplingPoint = CGPointMake(x, y); // Replace with actual coordinates, how to find it that depends on device? instead use iconLocationX iconLocationY.
-    UIColor *sampledColor = [self statusBarColorAtPoint:statusBarSamplingPoint];
-    
-    CGFloat brightness = [self perceivedBrightnessForColor:sampledColor];
-
-    if (brightness > 0.5) {
-        Bar1 = [UIColor darkColor]; 
-        Bar2 = [UIColor darkColor];
-		Bar3 = [UIColor darkColor];
-		Bar4 = [UIColor darkColor];
-		Bar5 = [UIColor darkColor];
-    } else {
-        Bar1 = [UIColor lightColor];
-        Bar2 = [UIColor lightColor];
-		Bar3 = [UIColor lightColor];
-		Bar4 = [UIColor lightColor];
-		Bar5 = [UIColor lightColor];
-    }
 }
 /* 
 Explanation required in depth because, too many if else confusing here is what does:
