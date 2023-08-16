@@ -1,16 +1,12 @@
 #import "PXL_Battery.h"
-#import <Foundation/Foundation.h>
-#import <syslog.h>
 
 static NSString *GetNSString(NSString *pkey, NSString *defaultValue){
 	NSDictionary *Dict = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", @kPrefDomain]];
-	
 	return [Dict objectForKey:pkey] ? [Dict objectForKey:pkey] : defaultValue;
 }
 
 static BOOL GetBool(NSString *pkey, BOOL defaultValue){
 	NSDictionary *Dict = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", @kPrefDomain]];
-
 	return [Dict objectForKey:pkey] ? [[Dict objectForKey:pkey] boolValue] : defaultValue;
 }
 
@@ -47,6 +43,17 @@ static void loader(){
 }
 
 %group PXLBattery // Here go again
+%hook UIStatusBar_Modern
+-(NSInteger)_effectiveStyleFromStyle:(NSInteger)arg1{
+  NSInteger original = %orig;
+		if (arg1 == 3)
+			statusBarDark = YES;
+		else
+			statusBarDark = NO;
+  NSLog(@"[PXL dbg]: StatusBar is Dark: %d", statusBarDark);
+  return original;
+}
+%end
 %hook _UIStaticBatteryView // Control Center Battery
 -(bool) _showsInlineChargingIndicator{return PXLEnabled?NO:%orig;} // Hide charging bolt
 -(bool) _shouldShowBolt{return PXLEnabled?NO:%orig;} // Hide charging bolt x2
@@ -55,10 +62,7 @@ static void loader(){
 -(id) pinColor{return PXLEnabled?[UIColor clearColor]:%orig;}// Hide the pin
 -(CGFloat) pinColorAlpha{return PXLEnabled?0.0:%orig;} // Hide battery pin x2
 -(id) _batteryFillColor{return PXLEnabled?[UIColor clearColor]:%orig;} // Hide the fill
-
--(void)_updateFillLayer{
-	PXLEnabled?[self refreshIcon]:%orig; 
-}
+-(void)_updateFillLayer{PXLEnabled?[self refreshIcon]:%orig;}
 %end
 
 %hook _UIBatteryView // SpringBoard Battery
@@ -215,14 +219,6 @@ static void loader(){
 	if (!PXLEnabled)
 		return;
 
-//UIColor *statusBarColor = [self statusBarColor];
-  //  CGFloat statusBarLuminance = [self luminanceForColor:statusBarColor];
-
-//SLog(@"Randy420: %@ Color StatusBar!", (statusBarLuminance > 0.5) ? @"Light" : @"Dark");
-//NSLog(@"Randy420: StartusBarLum %f",statusBarLuminance);
-//NSLog(@"Randy420: StatusBarColor %@", statusBarColor);
-
-
 icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]; 
 fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
@@ -268,18 +264,6 @@ If device has a battery percentage of 20% or greater, colors will be set to Batt
 If device has a battery percentage of less than 20%, colors will be set to LowBatteryColor. 
 Code sets both tint color of icon (frame) & fill (tick) using appropriate color value.
 */
-%end
-
-%hook UIStatusBar_Modern
--(NSInteger)_effectiveStyleFromStyle:(NSInteger)arg1{
-  NSInteger original = %orig;
-		if (arg1 == 3)
-			statusBarDark = YES;
-		else
-			statusBarDark = NO;
-  NSLog(@"[PXL dbg]: StatusBar is Dark: %d", statusBarDark);
-  return original;
-}
 %end
 %end
 %ctor{
