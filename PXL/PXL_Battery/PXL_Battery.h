@@ -23,7 +23,7 @@ UIColor *Bar5;
 BOOL isCharging = NO;
 BOOL PXLEnabled;
 BOOL SingleColorMode;
-BOOL statusBarDark;
+BOOL statusBarDark = NO;
 
 double actualPercentage;
 static double percentX;

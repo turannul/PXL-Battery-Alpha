@@ -283,7 +283,6 @@ Code sets both tint color of icon (frame) & fill (tick) using appropriate color 
 %end
 %end
 %ctor{
-    statusBarDark = NO;
  	loader();
  	%init(PXLBattery);
 }
