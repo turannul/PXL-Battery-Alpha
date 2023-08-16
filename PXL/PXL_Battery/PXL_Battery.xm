@@ -183,6 +183,14 @@ static void loader(){
 			[fill setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];	
 //-----------------------------------------------
 //Colors
+		if (statusBarDark) {
+					fill.backgroundColor = [UIColor whiteColor];
+					NSLog(@"[PXL dbg]: Statusbar is Dark, Changing color..");
+				} else {
+					fill.backgroundColor = [UIColor blackColor];
+					NSLog(@"[PXL dbg]: Statusbar is White, Changing color..");
+
+			} 
 			if ([self saverModeActive]){
 				fill.backgroundColor = LowPowerModeColor;
 			} else if (isCharging){
@@ -222,35 +230,30 @@ static void loader(){
 icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]; 
 fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
-	if (![self saverModeActive]){
-		if (isCharging){
+	if (![self saverModeActive]) {
+		if (isCharging) {
+        [icon setTintColor:ChargingColor];
+        [fill setTintColor:ChargingColor];
+    } else {
+        if (actualPercentage >= 20 && statusBarDark) {
+            //[icon setTintColor:BatteryColor];
+            //[fill setTintColor:BatteryColor];
+            [icon setTintColor:[UIColor whiteColor]];
+            [fill setTintColor:[UIColor whiteColor]];
+            NSLog(@"[PXL dbg]: Statusbar is Dark, Changing color to white..");
+        } else {
+            [icon setTintColor:[UIColor blackColor]];
+            [fill setTintColor:[UIColor blackColor]];
+            NSLog(@"[PXL dbg]: Statusbar is Light, Changing color to black..");
+        }
+    }
+	} else {
+		if (isCharging) {
 			[icon setTintColor:ChargingColor];
 			[fill setTintColor:ChargingColor];
-		}else{
-			if (actualPercentage >= 20){
-				[icon setTintColor:BatteryColor];
-				[fill setTintColor:BatteryColor];
-			}else{
-				[icon setTintColor:fill.backgroundColor = BatteryColor];
-				[fill setTintColor:fill.backgroundColor = LowBatteryColor];
-				if (actualPercentage >= 10){
-					[icon setTintColor:BatteryColor];
-					[fill setTintColor:BatteryColor];
-				}else{
-					[icon setTintColor:fill.backgroundColor = LowBatteryColor];
-					[fill setTintColor:fill.backgroundColor = LowBatteryColor];
-
-				}
-			}
-		}
-	}else{
-		if (isCharging){
-			[icon setTintColor:fill.backgroundColor = ChargingColor];
-			[fill setTintColor:fill.backgroundColor = ChargingColor];
-
-		}else{
-			[icon setTintColor:fill.backgroundColor = LowPowerModeColor];
-			[fill setTintColor:fill.backgroundColor = LowPowerModeColor];
+		} else {
+			[icon setTintColor:LowPowerModeColor];
+			[fill setTintColor:LowPowerModeColor];
 		}
 	}
 }
