@@ -270,52 +270,20 @@ Code sets both tint color of icon (frame) & fill (tick) using appropriate color 
 */
 %end
 
-%hook UIStatusBarManager
-- (long long)statusBarStyle {
-	long long style = %orig;
-	NSLog(@"Randy420: STYLE: %lld", style);
-
-	NSString *filePath = @"/var/mobile/zStatusBar.txt";
-	NSString *logMessage = [NSString stringWithFormat:@"Randy420: STYLE: %lld\n", style];
-
-	syslog(LOG_NOTICE, "%s", logMessage.UTF8String);
-	NSError *error = nil;
-	BOOL success = [logMessage writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
-	if (!success) {
-		NSLog(@"Error writing to file: %@", error);
-	}
-
-	return style;
+%hook UIStatusBar_Modern
+-(NSInteger)_effectiveStyleFromStyle:(NSInteger)arg1{
+  NSInteger original = %orig;
+		if (arg1 == 3)
+			statusBarDark = YES;
+		else
+			statusBarDark = NO;
+  NSLog(@"[PXL dbg]: StatusBar is Dark: %d", statusBarDark);
+  return original;
 }
 %end
-
-
-
-/*%hook _UIStatusBarStyleAttributes
-- (UIColor *)textColor {
-	UIColor *textColor = %orig;
-	CGFloat red, green, blue, alpha;
-	[textColor getRed:&red green:&green blue:&blue alpha:&alpha];
-	
-	// Calculate the distance to black (0, 0, 0)
-	CGFloat distanceToBlack = sqrt(red * red + green * green + blue * blue);
-	CGFloat distanceToWhite = sqrt((1 - red) * (1 - red) + (1 - green) * (1 - green) + (1 - blue) * (1 - blue));
-	
-	NSString *colorString;
-	
-	if (distanceToBlack != 0) {
-		colorString = @"dark"; // distance 0 = the color
-	} else {
-		colorString = @"light"; // same logic applies
-	}
-
-	NSLog(@"Randy420: StatusBar Color: %@  toW: %f toB: %f", colorString, distanceToWhite, distanceToBlack);
-	return textColor;
-}
-%end*/
-
 %end
 %ctor{
-	loader();
-	%init(PXLBattery);
-	}
+    statusBarDark = NO;
+ 	loader();
+ 	%init(PXLBattery);
+}
