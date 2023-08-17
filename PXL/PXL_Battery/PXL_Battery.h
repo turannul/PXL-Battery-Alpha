@@ -1,6 +1,7 @@
 #define kPrefDomain "xyz.turannul.pxlbattery"
 #include "SparkColourPickerUtils.h"
 #import <QuartzCore/CoreAnimation.h>
+#import <Foundation/Foundation.h>
 #import "Battery_Images.h"
 
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
@@ -35,12 +36,8 @@ double actualPercentage;
 static double percentX;
 static double percentY;
 
-@interface UIStatusBarManager (StatusBarStyle)
-- (int)statusBarStyle; // Declare the method signature
-@end
+@interface _UIBatteryView : UIView{}
 
-@interface _UIBatteryView : UIView{
-}
 @property (nonatomic, copy, readwrite) UIColor* fillColor;
 @property (nonatomic, copy, readwrite) UIColor* bodyColor;
 @property (nonatomic, copy, readwrite) UIColor* pinColor;

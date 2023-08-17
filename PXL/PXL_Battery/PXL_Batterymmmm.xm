@@ -1,17 +1,16 @@
 #import "PXL_Battery.h"
+<<<<<<< HEAD
 #import <Foundation/Foundation.h>
 #import <syslog.h>
 #import <Availability.h>
 
 static NSString *GetNSString(NSString *pkey, NSString *defaultValue){
 	NSDictionary *Dict = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", @kPrefDomain]];
-	
 	return [Dict objectForKey:pkey] ? [Dict objectForKey:pkey] : defaultValue;
 }
 
 static BOOL GetBool(NSString *pkey, BOOL defaultValue){
 	NSDictionary *Dict = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", @kPrefDomain]];
-
 	return [Dict objectForKey:pkey] ? [[Dict objectForKey:pkey] boolValue] : defaultValue;
 }
 
@@ -83,6 +82,29 @@ static void loader(){
 }
 
 %group PXLBattery // Here go again
+%hook UIStatusBar_Modern
+- (NSInteger)_effectiveStyleFromStyle:(NSInteger)arg1 {
+    NSInteger original = %orig;
+	if (arg1 == 3) {
+        statusBarDark = YES;
+    } else if (arg1 == 1) {
+        statusBarDark = NO;
+    } else {
+        statusBarDark = YES; // Default to dark status bar for unexpected arg1.
+        //NSLog(@"[PXL dbg]: arg1 has an unexpected value: %ld. Setting statusBarDark to YES.", arg1);
+    }
+    
+    if (statusBarDark) {
+        BatteryColor = [UIColor blackColor];
+       // NSLog(@"[PXL dbg]: Setting BatteryColor to black.");
+    } else {
+        BatteryColor = [UIColor whiteColor];
+        //NSLog(@"[PXL dbg]: Setting BatteryColor to white.");
+    }
+    //NSLog(@"[PXL dbg]: StatusBar is Dark: %d", statusBarDark);
+    return original;
+}
+%end
 %hook _UIStaticBatteryView // Control Center Battery
 -(bool) _showsInlineChargingIndicator{return PXLEnabled?NO:%orig;} // Hide charging bolt
 -(bool) _shouldShowBolt{return PXLEnabled?NO:%orig;} // Hide charging bolt x2
@@ -91,10 +113,7 @@ static void loader(){
 -(id) pinColor{return PXLEnabled?[UIColor clearColor]:%orig;}// Hide the pin
 -(CGFloat) pinColorAlpha{return PXLEnabled?0.0:%orig;} // Hide battery pin x2
 -(id) _batteryFillColor{return PXLEnabled?[UIColor clearColor]:%orig;} // Hide the fill
-
--(void)_updateFillLayer{
-	PXLEnabled?[self refreshIcon]:%orig; 
-}
+-(void)_updateFillLayer{PXLEnabled?[self refreshIcon]:%orig;}
 %end
 
 %hook _UIBatteryView // SpringBoard Battery
@@ -212,7 +231,16 @@ static void loader(){
 			else
 				fill = [[UIView alloc] initWithFrame: CGRectMake(iconLocationX + ((i-1)*(barWidth + 1)), iconLocationY, barWidth, barHeight)];
 			[fill setContentMode:UIViewContentModeScaleAspectFill];
-			[fill setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];	
+			[fill setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight]; 
+			// Set the initial alpha value to 0 to make the tick disappear
+            fill.alpha = 0.0;
+
+            // Animations to make the tick appear one at a time
+            [UIView animateWithDuration:0.5 delay:i * 0.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                fill.alpha = 1.0;
+                [self addSubview:fill];
+            } completion:nil];
+
 //-----------------------------------------------
 //Colors
 			if ([self saverModeActive]){
@@ -252,7 +280,10 @@ static void loader(){
 	if (!PXLEnabled)
 		return;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> eaf56931727818a59a98a2f6fc944efc10fed7d4
 icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]; 
 fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
@@ -300,8 +331,14 @@ Code sets both tint color of icon (frame) & fill (tick) using appropriate color 
 */
 %end
 %end
+<<<<<<< HEAD
 
 %ctor{
 	loader();
 	%init(PXLBattery);
+=======
+%ctor{
+ 	loader();
+ 	%init(PXLBattery);
+>>>>>>> eaf56931727818a59a98a2f6fc944efc10fed7d4
 }
