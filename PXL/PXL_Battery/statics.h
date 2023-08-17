@@ -23,56 +23,57 @@ static void loader(){
 	PXLEnabled = GetBool(@"pxlEnabled", YES);
 	SingleColorMode = GetBool(@"SingleColorMode",YES);
 
-	UIStatusBarStyle statusBarStyle;
+	UIColor *colorValues[] = {
+		[SparkColourPickerUtils colourWithString:GetNSString(@"BatteryColor", @"#FFFFFF") withFallback:@"#FFFFFF"],
+		[SparkColourPickerUtils colourWithString:GetNSString(@"LowPowerModeColor", @"#FFCC02") withFallback:@"#FFCC02"],
+		[SparkColourPickerUtils colourWithString:GetNSString(@"LowBatteryColor", @"#EA3323") withFallback:@"#EA3323"],
+		[SparkColourPickerUtils colourWithString:GetNSString(@"ChargingColor", @"#00FF0C") withFallback:@"#00FF0C"],
+		[SparkColourPickerUtils colourWithString:GetNSString(@"Bar1", @"#FFFFFF") withFallback:@"#FFFFFF"],
+		[SparkColourPickerUtils colourWithString:GetNSString(@"Bar2", @"#FFFFFF") withFallback:@"#FFFFFF"],
+		[SparkColourPickerUtils colourWithString:GetNSString(@"Bar3", @"#FFFFFF") withFallback:@"#FFFFFF"],
+		[SparkColourPickerUtils colourWithString:GetNSString(@"Bar4", @"#FFFFFF") withFallback:@"#FFFFFF"],
+		[SparkColourPickerUtils colourWithString:GetNSString(@"Bar5", @"#FFFFFF") withFallback:@"#FFFFFF"]
+	};
 
-//	if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"13.1")) {
-	UIStatusBarManager *statusBarManager = [UIApplication sharedApplication].windows.firstObject.windowScene.statusBarManager;
-	statusBarStyle = statusBarManager.statusBarStyle;
-//	} else {
-//		statusBarStyle = [UIApplication sharedApplication].statusBarStyle;
-//	}
+	NSUInteger numberOfColors = sizeof(colorValues) / sizeof(colorValues[0]);
 
-	if (statusBarStyle == UIStatusBarStyleDefault)
-		statusBarDark = YES;
-	else
-		statusBarDark = NO;
+	for (NSUInteger i = 0; i < numberOfColors; i++) {
+		UIColor *currentColor = colorValues[i];
 
-	NSString *Color = GetNSString(@"BatteryColor", @"#FFFFFF");
-	BatteryColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
+		if (!statusBarDark)
+			currentColor = invertColor(currentColor);
 
-	Color = GetNSString(@"LowPowerModeColor", @"#FFCC02");
-	LowPowerModeColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFCC02"];
-
-	Color = GetNSString(@"LowBatteryColor", @"#EA3323");
-	LowBatteryColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#EA3323"];
-
-	Color = GetNSString(@"ChargingColor", @"#00FF0C");
-	ChargingColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#00FF0C"];
-
-	Color = GetNSString(@"Bar1", @"#FFFFFF");
-	Bar1 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
-
-	Color = GetNSString(@"Bar2", @"#FFFFFF");
-	Bar2 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
-
-	Color = GetNSString(@"Bar3", @"#FFFFFF");
-	Bar3 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
-
-	Color = GetNSString(@"Bar4", @"#FFFFFF");
-	Bar4 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
-
-	Color = GetNSString(@"Bar5", @"#FFFFFF");
-	Bar5 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
-
-	if (!statusBarDark){
-		BatteryColor = invertColor(BatteryColor);
-		LowPowerModeColor = invertColor(LowPowerModeColor);
-		LowBatteryColor = invertColor(LowBatteryColor);
-		ChargingColor = invertColor(ChargingColor);
-		Bar1 = invertColor(Bar1);
-		Bar2 = invertColor(Bar2);
-		Bar3 = invertColor(Bar3);
-		Bar4 = invertColor(Bar4);
-		Bar5 = invertColor(Bar5);
+		// Assign the color variable based on the index 'i'
+		switch (i) {
+			case 0:
+				BatteryColor = currentColor;
+				break;
+			case 1:
+				LowPowerModeColor = currentColor;
+				break;
+			case 2:
+				LowBatteryColor = currentColor;
+				break;
+			case 3:
+				ChargingColor = currentColor;
+				break;
+			case 4:
+				Bar1 = currentColor;
+				break;
+			case 5:
+				Bar2 = currentColor;
+				break;
+			case 6:
+				Bar3 = currentColor;
+				break;
+			case 7:
+				Bar4 = currentColor;
+				break;
+			case 8:
+				Bar5 = currentColor;
+				break;
+			default:
+				break;
+		}
 	}
 }

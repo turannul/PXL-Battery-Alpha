@@ -7,23 +7,17 @@
 %hook UIStatusBar_Modern
 - (NSInteger)_effectiveStyleFromStyle:(NSInteger)arg1 {
 	NSInteger original = %orig;
-	if (arg1 == 3) {
-		statusBarDark = YES;
-	} else if (arg1 == 1) {
+	if (arg1 == 1) {
 		statusBarDark = NO;
 	} else {
 		statusBarDark = YES; // Default to dark status bar for unexpected arg1.
-		//NSLog(@"[PXL dbg]: arg1 has an unexpected value: %ld. Setting statusBarDark to YES.", arg1);
 	}
-	
+
 	if (statusBarDark) {
 		BatteryColor = [UIColor blackColor];
-	// NSLog(@"[PXL dbg]: Setting BatteryColor to black.");
 	} else {
 		BatteryColor = [UIColor whiteColor];
-		//NSLog(@"[PXL dbg]: Setting BatteryColor to white.");
 	}
-	//NSLog(@"[PXL dbg]: StatusBar is Dark: %d", statusBarDark);
 	return original;
 }
 %end
@@ -53,8 +47,8 @@
 -(BOOL)_shouldShowBolt{return PXLEnabled?NO:%orig;} // Hide charging bolt x2
 -(id)bodyColor{return PXLEnabled?[UIColor clearColor]:%orig;} // Hide the body
 -(CGFloat)bodyColorAlpha{return PXLEnabled?0.0:%orig;}// Hide the body x2
--(id)pinColor{return PXLEnabled?[UIColor clearColor]:%orig;}// Hide the pin
--(CGFloat)pinColorAlpha{return PXLEnabled?0.0:%orig;} // Hide the pin x2
+-(id)pinColor{return PXLEnabled?[UIColor clearColor]:%orig;} // Hide the pin
+-(CGFloat)pinColorAlpha{return PXLEnabled?0.0:%orig;}// Hide the pin x2
 -(id)_batteryFillColor{return PXLEnabled?[UIColor clearColor]:%orig;} // Hide the fill
 
 //-----------------------------------------------
@@ -72,7 +66,7 @@
 
 			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 				// Animate the fade-in effect
-				[UIView animateWithDuration:2.5 delay:0.5 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{
+				[UIView animateWithDuration:1.75 delay:0.5 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{
 					for (UIView *subview in self.subviews) {
 						if (![subview isKindOfClass:[UIImageView class]]) {
 							subview.alpha = 1.0;
@@ -265,4 +259,4 @@ Code sets both tint color of icon (frame) & fill (tick) using appropriate color 
 %ctor{
 	loader();
 	%init(PXLBattery);
-	}
+}
