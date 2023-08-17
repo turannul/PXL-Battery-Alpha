@@ -1,6 +1,7 @@
 #import "PXL_Battery.h"
 #import <Foundation/Foundation.h>
 #import <syslog.h>
+#import <Availability.h>
 
 static NSString *GetNSString(NSString *pkey, NSString *defaultValue){
 	NSDictionary *Dict = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", @kPrefDomain]];
@@ -14,9 +15,32 @@ static BOOL GetBool(NSString *pkey, BOOL defaultValue){
 	return [Dict objectForKey:pkey] ? [[Dict objectForKey:pkey] boolValue] : defaultValue;
 }
 
+static UIColor *invertColor(UIColor *originalColor){
+	CGFloat red, green, blue, alpha;
+	[originalColor getRed:&red green:&green blue:&blue alpha:&alpha];
+
+	UIColor *invertedColor = [UIColor colorWithRed:(1.0 - red) green:(1.0 - green) blue:(1.0 - blue) alpha:alpha];
+
+	return invertedColor;
+}
+
 static void loader(){
 	PXLEnabled = GetBool(@"pxlEnabled", YES);
 	SingleColorMode = GetBool(@"SingleColorMode",YES);
+
+	UIStatusBarStyle statusBarStyle;
+
+	if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"13.1")) {
+		UIStatusBarManager *statusBarManager = [UIApplication sharedApplication].windows.firstObject.windowScene.statusBarManager;
+		statusBarStyle = statusBarManager.statusBarStyle;
+	} else {
+		statusBarStyle = [UIApplication sharedApplication].statusBarStyle;
+	}
+
+	if (statusBarStyle == UIStatusBarStyleDefault)
+		statusBarDark = YES;
+	else
+		statusBarDark = NO;
 
 	NSString *Color = GetNSString(@"BatteryColor", @"#FFFFFF");
 	BatteryColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
@@ -44,6 +68,18 @@ static void loader(){
 
 	Color = GetNSString(@"Bar5", @"#FFFFFF");
 	Bar5 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
+
+	if (!statusBarDark){
+		BatteryColor = invertColor(BatteryColor);
+		LowPowerModeColor = invertColor(LowPowerModeColor);
+		LowBatteryColor = invertColor(LowBatteryColor);
+		ChargingColor = invertColor(ChargingColor);
+		Bar1 = invertColor(Bar1);
+		Bar2 = invertColor(Bar2);
+		Bar3 = invertColor(Bar3);
+		Bar4 = invertColor(Bar4);
+		Bar5 = invertColor(Bar5);
+	}
 }
 
 %group PXLBattery // Here go again
@@ -209,18 +245,12 @@ static void loader(){
 
 	[self updateIconColor];
 }
+
 %new
 // Load colors in conditions
 -(void)updateIconColor{
 	if (!PXLEnabled)
 		return;
-
-//UIColor *statusBarColor = [self statusBarColor];
-  //  CGFloat statusBarLuminance = [self luminanceForColor:statusBarColor];
-
-//SLog(@"Randy420: %@ Color StatusBar!", (statusBarLuminance > 0.5) ? @"Light" : @"Dark");
-//NSLog(@"Randy420: StartusBarLum %f",statusBarLuminance);
-//NSLog(@"Randy420: StatusBarColor %@", statusBarColor);
 
 
 icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]; 
@@ -269,53 +299,9 @@ If device has a battery percentage of less than 20%, colors will be set to LowBa
 Code sets both tint color of icon (frame) & fill (tick) using appropriate color value.
 */
 %end
-
-%hook UIStatusBarManager
-- (long long)statusBarStyle {
-	long long style = %orig;
-	NSLog(@"Randy420: STYLE: %lld", style);
-
-	NSString *filePath = @"/var/mobile/zStatusBar.txt";
-	NSString *logMessage = [NSString stringWithFormat:@"Randy420: STYLE: %lld\n", style];
-
-	syslog(LOG_NOTICE, "%s", logMessage.UTF8String);
-	NSError *error = nil;
-	BOOL success = [logMessage writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
-	if (!success) {
-		NSLog(@"Error writing to file: %@", error);
-	}
-
-	return style;
-}
 %end
 
-
-
-/*%hook _UIStatusBarStyleAttributes
-- (UIColor *)textColor {
-	UIColor *textColor = %orig;
-	CGFloat red, green, blue, alpha;
-	[textColor getRed:&red green:&green blue:&blue alpha:&alpha];
-	
-	// Calculate the distance to black (0, 0, 0)
-	CGFloat distanceToBlack = sqrt(red * red + green * green + blue * blue);
-	CGFloat distanceToWhite = sqrt((1 - red) * (1 - red) + (1 - green) * (1 - green) + (1 - blue) * (1 - blue));
-	
-	NSString *colorString;
-	
-	if (distanceToBlack != 0) {
-		colorString = @"dark"; // distance 0 = the color
-	} else {
-		colorString = @"light"; // same logic applies
-	}
-
-	NSLog(@"Randy420: StatusBar Color: %@  toW: %f toB: %f", colorString, distanceToWhite, distanceToBlack);
-	return textColor;
-}
-%end*/
-
-%end
 %ctor{
 	loader();
 	%init(PXLBattery);
-	}
+}

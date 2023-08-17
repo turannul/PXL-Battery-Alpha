@@ -3,6 +3,12 @@
 #import <QuartzCore/CoreAnimation.h>
 #import "Battery_Images.h"
 
+#define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+
 UIImageView* icon;
 UIImageView* fill;
 UIImageView* lockscreenBatteryIconView;
@@ -12,6 +18,8 @@ UIColor *LowPowerModeColor;
 UIColor *ChargingColor;
 UIColor *LowBatteryColor;
 UIColor *BatteryColor;
+UIColor *batteryColorDark;
+UIColor *batteryColorLight;
 UIColor *Bar1;
 UIColor *Bar2;
 UIColor *Bar3;
@@ -21,6 +29,7 @@ UIColor *Bar5;
 BOOL isCharging = NO;
 BOOL PXLEnabled;
 BOOL SingleColorMode;
+BOOL statusBarDark = NO;
 
 double actualPercentage;
 static double percentX;
