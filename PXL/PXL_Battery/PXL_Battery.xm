@@ -44,14 +44,28 @@ static void loader(){
 
 %group PXLBattery // Here go again
 %hook UIStatusBar_Modern
--(NSInteger)_effectiveStyleFromStyle:(NSInteger)arg1{
-  NSInteger original = %orig;
-		if (arg1 == 3)
-			statusBarDark = YES;
-		else
-			statusBarDark = NO;
-  NSLog(@"[PXL dbg]: StatusBar is Dark: %d", statusBarDark);
-  return original;
+- (NSInteger)_effectiveStyleFromStyle:(NSInteger)arg1 {
+    NSInteger original = %orig;
+	if (arg1 == 3) {
+        // If arg1 is 3, set the status bar dark.
+        statusBarDark = YES;
+    } else if (arg1 == 1) {
+        // If arg1 is 1, set the status bar light.
+        statusBarDark = NO;
+    } else {
+        statusBarDark = NO; // Default to light status bar for unexpected arg1.
+        NSLog(@"PXL dbg: arg1 has an unexpected value: %ld. Setting statusBarDark to NO.", arg1);
+    }
+    
+    if (statusBarDark) {
+        BatteryColor = [UIColor blackColor];
+        NSLog(@"PXL dbg: Setting BatteryColor to black.");
+    } else {
+        BatteryColor = [UIColor whiteColor];
+        NSLog(@"PXL dbg: Setting BatteryColor to white.");
+    }
+    NSLog(@"[PXL dbg]: StatusBar is Dark: %d", statusBarDark);
+    return original;
 }
 %end
 %hook _UIStaticBatteryView // Control Center Battery

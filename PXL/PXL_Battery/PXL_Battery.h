@@ -30,12 +30,8 @@ double actualPercentage;
 static double percentX;
 static double percentY;
 
-@interface UIStatusBarManager (StatusBarStyle)
-- (int)statusBarStyle; // Declare the method signature
-@end
+@interface _UIBatteryView : UIView{}
 
-@interface _UIBatteryView : UIView{
-}
 @property (nonatomic, copy, readwrite) UIColor* fillColor;
 @property (nonatomic, copy, readwrite) UIColor* bodyColor;
 @property (nonatomic, copy, readwrite) UIColor* pinColor;
