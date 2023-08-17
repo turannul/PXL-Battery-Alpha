@@ -1,108 +1,30 @@
 #import "PXL_Battery.h"
-<<<<<<< HEAD
-#import <Foundation/Foundation.h>
 #import <syslog.h>
-#import <Availability.h>
-
-static NSString *GetNSString(NSString *pkey, NSString *defaultValue){
-	NSDictionary *Dict = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", @kPrefDomain]];
-	return [Dict objectForKey:pkey] ? [Dict objectForKey:pkey] : defaultValue;
-}
-
-static BOOL GetBool(NSString *pkey, BOOL defaultValue){
-	NSDictionary *Dict = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", @kPrefDomain]];
-	return [Dict objectForKey:pkey] ? [[Dict objectForKey:pkey] boolValue] : defaultValue;
-}
-
-static UIColor *invertColor(UIColor *originalColor){
-	CGFloat red, green, blue, alpha;
-	[originalColor getRed:&red green:&green blue:&blue alpha:&alpha];
-
-	UIColor *invertedColor = [UIColor colorWithRed:(1.0 - red) green:(1.0 - green) blue:(1.0 - blue) alpha:alpha];
-
-	return invertedColor;
-}
-
-static void loader(){
-	PXLEnabled = GetBool(@"pxlEnabled", YES);
-	SingleColorMode = GetBool(@"SingleColorMode",YES);
-
-	UIStatusBarStyle statusBarStyle;
-
-	if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"13.1")) {
-		UIStatusBarManager *statusBarManager = [UIApplication sharedApplication].windows.firstObject.windowScene.statusBarManager;
-		statusBarStyle = statusBarManager.statusBarStyle;
-	} else {
-		statusBarStyle = [UIApplication sharedApplication].statusBarStyle;
-	}
-
-	if (statusBarStyle == UIStatusBarStyleDefault)
-		statusBarDark = YES;
-	else
-		statusBarDark = NO;
-
-	NSString *Color = GetNSString(@"BatteryColor", @"#FFFFFF");
-	BatteryColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
-
-	Color = GetNSString(@"LowPowerModeColor", @"#FFCC02");
-	LowPowerModeColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFCC02"];
-
-	Color = GetNSString(@"LowBatteryColor", @"#EA3323");
-	LowBatteryColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#EA3323"];
-
-	Color = GetNSString(@"ChargingColor", @"#00FF0C");
-	ChargingColor = [SparkColourPickerUtils colourWithString:Color withFallback:@"#00FF0C"];
-
-	Color = GetNSString(@"Bar1", @"#FFFFFF");
-	Bar1 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
-
-	Color = GetNSString(@"Bar2", @"#FFFFFF");
-	Bar2 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
-
-	Color = GetNSString(@"Bar3", @"#FFFFFF");
-	Bar3 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
-
-	Color = GetNSString(@"Bar4", @"#FFFFFF");
-	Bar4 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
-
-	Color = GetNSString(@"Bar5", @"#FFFFFF");
-	Bar5 = [SparkColourPickerUtils colourWithString:Color withFallback:@"#FFFFFF"];
-
-	if (!statusBarDark){
-		BatteryColor = invertColor(BatteryColor);
-		LowPowerModeColor = invertColor(LowPowerModeColor);
-		LowBatteryColor = invertColor(LowBatteryColor);
-		ChargingColor = invertColor(ChargingColor);
-		Bar1 = invertColor(Bar1);
-		Bar2 = invertColor(Bar2);
-		Bar3 = invertColor(Bar3);
-		Bar4 = invertColor(Bar4);
-		Bar5 = invertColor(Bar5);
-	}
-}
+#import <QuartzCore/QuartzCore.h>
+#import "statics.h"
 
 %group PXLBattery // Here go again
 %hook UIStatusBar_Modern
 - (NSInteger)_effectiveStyleFromStyle:(NSInteger)arg1 {
-    NSInteger original = %orig;
+	NSInteger original = %orig;
 	if (arg1 == 3) {
-        statusBarDark = YES;
-    } else if (arg1 == 1) {
-        statusBarDark = NO;
-    } else {
-        statusBarDark = YES; // Default to dark status bar for unexpected arg1.
-        //NSLog(@"[PXL dbg]: arg1 has an unexpected value: %ld. Setting statusBarDark to YES.", arg1);
-    }
-    
-    if (statusBarDark) {
-        BatteryColor = [UIColor blackColor];
-       // NSLog(@"[PXL dbg]: Setting BatteryColor to black.");
-    } else {
-        BatteryColor = [UIColor whiteColor];
-        //NSLog(@"[PXL dbg]: Setting BatteryColor to white.");
-    }
-    //NSLog(@"[PXL dbg]: StatusBar is Dark: %d", statusBarDark);
-    return original;
+		statusBarDark = YES;
+	} else if (arg1 == 1) {
+		statusBarDark = NO;
+	} else {
+		statusBarDark = YES; // Default to dark status bar for unexpected arg1.
+		//NSLog(@"[PXL dbg]: arg1 has an unexpected value: %ld. Setting statusBarDark to YES.", arg1);
+	}
+	
+	if (statusBarDark) {
+		BatteryColor = [UIColor blackColor];
+	// NSLog(@"[PXL dbg]: Setting BatteryColor to black.");
+	} else {
+		BatteryColor = [UIColor whiteColor];
+		//NSLog(@"[PXL dbg]: Setting BatteryColor to white.");
+	}
+	//NSLog(@"[PXL dbg]: StatusBar is Dark: %d", statusBarDark);
+	return original;
 }
 %end
 %hook _UIStaticBatteryView // Control Center Battery
@@ -137,13 +59,33 @@ static void loader(){
 
 //-----------------------------------------------
 //Keep updating view
-
 -(void)_updateFillLayer{
-	if (PXLEnabled)
+	if (PXLEnabled){
 		[self refreshIcon];
-	else
+		if (isCharging) {
+			// Set initial alpha value to 0
+			for (UIView *subview in self.subviews) {
+				if (![subview isKindOfClass:[UIImageView class]]) {
+					subview.alpha = 0.0;
+				}
+			}
+
+			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+				// Animate the fade-in effect
+				[UIView animateWithDuration:2.5 delay:0.5 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{
+					for (UIView *subview in self.subviews) {
+						if (![subview isKindOfClass:[UIImageView class]]) {
+							subview.alpha = 1.0;
+						}
+					}
+				} completion:nil];
+			});
+		}
+	} else {
 		%orig;
+	}
 }
+
 // when low power mode activated
 -(void)setSaverModeActive:(bool)arg1{
 	%orig;
@@ -232,14 +174,6 @@ static void loader(){
 				fill = [[UIView alloc] initWithFrame: CGRectMake(iconLocationX + ((i-1)*(barWidth + 1)), iconLocationY, barWidth, barHeight)];
 			[fill setContentMode:UIViewContentModeScaleAspectFill];
 			[fill setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight]; 
-			// Set the initial alpha value to 0 to make the tick disappear
-            fill.alpha = 0.0;
-
-            // Animations to make the tick appear one at a time
-            [UIView animateWithDuration:0.5 delay:i * 0.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                fill.alpha = 1.0;
-                [self addSubview:fill];
-            } completion:nil];
 
 //-----------------------------------------------
 //Colors
@@ -280,12 +214,8 @@ static void loader(){
 	if (!PXLEnabled)
 		return;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> eaf56931727818a59a98a2f6fc944efc10fed7d4
-icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]; 
-fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	icon.image = [icon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]; 
+	fill.image = [fill.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
 	if (![self saverModeActive]){
 		if (isCharging){
@@ -331,14 +261,8 @@ Code sets both tint color of icon (frame) & fill (tick) using appropriate color 
 */
 %end
 %end
-<<<<<<< HEAD
 
 %ctor{
 	loader();
 	%init(PXLBattery);
-=======
-%ctor{
- 	loader();
- 	%init(PXLBattery);
->>>>>>> eaf56931727818a59a98a2f6fc944efc10fed7d4
-}
+	}

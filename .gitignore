@@ -2,3 +2,4 @@
 .theos/
 .vscode/
 *.deb
+DEBs/*.deb
