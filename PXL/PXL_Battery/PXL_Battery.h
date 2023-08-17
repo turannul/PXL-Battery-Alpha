@@ -13,8 +13,6 @@ UIColor *LowPowerModeColor;
 UIColor *ChargingColor;
 UIColor *LowBatteryColor;
 UIColor *BatteryColor;
-UIColor *batteryColorDark;
-UIColor *batteryColorLight;
 UIColor *Bar1;
 UIColor *Bar2;
 UIColor *Bar3;
