@@ -193,6 +193,15 @@ static void loader(){
 				fill = [[UIView alloc] initWithFrame: CGRectMake(iconLocationX + ((i-1)*(barWidth + 1)), iconLocationY, barWidth, barHeight)];
 			[fill setContentMode:UIViewContentModeScaleAspectFill];
 			[fill setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight]; 
+			// Set the initial alpha value to 0 to make the tick disappear
+            fill.alpha = 0.0;
+
+            // Animations to make the tick appear one at a time
+            [UIView animateWithDuration:0.5 delay:i * 0.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                fill.alpha = 1.0;
+                [self addSubview:fill];
+            } completion:nil];
+
 //-----------------------------------------------
 //Colors
 			if ([self saverModeActive]){
