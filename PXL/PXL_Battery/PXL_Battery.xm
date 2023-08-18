@@ -7,17 +7,10 @@
 %hook UIStatusBar_Modern
 - (NSInteger)_effectiveStyleFromStyle:(NSInteger)arg1 {
 	NSInteger original = %orig;
-	if (arg1 == 1) {
-		statusBarDark = NO;
-	} else {
-		statusBarDark = YES; // Default to dark status bar for unexpected arg1.
-	}
+	statusBarDark = (arg1 != 1);
 
-	if (statusBarDark) {
-		BatteryColor = [UIColor blackColor];
-	} else {
-		BatteryColor = [UIColor whiteColor];
-	}
+	BatteryColor = statusBarDark ? [UIColor blackColor] : [UIColor whiteColor];
+
 	return original;
 }
 %end
@@ -66,7 +59,7 @@
 
 			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 				// Animate the fade-in effect
-				[UIView animateWithDuration:1.75 delay:0.5 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{
+				[UIView animateWithDuration:1.5 delay:0.5 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{
 					for (UIView *subview in self.subviews) {
 						if (![subview isKindOfClass:[UIImageView class]]) {
 							subview.alpha = 1.0;
