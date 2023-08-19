@@ -25,7 +25,7 @@ static void loader(){
 	UIStatusBarManager *statusBarManager = [UIApplication sharedApplication].windows.firstObject.windowScene.statusBarManager;
 	UIStatusBarStyle statusBarStyle = statusBarManager.statusBarStyle;
 
-	statusBarDark = statusBarStyle != 1;
+	statusBarDark = statusBarStyle != UIStatusBarStyleLightContent;
 
 	UIColor *colorValues[] = {
 		[SparkColourPickerUtils colourWithString:GetNSString(@"BatteryColor", @"#FFFFFF") withFallback:@"#FFFFFF"],
