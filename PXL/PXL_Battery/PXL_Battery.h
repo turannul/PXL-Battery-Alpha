@@ -40,10 +40,11 @@ static double percentY;
 +(instancetype)sharedInstance;
 -(CGFloat)chargePercent;
 -(long long)chargingState;
+-(double)getCurrentBattery;
 -(BOOL)saverModeActive;
 -(BOOL)isLowBattery;
 -(void)refreshIcon;
+-(void)animateSubviewsSequentially:(NSArray *)subviews index:(NSUInteger)index delay:(NSTimeInterval)delay;
 -(void)updateIconColor;
--(double)getCurrentBattery;
 -(void)cleanUpViews;
 @end
