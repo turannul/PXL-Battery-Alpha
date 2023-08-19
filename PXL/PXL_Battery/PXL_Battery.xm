@@ -6,12 +6,11 @@
 %group PXLBattery // Here go again
 %hook UIStatusBar_Modern
 -(NSInteger)_effectiveStyleFromStyle:(NSInteger)arg1{
-	NSInteger original = %orig;
 	statusBarDark = (arg1 != 1);
 
 	BatteryColor = statusBarDark ? [UIColor blackColor] : [UIColor whiteColor];
 
-	return original;
+	return %orig;
 }
 %end
 
