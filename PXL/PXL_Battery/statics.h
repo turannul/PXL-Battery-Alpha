@@ -22,6 +22,10 @@ static UIColor *invertColor(UIColor *originalColor){
 static void loader(){
 	PXLEnabled = GetBool(@"pxlEnabled", YES);
 	SingleColorMode = GetBool(@"SingleColorMode",YES);
+	UIStatusBarManager *statusBarManager = [UIApplication sharedApplication].windows.firstObject.windowScene.statusBarManager;
+	UIStatusBarStyle statusBarStyle = statusBarManager.statusBarStyle;
+
+	statusBarDark = statusBarStyle != 1;
 
 	UIColor *colorValues[] = {
 		[SparkColourPickerUtils colourWithString:GetNSString(@"BatteryColor", @"#FFFFFF") withFallback:@"#FFFFFF"],
