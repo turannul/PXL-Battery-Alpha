@@ -54,22 +54,18 @@
 
 	[self refreshIcon];
 	if (isCharging){
-		// Create an array to hold the subviews
 		NSMutableArray *subviewsToAnimate = [NSMutableArray array];
 
-		// Gather the subviews that need to be animated
 		for (UIView *subview in self.subviews){
 			if (![subview isKindOfClass:[UIImageView class]]){
 				[subviewsToAnimate addObject:subview];
 			}
 		}
 
-		// Set initial alpha value to 0 for all subviews
 		for (UIView *subview in subviewsToAnimate){
 			subview.alpha = 0.35;
 		}
 
-		// Animate the subviews one after the other with 0.5 seconds delay
 		[self animateSubviewsSequentially:subviewsToAnimate index:0 delay:0.2];
 	}
 }
@@ -217,7 +213,6 @@
 	icon = nil;
 	fill = nil;
 
-// Frame as base64
 	[self cleanUpViews];
 
 	NSData *batteryImage = BATTERY_IMAGE;
@@ -229,7 +224,7 @@
 		[icon setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 		[self addSubview:icon];
 	}
-// Update tick count in battery %
+
 	float barPercent = 0.00f;
 	int tickCt = 0;
 
@@ -248,8 +243,6 @@
 	}else if (actualPercentage >= 6){
 		tickCt = 1;
 		barPercent = ((actualPercentage - 6) / 14.00f);
-	}else{
-		tickCt = 0;
 	}
 
 	float iconLocationX = icon.frame.origin.x + 2;
@@ -258,14 +251,11 @@
 	float barHeight = icon.frame.size.height - 5;
 
 	for (int i = 1; i <= tickCt; ++i){
-		UIView *fill = (i == tickCt) ?
-			[[UIView alloc] initWithFrame: CGRectMake(iconLocationX + ((i-1)*(barWidth + 1)), iconLocationY, barWidth * barPercent, barHeight)] : [[UIView alloc] initWithFrame: CGRectMake(iconLocationX + ((i-1)*(barWidth + 1)), iconLocationY, barWidth, barHeight)];
-
+		CGRect fillFrame = CGRectMake(iconLocationX + ((i-1)*(barWidth + 1)), iconLocationY, (i == tickCt) ? barWidth * barPercent : barWidth, barHeight);
+		UIView *fill = [[UIView alloc] initWithFrame:fillFrame];
 		[fill setContentMode:UIViewContentModeScaleAspectFill];
-		[fill setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight]; 
+		[fill setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 
-//-----------------------------------------------
-//Colors
 		if ([self saverModeActive]){
 			fill.backgroundColor = LowPowerModeColor;
 		}else if (isCharging){
@@ -287,10 +277,10 @@
 			else
 				fill.backgroundColor = LowBatteryColor;
 		}
+
 		[self addSubview:fill];
 	}
-//-----------------------------------------------
-//Loading Frame
+
 	[icon setImage:(actualPercentage >= 6) ? [UIImage imageWithData:batteryImage] : [UIImage imageWithData:batteryLowImage]];
 
 	[self updateIconColor];
