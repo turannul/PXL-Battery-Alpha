@@ -1,8 +1,11 @@
 #define kPrefDomain "xyz.turannul.pxlbattery"
-#include "SparkColourPickerUtils.h"
 #import <QuartzCore/CoreAnimation.h>
+#import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import <Foundation/Foundation.h>
 #import "Battery_Images.h"
+#include "SparkColourPickerUtils.h"
+
 
 UIImageView* icon;
 UIImageView* fill;

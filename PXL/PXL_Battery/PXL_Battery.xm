@@ -1,15 +1,11 @@
 #import "PXL_Battery.h"
-#import <syslog.h>
-#import <QuartzCore/QuartzCore.h>
 #import "statics.h"
 
 %group PXLBattery // Here go again
 %hook UIStatusBar_Modern
 -(NSInteger)_effectiveStyleFromStyle:(NSInteger)arg1{
 	statusBarDark = (arg1 != 1);
-
 	BatteryColor = statusBarDark ? [UIColor blackColor] : [UIColor whiteColor];
-
 	return %orig;
 }
 %end
@@ -93,86 +89,6 @@
 	// Adjust the run loop mode if necessary
 	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 }
-
-/*old blinking animation
--(void)_updateFillLayer{
-	if (PXLEnabled){
-		[self refreshIcon];
-		if (isCharging){
-			// Set initial alpha value to 0
-			for (UIView *subview in self.subviews){
-				if (![subview isKindOfClass:[UIImageView class]]){
-					subview.alpha = 0.0;
-				}
-			}
-
-			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-				// Animate the fade-in effect
-				[UIView animateWithDuration:1.5 delay:0.5 options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{
-					for (UIView *subview in self.subviews){
-						if (![subview isKindOfClass:[UIImageView class]]){
-							subview.alpha = 1.0;
-						}
-					}
-				}completion:nil];
-			});
-		}
-	}else{
-		%orig;
-	}
-}*/
-
-/*animation 
--(void)_updateFillLayer{
-	if (PXLEnabled){
-		[self refreshIcon];
-		if (isCharging){
-			// Create an array to hold the subviews
-			NSMutableArray *subviewsToAnimate = [NSMutableArray array];
-			
-			// Gather the subviews that need to be animated
-			for (UIView *subview in self.subviews){
-				if (![subview isKindOfClass:[UIImageView class]]){
-					[subviewsToAnimate addObject:subview];
-				}
-			}
-			
-			// Set initial alpha value to 0 for all subviews
-			for (UIView *subview in subviewsToAnimate){
-				subview.alpha = 0.35;
-			}
-
-			// Animate the subviews one after the other with 0.5 seconds delay
-			[self animateSubviewsSequentially:subviewsToAnimate index:0 delay:0.2];
-		}else{
-			%orig;
-		}
-	}
-}
-
-%new
--(void)animateSubviewsSequentially:(NSArray *)subviews index:(NSUInteger)index delay:(NSTimeInterval)delay{
-	__block NSInteger blockIndex = index;
-	
-	NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:delay repeats:YES block:^(NSTimer * _Nonnull timer){
-		if (subviews.count > 0){
-			UIView *subview = subviews[blockIndex];
-			
-			[UIView animateWithDuration:2.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-				subview.alpha = 1.0;
-			}completion:^(BOOL finished){
-				[UIView animateWithDuration:2.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-					subview.alpha = 0.35;
-				}completion:nil];
-			}];
-			
-			blockIndex = (blockIndex + 1) % subviews.count; // Circular index
-		}
-	}];
-	
-	// Adjust the run loop mode if necessary
-	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-}*/
 
 // when low power mode activated
 -(void)setSaverModeActive:(bool)arg1{

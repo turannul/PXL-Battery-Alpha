@@ -1,4 +1,4 @@
-#import <Foundation/Foundation.h>
+#import "PXL_Battery.h"
 
 static NSString *GetNSString(NSString *pkey, NSString *defaultValue){
 	NSDictionary *Dict = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", @kPrefDomain]];
