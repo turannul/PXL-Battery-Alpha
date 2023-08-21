@@ -49,26 +49,6 @@
 	}
 
 	[self refreshIcon]; // move this to buttom of effects 
-	}/*if (isCharging){
-		NSMutableArray *subviewsToAnimate = [NSMutableArray array];
-
-		for (UIView *subview in self.subviews){
-			if (![subview isKindOfClass:[UIImageView class]]){
-				[subviewsToAnimate addObject:subview];
-			}
-		}
-
-		for (NSInteger i = 0; i < subviewsToAnimate.count; i++) {
-			UIView *subview = subviewsToAnimate[i];
-			if (i == subviewsToAnimate.count - 1) {
-				subview.alpha = 0; // Set initial alpha to 0.0 for the charging subview
-			} else {
-				subview.alpha = 1.0; // Set other subviews to full visibility
-			}
-		}
-
-		[self animateSubviewsSequentially:subviewsToAnimate index:0 delay:0.2];
-	}
 }
 
 %new
@@ -78,23 +58,31 @@
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:delay repeats:YES block:^(NSTimer * _Nonnull timer) {
         if (subviews.count > 0) {
             UIView *subview = subviews[blockIndex];
-
-			if (actualPercentage < 6 && !isCharging) {
-				// There's no tick to play with so blinking icon would be great?
-				// build the animation later...
-				}
+			//UIView *icon = subviews[fill]; How to define frame here?
             
-            if (blockIndex == subviews.count - 1) {
-                [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                    subview.alpha = 1.0; // Fully visible (charging)
-                } completion:^(BOOL finished){
-					// I can't love the 'fade' effect.
-                    [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                        subview.alpha = 0.0; // Fading out (charging)
-                    } completion:^(BOOL finished){
-                        if (actualPercentage == 100) {
-                            [timer invalidate]; // Stop the animation timer when battery is 100%
+            if (actualPercentage < 6 && !isCharging) { icon.alpha = (icon.alpha == 0.0) ? 1.0 : 0.0; } else { icon.alpha = 1.0; /* Always set visibility to full */}
+            
+               if (actualPercentage >= 6 && isCharging) {
+				// Animation here to make tick count increases till battery gets full.
+				// further explanation:
+				/* This example  here first If Battery was %7 charged/full only one subview will be blinking till battery reaches %20 and keeps till %100. */
+			   } 
+            blockIndex = (blockIndex + 1) % subviews.count; // Circular index
+            
+            if (actualPercentage == 100) {
+                [timer invalidate]; // Stop the animation timer when battery is 100%
                         }
+                        }
+                    }];
+                }];
+            } else {
+                [UIView animateWithDuration:2.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                    subview.alpha = 1.0; // Full visibility (not charging)
+                } completion:nil];
+            }
+            
+            blockIndex = (blockIndex + 1) % subviews.count; // Circular index
+            }
                     }];
                 }];
             } else {
@@ -109,7 +97,8 @@
     
     // Adjust the run loop mode if necessary
     [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-}*/
+}
+
 
 // when low power mode activated
 -(void)setSaverModeActive:(bool)arg1{
