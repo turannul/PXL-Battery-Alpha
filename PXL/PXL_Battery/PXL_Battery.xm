@@ -48,8 +48,8 @@
 		return;
 	}
 
-	[self refreshIcon];
-	if (isCharging){
+	[self refreshIcon]; // move this to buttom of effects 
+	}/*if (isCharging){
 		NSMutableArray *subviewsToAnimate = [NSMutableArray array];
 
 		for (UIView *subview in self.subviews){
@@ -58,8 +58,13 @@
 			}
 		}
 
-		for (UIView *subview in subviewsToAnimate){
-			subview.alpha = 0.35;
+		for (NSInteger i = 0; i < subviewsToAnimate.count; i++) {
+			UIView *subview = subviewsToAnimate[i];
+			if (i == subviewsToAnimate.count - 1) {
+				subview.alpha = 0; // Set initial alpha to 0.0 for the charging subview
+			} else {
+				subview.alpha = 1.0; // Set other subviews to full visibility
+			}
 		}
 
 		[self animateSubviewsSequentially:subviewsToAnimate index:0 delay:0.2];
@@ -67,28 +72,44 @@
 }
 
 %new
--(void)animateSubviewsSequentially:(NSArray *)subviews index:(NSUInteger)index delay:(NSTimeInterval)delay{
-	__block NSInteger blockIndex = index;
-	
-	NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:delay repeats:YES block:^(NSTimer * _Nonnull timer){
-		if (subviews.count > 0){
-			UIView *subview = subviews[blockIndex];
-			
-			[UIView animateWithDuration:2.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-				subview.alpha = 1.0;
-			}completion:^(BOOL finished){
-				[UIView animateWithDuration:2.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-					subview.alpha = 0.35;
-				}completion:nil];
-			}];
-			
-			blockIndex = (blockIndex + 1) % subviews.count; // Circular index
-		}
-	}];
-	
-	// Adjust the run loop mode if necessary
-	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-}
+- (void)animateSubviewsSequentially:(NSArray *)subviews index:(NSUInteger)index delay:(NSTimeInterval)delay {
+    __block NSInteger blockIndex = index;
+    
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:delay repeats:YES block:^(NSTimer * _Nonnull timer) {
+        if (subviews.count > 0) {
+            UIView *subview = subviews[blockIndex];
+
+			if (actualPercentage < 6 && !isCharging) {
+				// There's no tick to play with so blinking icon would be great?
+				// build the animation later...
+				}
+            
+            if (blockIndex == subviews.count - 1) {
+                [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                    subview.alpha = 1.0; // Fully visible (charging)
+                } completion:^(BOOL finished){
+					// I can't love the 'fade' effect.
+                    [UIView animateWithDuration:1.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                        subview.alpha = 0.0; // Fading out (charging)
+                    } completion:^(BOOL finished){
+                        if (actualPercentage == 100) {
+                            [timer invalidate]; // Stop the animation timer when battery is 100%
+                        }
+                    }];
+                }];
+            } else {
+                [UIView animateWithDuration:2.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                    subview.alpha = 1.0; // Full visibility (not charging)
+                } completion:nil];
+            }
+            
+            blockIndex = (blockIndex + 1) % subviews.count; // Circular index
+        }
+    }];
+    
+    // Adjust the run loop mode if necessary
+    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+}*/
 
 // when low power mode activated
 -(void)setSaverModeActive:(bool)arg1{
@@ -132,7 +153,7 @@
 	[self cleanUpViews];
 
 	NSData *batteryImage = BATTERY_IMAGE;
-	NSData *batteryLowImage = BATTERY_LOW_IMAGE;
+	//NSData *batteryLowImage = BATTERY_LOW_IMAGE;
 
 	if (!icon){
 		icon = [[UIImageView alloc] initWithFrame:[self bounds]];
@@ -197,8 +218,8 @@
 		[self addSubview:fill];
 	}
 
-	[icon setImage:(actualPercentage >= 6) ? [UIImage imageWithData:batteryImage] : [UIImage imageWithData:batteryLowImage]];
-
+	//[icon setImage:(actualPercentage >= 6) ? [UIImage imageWithData:batteryImage] : [UIImage imageWithData:batteryLowImage]];
+	[icon setImage:[UIImage imageWithData:batteryImage]];
 	[self updateIconColor];
 }
 
