@@ -48,57 +48,47 @@
 		return;
 	}
 
-	[self refreshIcon]; // move this to buttom of effects 
+	[self refreshIcon];
+	if (isCharging){
+		NSMutableArray *subviewsToAnimate = [NSMutableArray array];
+
+		for (UIView *subview in self.subviews){
+			if (![subview isKindOfClass:[UIImageView class]]){
+				[subviewsToAnimate addObject:subview];
+			}
+		}
+
+		for (UIView *subview in subviewsToAnimate){
+			subview.alpha = 0.35;
+		}
+
+		[self animateSubviewsSequentially:subviewsToAnimate index:0 delay:0.2];
+	}
 }
 
 %new
-- (void)animateSubviewsSequentially:(NSArray *)subviews index:(NSUInteger)index delay:(NSTimeInterval)delay {
-    __block NSInteger blockIndex = index;
-    
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:delay repeats:YES block:^(NSTimer * _Nonnull timer) {
-        if (subviews.count > 0) {
-            UIView *subview = subviews[blockIndex];
-			//UIView *icon = subviews[fill]; How to define frame here?
-            
-            if (actualPercentage < 6 && !isCharging) { icon.alpha = (icon.alpha == 0.0) ? 1.0 : 0.0; } else { icon.alpha = 1.0; /* Always set visibility to full */}
-            
-               if (actualPercentage >= 6 && isCharging) {
-				// Animation here to make tick count increases till battery gets full.
-				// further explanation:
-				/* This example  here first If Battery was %7 charged/full only one subview will be blinking till battery reaches %20 and keeps till %100. */
-			   } 
-            blockIndex = (blockIndex + 1) % subviews.count; // Circular index
-            
-            if (actualPercentage == 100) {
-                [timer invalidate]; // Stop the animation timer when battery is 100%
-                        }
-                        }
-                    }];
-                }];
-            } else {
-                [UIView animateWithDuration:2.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                    subview.alpha = 1.0; // Full visibility (not charging)
-                } completion:nil];
-            }
-            
-            blockIndex = (blockIndex + 1) % subviews.count; // Circular index
-            }
-                    }];
-                }];
-            } else {
-                [UIView animateWithDuration:2.0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                    subview.alpha = 1.0; // Full visibility (not charging)
-                } completion:nil];
-            }
-            
-            blockIndex = (blockIndex + 1) % subviews.count; // Circular index
-        }
-    }];
-    
-    // Adjust the run loop mode if necessary
-    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+-(void)animateSubviewsSequentially:(NSArray *)subviews index:(NSUInteger)index delay:(NSTimeInterval)delay{
+	__block NSInteger blockIndex = index;
+	
+	NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:delay repeats:YES block:^(NSTimer * _Nonnull timer){
+		if (subviews.count > 0){
+			UIView *subview = subviews[blockIndex];
+			
+			[UIView animateWithDuration:2.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+				subview.alpha = 1.0;
+			}completion:^(BOOL finished){
+				[UIView animateWithDuration:2.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+					subview.alpha = 0.35;
+				}completion:nil];
+			}];
+			
+			blockIndex = (blockIndex + 1) % subviews.count; // Circular index
+		}
+	}];
+	
+	// Adjust the run loop mode if necessary
+	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 }
-
 
 // when low power mode activated
 -(void)setSaverModeActive:(bool)arg1{
@@ -142,7 +132,7 @@
 	[self cleanUpViews];
 
 	NSData *batteryImage = BATTERY_IMAGE;
-	//NSData *batteryLowImage = BATTERY_LOW_IMAGE;
+	NSData *batteryLowImage = BATTERY_LOW_IMAGE;
 
 	if (!icon){
 		icon = [[UIImageView alloc] initWithFrame:[self bounds]];
@@ -207,8 +197,8 @@
 		[self addSubview:fill];
 	}
 
-	//[icon setImage:(actualPercentage >= 6) ? [UIImage imageWithData:batteryImage] : [UIImage imageWithData:batteryLowImage]];
-	[icon setImage:[UIImage imageWithData:batteryImage]];
+	[icon setImage:(actualPercentage >= 6) ? [UIImage imageWithData:batteryImage] : [UIImage imageWithData:batteryLowImage]];
+
 	[self updateIconColor];
 }
 
