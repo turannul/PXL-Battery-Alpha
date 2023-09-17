@@ -3,6 +3,33 @@
 
 %group PXLBattery // Here go again
 %hook UIStatusBar_Modern
+/* From SparkDev libColourPicker docs 
+#import "SparkColourPickerUtils.h"
+
+%hook HOOKHERE
+
+-(UIColor*) FUNCTIONTOHOOK
+{
+    NSString* colorFromPlist = NULL;
+	PlistPathStr = @"/User/Library/Preferences/com.your.identifier.plist";
+    NSDictionary* prefsDic = [NSDictionary dictionaryWithContentsOfFile:PlistPathStr];
+    if(prefsDic)
+    {
+        colorFromPlist = [preferencesDictionary objectForKey: @"BatteryColor"]; is returns HEX Value
+    }
+
+    UIColor* colorFromPlist = [SparkColourPickerUtils colourWithString: colourString withFallback: @"#ffffff"];
+	if (colorFromPlist = statusBarColors **Define Black&White** ){statusBarDark ? [UIColor blackColor] : [UIColor whiteColor];}else{return %orig;}
+	                   ^ Where my headcache starts
+}
+
+%end 
+Idea was simple but hard to implement *properly*
+	NSLog(@"colourFromPlist: %@", colorFromPlist);
+	NSLog(@"BatteryColor: %@", BatteryColor);
+	note statusBarDark = 1 White for eg
+	arg1=1 colorFromPlist; = change color (UIColor and [X==X] NSString Problem)
+*/
 -(NSInteger)_effectiveStyleFromStyle:(NSInteger)arg1{
 	statusBarDark = (arg1 != 1);
 	BatteryColor = statusBarDark ? [UIColor blackColor] : [UIColor whiteColor];
