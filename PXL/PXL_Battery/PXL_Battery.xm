@@ -48,8 +48,6 @@
         return;
     }
 
-    [self refreshIcon];
-
 	// Charging Animation
 	BOOL ShouldAnimateTick = (actualPercentage >= 6) && (actualPercentage != 100) && isCharging;
     if (ShouldAnimateTick) {
@@ -65,15 +63,22 @@
 				if (ticksToShow < tickCount) { ticksToShow++; } else { ticksToShow--; }}];
 			[[NSRunLoop currentRunLoop] addTimer:ChargingAnimation forMode:NSRunLoopCommonModes]; }
 
-	// Low Battery Animation
-	BOOL shouldAnimateIcon = (actualPercentage <= 6);
+	// Low Battery Animation 
+	NSTimer *LowBatteryAnimation = nil; // Declare the timer variable
+
+	BOOL shouldAnimateIcon = (actualPercentage <= 6) && !(actualPercentage >= 7);
+	__block BOOL frameHidden = NO;
+
 	if (shouldAnimateIcon) {
-		__block BOOL frameHidden = NO;
-		NSTimer *LowBatteryAnimation = [NSTimer scheduledTimerWithTimeInterval:0.42 repeats:YES block:^(NSTimer * _Nonnull timer) {
-			icon.alpha = frameHidden ? 0.0 : 1.0; // Toggle between 0 and 1
-			frameHidden = !frameHidden; // Toggle the boolean flag
+		LowBatteryAnimation = [NSTimer scheduledTimerWithTimeInterval:0.42 repeats:YES block:^(NSTimer * _Nonnull timer) {
+			icon.alpha = frameHidden ? 0.0 : 1.0; // Toggle between 0 & 1
+			frameHidden = !frameHidden; // Toggle the bool
 		}];
-		[[NSRunLoop currentRunLoop] addTimer:LowBatteryAnimation forMode:NSRunLoopCommonModes];}
+		[[NSRunLoop currentRunLoop] addTimer:LowBatteryAnimation forMode:NSRunLoopCommonModes];
+	} else {
+		[LowBatteryAnimation invalidate];
+	}
+    [self refreshIcon];
 }
 // when low power mode activated
 -(void)setSaverModeActive:(bool)arg1{
