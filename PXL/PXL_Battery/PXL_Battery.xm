@@ -50,63 +50,21 @@
 
     [self refreshIcon];
 
-    if (isCharging) {
-        NSMutableArray *subviewsToAnimate = [NSMutableArray array];
-
-        for (UIView *subview in self.subviews) {
-            if (![subview isKindOfClass:[UIImageView class]]) {
-                [subviewsToAnimate addObject:subview];
-            }
-        }
-
-        NSTimeInterval blinkInterval = 0.5;
-        BOOL loop = YES;
-        __block BOOL leftToRight = YES;
-
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            while (loop) {
-                for (UIView *subview in leftToRight ? subviewsToAnimate : [subviewsToAnimate reverseObjectEnumerator].allObjects) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        subview.hidden = NO; // Show the tick
-                    });
-
-                    [NSThread sleepForTimeInterval:blinkInterval];
-
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        subview.hidden = YES; // Hide the tick
-                    });
-
-                    [NSThread sleepForTimeInterval:blinkInterval];
-                }
-                leftToRight = !leftToRight; // Toggle the direction
-            }
-        });
-    }
-}
-
-%new
--(void)animateSubviewsSequentially:(NSArray *)subviews index:(NSUInteger)index delay:(NSTimeInterval)delay{
-	__block NSInteger blockIndex = index;
-	
-	NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:delay repeats:YES block:^(NSTimer * _Nonnull timer){
-		if (subviews.count > 0){
-			UIView *subview = subviews[blockIndex];
-			
-			[UIView animateWithDuration:2.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-				subview.alpha = 1.0;
-			}completion:^(BOOL finished){
-				[UIView animateWithDuration:2.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-					subview.alpha = 0.35;
-				}completion:nil];
-			}];
-			
-			blockIndex = (blockIndex + 1) % subviews.count; // Circular index
-		}
-	}];
-	
-	// Adjust the run loop mode if necessary
-	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-}
+	// TODO: make same animation for < 6% * How to animate frame? - Ask Randy?
+	// Charging effect	// Completed animation.
+	BOOL shouldRunAnim = (actualPercentage >= 6) && (actualPercentage != 100);
+    if (shouldRunAnim) {
+        NSInteger tickCount = (NSInteger)(actualPercentage / 20);
+			NSMutableArray *subviewsToAnimate = [NSMutableArray array];
+			for (UIView *subview in self.subviews) {
+				if (![subview isKindOfClass:[UIImageView class]]) {[subviewsToAnimate addObject:subview];}}
+			__block NSInteger ticksToShow = 0;
+			NSTimer *animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.45 repeats:YES block:^(NSTimer * _Nonnull timer) {
+				for (NSInteger i = 0; i < subviewsToAnimate.count; i++) {
+					UIView *subview = subviewsToAnimate[i];
+					dispatch_async(dispatch_get_main_queue(), ^{ subview.hidden = (i >= ticksToShow); });}
+				if (ticksToShow < tickCount) { ticksToShow++; } else { ticksToShow--; }}];
+			[[NSRunLoop currentRunLoop] addTimer:animationTimer forMode:NSRunLoopCommonModes];}}
 
 // when low power mode activated
 -(void)setSaverModeActive:(bool)arg1{
