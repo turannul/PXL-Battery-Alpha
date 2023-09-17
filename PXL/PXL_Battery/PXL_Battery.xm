@@ -50,22 +50,31 @@
 
     [self refreshIcon];
 
-	// TODO: make same animation for < 6% * How to animate frame? - Ask Randy?
-	// Charging effect	// Completed animation.
-	BOOL shouldRunAnim = (actualPercentage >= 6) && (actualPercentage != 100);
-    if (shouldRunAnim) {
-        NSInteger tickCount = (NSInteger)(actualPercentage / 20);
+	// Charging Animation
+	BOOL ShouldAnimateTick = (actualPercentage >= 6) && (actualPercentage != 100) && isCharging;
+    if (ShouldAnimateTick) {
+        NSInteger tickCount = (NSInteger)(actualPercentage / 20); /* Optional: use tickPercentage? */
 			NSMutableArray *subviewsToAnimate = [NSMutableArray array];
 			for (UIView *subview in self.subviews) {
 				if (![subview isKindOfClass:[UIImageView class]]) {[subviewsToAnimate addObject:subview];}}
 			__block NSInteger ticksToShow = 0;
-			NSTimer *animationTimer = [NSTimer scheduledTimerWithTimeInterval:0.45 repeats:YES block:^(NSTimer * _Nonnull timer) {
+			NSTimer *ChargingAnimation = [NSTimer scheduledTimerWithTimeInterval:0.45 repeats:YES block:^(NSTimer * _Nonnull timer) {
 				for (NSInteger i = 0; i < subviewsToAnimate.count; i++) {
 					UIView *subview = subviewsToAnimate[i];
 					dispatch_async(dispatch_get_main_queue(), ^{ subview.hidden = (i >= ticksToShow); });}
 				if (ticksToShow < tickCount) { ticksToShow++; } else { ticksToShow--; }}];
-			[[NSRunLoop currentRunLoop] addTimer:animationTimer forMode:NSRunLoopCommonModes];}}
+			[[NSRunLoop currentRunLoop] addTimer:ChargingAnimation forMode:NSRunLoopCommonModes]; }
 
+	// Low Battery Animation
+	BOOL shouldAnimateIcon = (actualPercentage <= 6);
+	if (shouldAnimateIcon) {
+		__block BOOL frameHidden = NO;
+		NSTimer *LowBatteryAnimation = [NSTimer scheduledTimerWithTimeInterval:0.42 repeats:YES block:^(NSTimer * _Nonnull timer) {
+			icon.alpha = frameHidden ? 0.0 : 1.0; // Toggle between 0 and 1
+			frameHidden = !frameHidden; // Toggle the boolean flag
+		}];
+		[[NSRunLoop currentRunLoop] addTimer:LowBatteryAnimation forMode:NSRunLoopCommonModes];}
+}
 // when low power mode activated
 -(void)setSaverModeActive:(bool)arg1{
 	%orig;
@@ -108,7 +117,7 @@
 	[self cleanUpViews];
 
 	NSData *batteryImage = BATTERY_IMAGE;
-	NSData *batteryLowImage = BATTERY_LOW_IMAGE;
+	//NSData *batteryLowImage = BATTERY_LOW_IMAGE;
 
 	if (!icon){
 		icon = [[UIImageView alloc] initWithFrame:[self bounds]];
@@ -173,8 +182,8 @@
 		[self addSubview:fill];
 	}
 
-	[icon setImage:(actualPercentage >= 6) ? [UIImage imageWithData:batteryImage] : [UIImage imageWithData:batteryLowImage]];
-
+	//[icon setImage:(actualPercentage >= 6) ? [UIImage imageWithData:batteryImage] : [UIImage imageWithData:batteryLowImage]]; I don't like LowImage
+	[icon setImage:[UIImage imageWithData:batteryImage]];
 	[self updateIconColor];
 }
 
