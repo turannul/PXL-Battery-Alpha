@@ -47,7 +47,7 @@
         %orig;
         return;
     }
-	
+
     [self refreshIcon];
 
     if (isCharging) {
@@ -59,19 +59,26 @@
             }
         }
 
-        __block BOOL isHidden = YES;
         NSTimeInterval blinkInterval = 0.5;
+        BOOL loop = YES;
+        __block BOOL leftToRight = YES;
 
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            while (isCharging) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    for (UIView *subview in subviewsToAnimate) {
-                        subview.hidden = isHidden;
-                    }
-                });
+            while (loop) {
+                for (UIView *subview in leftToRight ? subviewsToAnimate : [subviewsToAnimate reverseObjectEnumerator].allObjects) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        subview.hidden = NO; // Show the tick
+                    });
 
-                isHidden = !isHidden;
-                [NSThread sleepForTimeInterval:blinkInterval];
+                    [NSThread sleepForTimeInterval:blinkInterval];
+
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        subview.hidden = YES; // Hide the tick
+                    });
+
+                    [NSThread sleepForTimeInterval:blinkInterval];
+                }
+                leftToRight = !leftToRight; // Toggle the direction
             }
         });
     }
