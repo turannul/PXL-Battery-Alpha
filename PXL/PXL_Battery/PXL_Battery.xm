@@ -42,28 +42,39 @@
 
 //-----------------------------------------------
 //Keep updating view
--(void)_updateFillLayer{
-	if (!PXLEnabled){
-		%orig;
-		return;
-	}
+-(void)_updateFillLayer {
+    if (!PXLEnabled) {
+        %orig;
+        return;
+    }
+	
+    [self refreshIcon];
 
-	[self refreshIcon];
-	if (isCharging){
-		NSMutableArray *subviewsToAnimate = [NSMutableArray array];
+    if (isCharging) {
+        NSMutableArray *subviewsToAnimate = [NSMutableArray array];
 
-		for (UIView *subview in self.subviews){
-			if (![subview isKindOfClass:[UIImageView class]]){
-				[subviewsToAnimate addObject:subview];
-			}
-		}
+        for (UIView *subview in self.subviews) {
+            if (![subview isKindOfClass:[UIImageView class]]) {
+                [subviewsToAnimate addObject:subview];
+            }
+        }
 
-		for (UIView *subview in subviewsToAnimate){
-			subview.alpha = 0.35;
-		}
+        __block BOOL isHidden = YES;
+        NSTimeInterval blinkInterval = 0.5;
 
-		[self animateSubviewsSequentially:subviewsToAnimate index:0 delay:0.2];
-	}
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            while (isCharging) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    for (UIView *subview in subviewsToAnimate) {
+                        subview.hidden = isHidden;
+                    }
+                });
+
+                isHidden = !isHidden;
+                [NSThread sleepForTimeInterval:blinkInterval];
+            }
+        });
+    }
 }
 
 %new
