@@ -52,7 +52,7 @@
 	// Charging Animation
 	BOOL ShouldAnimateTick = (actualPercentage >= 6) && (actualPercentage != 100) && isCharging;
     if (ShouldAnimateTick) {
-        NSInteger tickCount = (NSInteger)(actualPercentage / 20); /* Optional: use tickPercentage? */
+        NSInteger tickCount = (actualPercentage >= 80) ? 5 : (actualPercentage >= 60) ? 4 : (actualPercentage >= 40) ? 3 : (actualPercentage >= 20) ? 2 : (actualPercentage >= 6) ? : 1;
 			NSMutableArray *subviewsToAnimate = [NSMutableArray array];
 			for (UIView *subview in self.subviews) {
 				if (![subview isKindOfClass:[UIImageView class]]) {[subviewsToAnimate addObject:subview];}}
