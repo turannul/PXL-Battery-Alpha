@@ -91,29 +91,27 @@ Idea was simple but hard to implement *properly*
 				if (ticksToShow < tickCount) { ticksToShow++; } else { ticksToShow--; }}];
 			[[NSRunLoop currentRunLoop] addTimer:ChargingAnimation forMode:NSRunLoopCommonModes]; }
 
-	// Low Battery Animation 
-/*
+	// Low Battery Animation Credits:@MynameisDell
 	BOOL shouldAnimateIcon = (actualPercentage <= 6);
-	NSTimeInterval animationInterval = 0.2;
-	__block BOOL isHidden = NO; // Should be shown at start
+	NSTimeInterval animationInterval = 2.0; // Đặt khoảng thời gian là 2 giây (hoặc thời gian mong muốn).
+	__block BOOL isHidden = NO; // Ban đầu hiển thị biểu tượng.
+
 	if (shouldAnimateIcon) {
-		NSTimer *lowBatteryAnimation = [NSTimer scheduledTimerWithTimeInterval:animationInterval repeats:YES block:^(NSTimer * _Nonnull timer) {
+		// Sử dụng GCD (Grand Central Dispatch) thay vì NSTimer để tạo hiệu ứng ẩn/hiển thị.
+		dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+		dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+		
+		dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, animationInterval * NSEC_PER_SEC, 0);
+		
+		dispatch_source_set_event_handler(timer, ^{
 			dispatch_async(dispatch_get_main_queue(), ^{
 				icon.hidden = isHidden;
+				isHidden = !isHidden;
 			});
-		}];
-
-		[[NSRunLoop currentRunLoop] addTimer:lowBatteryAnimation forMode:NSRunLoopCommonModes];
+		});
 		
-		// Create a separate timer to toggle the animation state
-		NSTimeInterval toggleInterval = animationInterval * 2; // 0.5 % 2 = 0.25 by that way during animationInterval time showin and hiding once
-		NSTimer *toggleAnimationState = [NSTimer scheduledTimerWithTimeInterval:toggleInterval repeats:YES block:^(NSTimer * _Nonnull timer) {
-			isHidden = !isHidden;
-		}];
-		
-		[[NSRunLoop currentRunLoop] addTimer:toggleAnimationState forMode:NSRunLoopCommonModes];
+		dispatch_resume(timer);
 	}
-*/
 }
 
 // when low power mode activated
