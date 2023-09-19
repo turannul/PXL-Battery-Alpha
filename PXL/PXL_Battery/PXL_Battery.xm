@@ -92,31 +92,28 @@ Idea was simple but hard to implement *properly*
 			[[NSRunLoop currentRunLoop] addTimer:ChargingAnimation forMode:NSRunLoopCommonModes]; }
 
 	// Low Battery Animation 
-	__block NSTimer *lowBatteryAnimation = nil;
-	__block BOOL frameHidden = NO;
-
-	void (^updateAnimation)(void);
-
-	updateAnimation = ^{
-		BOOL shouldAnimateIcon = (actualPercentage <= 6) && (actualPercentage >= 1);
-
-		if (shouldAnimateIcon) {
+/*
+	BOOL shouldAnimateIcon = (actualPercentage <= 6);
+	NSTimeInterval animationInterval = 0.2;
+	__block BOOL isHidden = NO; // Should be shown at start
+	if (shouldAnimateIcon) {
+		NSTimer *lowBatteryAnimation = [NSTimer scheduledTimerWithTimeInterval:animationInterval repeats:YES block:^(NSTimer * _Nonnull timer) {
 			dispatch_async(dispatch_get_main_queue(), ^{
-				icon.alpha = frameHidden ? 0.0 : 1.0;
-				frameHidden = !frameHidden;
+				icon.hidden = isHidden;
 			});
-		} else {
-			[lowBatteryAnimation invalidate];
-			lowBatteryAnimation = nil;
-		}
-	};
+		}];
 
-	lowBatteryAnimation = [NSTimer scheduledTimerWithTimeInterval:0.42 repeats:YES block:^(NSTimer * _Nonnull timer) {
-		updateAnimation();
-	}];
-
-	[[NSRunLoop currentRunLoop] addTimer:lowBatteryAnimation forMode:NSRunLoopCommonModes];
-
+		[[NSRunLoop currentRunLoop] addTimer:lowBatteryAnimation forMode:NSRunLoopCommonModes];
+		
+		// Create a separate timer to toggle the animation state
+		NSTimeInterval toggleInterval = animationInterval * 2; // 0.5 % 2 = 0.25 by that way during animationInterval time showin and hiding once
+		NSTimer *toggleAnimationState = [NSTimer scheduledTimerWithTimeInterval:toggleInterval repeats:YES block:^(NSTimer * _Nonnull timer) {
+			isHidden = !isHidden;
+		}];
+		
+		[[NSRunLoop currentRunLoop] addTimer:toggleAnimationState forMode:NSRunLoopCommonModes];
+	}
+*/
 }
 
 // when low power mode activated
