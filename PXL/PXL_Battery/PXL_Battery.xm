@@ -91,30 +91,20 @@ Idea was simple but hard to implement *properly*
 				if (ticksToShow < tickCount) { ticksToShow++; } else { ticksToShow--; }}];
 			[[NSRunLoop currentRunLoop] addTimer:ChargingAnimation forMode:NSRunLoopCommonModes]; }
 		// Low Battery Animation
-		BOOL shouldAnimateFrame = (actualPercentage <= 6);
+		/* Problems
+		1: Animation keeps going whenever if true or not
+		2: Animation not always works in SB *//*
+		BOOL shouldAnimateFrame = (actualPercentage <= 6) && !(actualPercentage >= 7); // if not 7 and smaller than 6 (0,1,2,3,4,5,6)
 		if (shouldAnimateFrame) {
-		NSLog(@"PXL: LOW Battery Animation Stage 0");
-			NSTimeInterval animationInterval = 0.33; // 3/3 of timer
-			__block BOOL isHidden = NO; // Should be shown at the start
-
-			NSLog(@"PXL: Stage 1:Warming up, Battery: %f", actualPercentage);
-			// Stage 2 - First Timer
-			NSTimer *lowBatteryAnimation = [NSTimer scheduledTimerWithTimeInterval:animationInterval repeats:YES block:^(NSTimer * _Nonnull timer) {
-				NSLog(@"PXL: Stage 2: Firing up: (First Timer)");
-				dispatch_async(dispatch_get_main_queue(), ^{
-					icon.hidden = isHidden;
-					NSLog(@"PXL: Stage 3: Checking the boolean isHidden: %d", isHidden);
-				});
-			}];
-			// Stage 3 - Second Timer
-			NSTimer *secondTimer = [NSTimer scheduledTimerWithTimeInterval:(0.11) repeats:YES block:^(NSTimer * _Nonnull timer) {
-				NSLog(@"PXL: Stage:3.5 Timer Fired, Changing boolean"); /* 3/1 of timer = 9 flashing in a minute? */
-				/* issue: Meanwhile log and control center updates sb battery icon is not. */
-				isHidden = !isHidden;
-			}];
-			[[NSRunLoop currentRunLoop] addTimer:lowBatteryAnimation forMode:NSRunLoopCommonModes];
-			[[NSRunLoop currentRunLoop] addTimer:secondTimer forMode:NSRunLoopCommonModes];
-		}
+				NSTimeInterval animationInterval = 0.45; 
+				__block BOOL isHidden = NO; // Should be shown at the start
+				NSTimer *lowBatteryAnimation = [NSTimer scheduledTimerWithTimeInterval:animationInterval repeats:NO block:^(NSTimer * _Nonnull timer) {
+					dispatch_async(dispatch_get_main_queue(), ^{
+						icon.hidden = isHidden;
+						NSLog(@"PXL: A isHidden: %d", isHidden); // This is required to function properly
+						isHidden = !isHidden;
+					});}];
+				[[NSRunLoop currentRunLoop] addTimer:lowBatteryAnimation forMode:NSRunLoopCommonModes]; */
 	}
 
 // when low power mode activated
